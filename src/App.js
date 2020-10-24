@@ -4,6 +4,7 @@ import {makeStyles} from '@material-ui/core';
 import PostUserView from './components/post/PostUserView'
 import PostEditor from './components/post/PostEditor'
 import "./App.css"
+import PostManageView from './components/post/PostManageView'
 import {
     BrowserRouter as Router,
     Switch,
@@ -30,13 +31,14 @@ const App = observer( () =>  {
   return (
         <div className={classes.root}>
             <UserHomeLayout>
-            <Router>
+                <PostManageView></PostManageView>
+            {/* <Router>
                 <Switch>
                     <Route path="/posts/:a([A-Za-z]+)" component={PostUserView}/>
                     <Route path="/post/detail/:a(\d+)">dasdasd</Route>
                     <Route exact path="/post/write" component={PostEditor}/>
                 </Switch>
-            </Router>
+            </Router> */}
             </UserHomeLayout>
         </div>
   );

@@ -106,7 +106,7 @@ function UserHomeLayout(props){
                         <Menu />
                     </IconButton>
                     <div className={classes.title}>
-                         첫 줄
+                         첫 줄 관리자
                     </div>
                     <div alignSelf="flex-end" className={classes.accountIconArea}>
                         { authInfo == undefined ? 
@@ -123,22 +123,52 @@ function UserHomeLayout(props){
                     </div>
                     <Divider />
                     <List>
-                        <Link  href='/home'>
+                        <Link  href='/memberManage'>
                         <ListItem button>
                             <ListItemIcon><Home /></ListItemIcon>                            
-                                <ListItemText className={classes.listItemText}>Home</ListItemText>
+                                <ListItemText className={classes.listItemText}>회원 관리</ListItemText>
                         </ListItem>
                         </Link>
-                        <Link  href='/post'>
+                        <Link  href='/postManage'>
                         <ListItem button>
                             <ListItemIcon><Home /></ListItemIcon>                            
-                                <ListItemText className={classes.listItemText}>Post</ListItemText>
+                                <ListItemText className={classes.listItemText}>게시글 관리</ListItemText>
                         </ListItem>
                         </Link>
-                        <Link  href='/about'>
+                        <Link  href='/replyManage'>
                         <ListItem button>
                             <ListItemIcon><Home /></ListItemIcon>                            
-                                <ListItemText className={classes.listItemText}>About</ListItemText>
+                                <ListItemText className={classes.listItemText}>댓글 관리</ListItemText>
+                        </ListItem>
+                        </Link>
+                        <Link  href='/noticeManage'>
+                        <ListItem button>
+                            <ListItemIcon><Home /></ListItemIcon>                            
+                                <ListItemText className={classes.listItemText}>알림 관리</ListItemText>
+                        </ListItem>
+                        </Link>
+                        <Link  href='/keywordManage'>
+                        <ListItem button>
+                            <ListItemIcon><Home /></ListItemIcon>                            
+                                <ListItemText className={classes.listItemText}>키워드 관리</ListItemText>
+                        </ListItem>
+                        </Link>
+                        <Link  href='/reportManage'>
+                        <ListItem button>
+                            <ListItemIcon><Home /></ListItemIcon>                            
+                                <ListItemText className={classes.listItemText}>신고 관리</ListItemText>
+                        </ListItem>
+                        </Link>
+                        <Link  href='/log'>
+                        <ListItem button>
+                            <ListItemIcon><Home /></ListItemIcon>                            
+                                <ListItemText className={classes.listItemText}>로그 조회</ListItemText>
+                        </ListItem>
+                        </Link>
+                        <Link  href='/traffic'>
+                        <ListItem button>
+                            <ListItemIcon><Home /></ListItemIcon>                            
+                                <ListItemText className={classes.listItemText}>트래픽 통계</ListItemText>
                         </ListItem>
                         </Link>
                     </List>

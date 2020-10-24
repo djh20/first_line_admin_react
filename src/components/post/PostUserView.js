@@ -5,6 +5,7 @@ import PostStore from '../../stores/PostStore'
 import PostWriteFloatButton from './PostWriteFloatButton'
 import PostCardList from './PostCardList'
 
+
 const useStyles = makeStyles({
     root: {
         width:'100%',
