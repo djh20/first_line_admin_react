@@ -5,7 +5,7 @@ import PostUserView from './components/post/PostUserView'
 import PostEditor from './components/post/PostEditor'
 import "./App.css"
 import PostManageView from './components/post/PostManageView'
-import ReplyUserView from './components/reply/ReplyUserView'
+import ReplyManageView from './components/reply/ReplyManageView'
 import {
     BrowserRouter as Router,
     Switch,
@@ -32,13 +32,13 @@ const App = observer( () =>  {
   return (
         <div className={classes.root}>
             <UserHomeLayout>
-                <PostManageView></PostManageView>
+                <ReplyManageView></ReplyManageView>
             <Router>
                 <Switch>
                     {/*<Route path="/posts/:a([A-Za-z]+)" component={PostUserView}/>
                     <Route path="/post/detail/:a(\d+)">dasdasd</Route>
-                    <Route exact path="/post/write" component={PostEditor}/> */}
-                    <Route path="/replyManage" component={ReplyUserView}/>
+                    <Route exact path="/post/write" component={PostEditor}/> 
+                    <Route path="/replyManage" component={ReplyManageView}/>*/}
                 </Switch>
             </Router> 
             </UserHomeLayout>
