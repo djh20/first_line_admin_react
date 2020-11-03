@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState} from 'react'
+import React, {useEffect, useContext, useState, useRef} from 'react'
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,16 +11,29 @@ import {observer} from 'mobx-react'
 import Button from '@material-ui/core/Button';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-
+import Checkbox from '@material-ui/core/Checkbox';
 import ReplyStore from '../../stores/ReplyStore'
 import { autorun } from 'mobx';
-
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
 
 const useStyles = makeStyles( (theme) => ({
     root:{
         width:"70% ",
         marginLeft : 'auto',
         marginRight : 'auto'
+    },
+    inputRoot: {
+        width: "50%",
+        marginRight:"1%",
+        marginBottom:"2%",
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+        backgroundColor: fade(theme.palette.common.white, 0.25),
+        },
     },
     table: {
       maxWidth: '100%',
@@ -31,66 +44,87 @@ const useStyles = makeStyles( (theme) => ({
         textAlign:'center'
     },
     paper:{
-        maxWidth: '95%',
+        maxWidth: '100%',
     },
     cell:{
         width : "6%",
         textAlign:'center'
     },
+    select: {
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        marginRight : '0.5%'
+    },
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        '&:hover': {
-          backgroundColor: fade(theme.palette.common.white, 0.25),
-        },
         marginLeft : 'auto',
-        marginRight : 'auto'
+        marginRight : 'auto',
       },
-      searchIcon: {
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
+    buttons: {
+        marginBottom : '2%',
+        float : 'right',
+    }
     
 }))
 
 
 const ReplyManageView = observer( (props) =>{
     const classes = useStyles();
+    const category = useRef();
+    const input = useRef();
     const [reply,setReply] = useState(0);
+    const colHeaders = 
+    [
+        "댓글 번호", "게시글 번호", "내용", "작성자", "작성일", "수정일", "욕설 확률", "삭제 여부", "블라인드 여부"
+        ,<Checkbox color="primary" inputProps={{ 'aria-label': 'secondary checkbox' }} /> 
+    ];
 
-    const colHeaders = ["댓글번호", "게시글 번호", "내용", "작성자", "작성일", "수정일", 
-    "욕설 확률", "삭제 여부", "블라인드 여부" ];
     const replyStore = useContext(ReplyStore.context);
     
     useEffect(() => {
         replyStore.readAllReplies();
       }, []); 
-
+    
+    const searchButtonClick = () => {
+        replyStore.search(category.current.value, input.current.value, 1)
+    }
     return( 
         <div className={classes.root}> 
         <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
+            <NativeSelect
+                className={classes.select}
+                defaultValue={"내용"}
+                inputRef={category}
+                >
+                <option value={'댓글 번호'}>댓글 번호</option>
+                <option value={"게시글 번호"}>게시글 번호</option>
+                <option value={"내용"}>내용</option>
+                <option value={"작성자"}>작성자</option>
+                <option value={"작성일"}>작성일</option>
+                <option value={"수정일"}>수정일</option>
+                <option value={"욕설 확률"}>욕설 확률</option>
+                <option value={"삭제 여부"}>삭제 여부</option>
+                <option value={"블라인드 여부"}>블라인드 여부</option>
+            </NativeSelect>
             <InputBase
-              placeholder="Search…"
+              placeholder="Search"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              inputRef={input}
+              onKeyUp={event => event.key === "Enter" ? searchButtonClick() : null}
               inputProps={{ 'aria-label': 'search' }}
             />
+            <Button  variant="contained" color="primary" onClick={searchButtonClick} >검색</Button>
+            
         </div>
         <div className={classes.content}>      
-            <Button  variant="contained" color="primary" >검색</Button>
-            <Button  variant="contained" color="secondary" >삭제</Button>
-            <Button  variant="contained" color="third" >블라인드</Button>
+            
+            <div className={classes.buttons}>
+                    <Button  variant="contained" color="secondary" >삭제</Button>
+                    <Button  variant="contained" color="third" >블라인드</Button>
+            </div>
             <TableContainer component={Paper} className={classes.paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
@@ -120,6 +154,12 @@ const ReplyManageView = observer( (props) =>{
                                 <TableCell className={classes.cell}>{reply.prob_is_slang}</TableCell>
                                 <TableCell className={classes.cell}>{reply.is_deleted}</TableCell>
                                 <TableCell className={classes.cell}>{reply.is_blinded}</TableCell>
+                                <TableCell className={classes.cell}>
+                                <Checkbox
+                                    color="primary"
+                                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                />
+                                </TableCell>
                             </TableRow>
                             )
                         })
@@ -127,6 +167,7 @@ const ReplyManageView = observer( (props) =>{
                     </TableBody> 
                 </Table>
             </TableContainer>
+            
         </div>
     </div>
     )

@@ -48,3 +48,7 @@ export async function requestPostReply(_post_id, _text)
         text : _text},{ withCreadentials: true }
         ).catch(err => console.warn(err)).then(res => { return res.status})
 }
+
+export async function search(code, query, pageNo){
+    return []
+}

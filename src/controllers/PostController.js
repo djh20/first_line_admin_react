@@ -29,3 +29,7 @@ export function readPost(){ // 5-1
     console.log("haha")
 }
 
+export async function search(code, query, pageNo){
+    return []
+}
+

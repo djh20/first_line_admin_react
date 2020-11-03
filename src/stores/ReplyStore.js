@@ -1,7 +1,7 @@
 import { observable, action } from "mobx";
 import { createContext } from "react";
 import requestReadAllReplies from "../controllers/ReplyController";
-import requestReadReplies,{requestPostReply} from "../controllers/ReplyController";
+import requestReadReplies,{requestPostReply, search} from "../controllers/ReplyController";
 
 
 class ReplyStore {
@@ -36,6 +36,18 @@ class ReplyStore {
                 return false
                 
         })
+    }
+
+    @action
+    search(code, query, pageNo) {
+      console.log(code)
+      console.log(query)
+      console.log(pageNo)
+  
+      const codeTable = {'댓글 번호':0,'게시글 번호':1,'내용':2,'작성자':3,'작성일':4,'수정일':5,'욕설 확률':6,'삭제 여부':7,'블라인드 여부':8}
+      return search(codeTable[code], query, pageNo).then(result=>{
+        this.replies = [...result]
+      })
     }
 
     @action
