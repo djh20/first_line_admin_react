@@ -22,7 +22,7 @@ class ReplyStore {
     readAllReplies()
     {
         return requestReadAllReplies().then(result=>{
-            this.replies = [...this.replies,...result]
+            this.replies = [...result]
             console.log(this.replies)
         })
     }

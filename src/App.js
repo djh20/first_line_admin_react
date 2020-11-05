@@ -6,6 +6,7 @@ import PostEditor from './components/post/PostEditor'
 import "./App.css"
 import PostManageView from './components/post/PostManageView'
 import ReplyManageView from './components/reply/ReplyManageView'
+import NoticeManageView from './components/notice/NoticeManageView'
 import {
     BrowserRouter as Router,
     Switch,
@@ -31,17 +32,15 @@ const App = observer( () =>  {
   const classes = useStyle();
   return (
         <div className={classes.root}>
-            <UserHomeLayout>
-                <ReplyManageView></ReplyManageView>
             <Router>
+            <UserHomeLayout>
                 <Switch>
-                    {/*<Route path="/posts/:a([A-Za-z]+)" component={PostUserView}/>
-                    <Route path="/post/detail/:a(\d+)">dasdasd</Route>
-                    <Route exact path="/post/write" component={PostEditor}/> 
-                    <Route path="/replyManage" component={ReplyManageView}/>*/}
+                    <Route exact path="/replyManage" component={ReplyManageView}/>
+                    <Route exact path="/noticeManage" component={NoticeManageView}/> 
+                    <Route exact path="/postManage" component={PostManageView}/>
                 </Switch>
-            </Router> 
             </UserHomeLayout>
+            </Router> 
         </div>
   );
 })
