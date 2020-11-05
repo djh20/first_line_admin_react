@@ -96,13 +96,18 @@ const ReplyManageView = observer( (props) =>{
                 defaultValue={"내용"}
                 inputRef={category}
                 >
-                <option value={'댓글 번호'}>댓글 번호</option>
-                <option value={"게시글 번호"}>게시글 번호</option>
+                <option value={'댓글 번호 (이상)'}>댓글 번호 (이상)</option>
+                <option value={'댓글 번호 (이하)'}>댓글 번호 (이하)</option>
+                <option value={"게시글 번호 (이상)"}>게시글 번호 (이상)</option>
+                <option value={"게시글 번호 (이하)"}>게시글 번호 (이하)</option>
                 <option value={"내용"}>내용</option>
                 <option value={"작성자"}>작성자</option>
-                <option value={"작성일"}>작성일</option>
-                <option value={"수정일"}>수정일</option>
-                <option value={"욕설 확률"}>욕설 확률</option>
+                <option value={"작성일 (이후)"}>작성일 (이후)</option>
+                <option value={"작성일 (이전)"}>작성일 (이전)</option>
+                <option value={"수정일 (이후)"}>수정일 (이후)</option>
+                <option value={"수정일 (이전)"}>수정일 (이전)</option>
+                <option value={"욕설 확률 (이상)"}>욕설 확률 (이상)</option>
+                <option value={"욕설 확률 (이하)"}>욕설 확률 (이하)</option>
                 <option value={"삭제 여부"}>삭제 여부</option>
                 <option value={"블라인드 여부"}>블라인드 여부</option>
             </NativeSelect>

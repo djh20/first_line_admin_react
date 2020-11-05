@@ -44,7 +44,8 @@ class ReplyStore {
       console.log(query)
       console.log(pageNo)
   
-      const codeTable = {'댓글 번호':0,'게시글 번호':1,'내용':2,'작성자':3,'작성일':4,'수정일':5,'욕설 확률':6,'삭제 여부':7,'블라인드 여부':8}
+      const codeTable = {'댓글 번호 (이상)':0,'댓글 번호 (이하)':1,"게시글 번호 (이상)":2,"게시글 번호 (이하)":3, '내용':4,'작성자':5,'작성일 (이후)':6,
+        '작성일 (이전)':7, '수정일(이후)':8,'수정일(이전)':9,'욕설 확률 (이상)':10,'욕설 확률 (이하)':11,'삭제 여부':12,'블라인드 여부':13}
       return search(codeTable[code], query, pageNo).then(result=>{
         this.replies = [...result]
       })

@@ -74,7 +74,7 @@ const PostManageView = observer( (props) =>{
     const [t,setT] = useState(0)
     const category = useRef();
     const input = useRef();
-    const colHeaders = ["게시글 번호", "제목", "좋아요", "댓글 수","태그", "작성자", "작성일", "수정일", "온도", "키워드", "P/DP", "A/DA", "욕설 확률", "삭제 여부", "블라인드 여부" 
+    const colHeaders = ["게시글 번호", "제목", "조회수", "좋아요", "댓글 수","태그", "작성자", "작성일", "수정일", "온도", "키워드", "P/DP", "A/DA", "욕설 확률", "삭제 여부", "블라인드 여부" 
     ,<Checkbox color="primary" inputProps={{ 'aria-label': 'secondary checkbox' }} /> ];
     const postStore = useContext(PostStore.context)
     useEffect(() => {
@@ -93,19 +93,28 @@ const PostManageView = observer( (props) =>{
                 defaultValue={"내용"}
                 inputRef={category}
                 >
-                <option value={"게시글 번호"}>게시글 번호</option>
+                <option value={"게시글 번호 (이상)"}>게시글 번호 (이상)</option>
+                <option value={"게시글 번호 (이하)"}>게시글 번호 (이하)</option>
                 <option value={"제목"}>제목</option>
-                <option value={"좋아요"}>좋아요</option>
-                <option value={"댓글 수"}>댓글 수</option>
+                <option value={"조회수 (이상)"}>조회수 (이상)</option>
+                <option value={"조회수 (이하)"}>조회수 (이상)</option>
+                <option value={"좋아요 (이상)"}>좋아요 (이상)</option>
+                <option value={"좋아요 (이하)"}>좋아요 (이하)</option>
+                <option value={"댓글 수"}>댓글 수 (이상)</option>
                 <option value={"태그"}>태그</option>
-                <option value={"작성자"}>작성자</option>
-                <option value={"작성일"}>작성일</option>
-                <option value={"수정일"}>수정일</option>
-                <option value={"온도"}>온도</option>
+                <option value={"작성일 (이후)"}>작성일 (이후)</option>
+                <option value={"작성일 (이전)"}>작성일 (이전)</option>
+                <option value={"수정일 (이후)"}>수정일 (이후)</option>
+                <option value={"수정일 (이전)"}>수정일 (이전)</option>
+                <option value={"온도 (이상)"}>온도 (이상)</option>
+                <option value={"온도 (이하)"}>온도 (이하)</option>
                 <option value={"키워드"}>키워드</option>
-                <option value={"P/DP"}>P/DP</option>
-                <option value={"A/DA"}>A/DA"</option>
-                <option value={"욕설 확률"}>욕설 확률</option>
+                <option value={"P/DP (이상)"}>P/DP (이상)</option>
+                <option value={"P/DP (이하)"}>P/DP (이하)</option>
+                <option value={"A/DA (이상)"}>A/DA (이상)"</option>
+                <option value={"A/DA (이하)"}>A/DA (이하)"</option>
+                <option value={"욕설 확률 (이상)"}>욕설 확률 (이상)</option>
+                <option value={"욕설 확률 (이하)"}>욕설 확률 (이하)</option>
                 <option value={"삭제 여부"}>삭제 여부</option>
                 <option value={"블라인드 여부"}>블라인드 여부</option>
             </NativeSelect>
@@ -147,6 +156,7 @@ const PostManageView = observer( (props) =>{
                     <TableRow key={post.post_id}>
                     <TableCell className={classes.cell}>{post.post_id}</TableCell>
                     <TableCell className={classes.cell}>{post.title}</TableCell>
+                    <TableCell className={classes.cell}>{post.num_lookup}</TableCell>
                     <TableCell className={classes.cell}>{post.like}</TableCell>
                     <TableCell className={classes.cell}>{post.num_reply}</TableCell>
                     <TableCell className={classes.cell}>{post.tag}</TableCell>
