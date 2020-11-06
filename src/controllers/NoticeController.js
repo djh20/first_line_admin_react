@@ -1,12 +1,13 @@
 import axios from 'axios'
 import Notice from '../models/Notice'
-export default async function readNotices(param){
+export default async function readNotices(condition, query){
     return await axios.get(
-        `/api/notice/manage/`, {withCredentials: true}
+        `/api/notice/manage/`, {params:{ condition :  condition, query : query}},
+        {withCredentials: true}
     ).catch(error => {return [] }).then(result =>{
         var data = [];
         if(result.data != null){ // 5-2
-            var tmp = result.data
+            var tmp = result.data.data
             Object.keys(tmp).map((key,index) => (
                 data.push(new Notice(tmp[key]['notice_id'],
                 tmp[key]['receiver_id'],tmp[key]['sender_id'],
@@ -14,7 +15,7 @@ export default async function readNotices(param){
                 tmp[key]['is_read']
                 ))
             ))
-            return data
+            return [data, result.data.currentPage, result.data.totalPage]
         }
         return []
     });
