@@ -85,6 +85,18 @@ const PostManageView = observer( (props) =>{
         postStore.search(category.current.value, input.current.value, 1)
     }    
 
+    const selectCategory = () => {
+      var input = document.getElementById("input");
+      if(category.current.value == "작성일 (이후)" || category.current.value ==  "작성일 (이전)" ||  category.current.value ==  "수정일 (이후)" ||  category.current.value ==  "수정일 (이전)")
+      {
+          input.type = "datetime-local";
+      }
+      else 
+      {
+          input.type = "none";
+      }
+  }
+
     return (
         <div className={classes.root}> 
         <div className={classes.search}>
@@ -92,6 +104,7 @@ const PostManageView = observer( (props) =>{
                 className={classes.select}
                 defaultValue={"내용"}
                 inputRef={category}
+                onChange={selectCategory}
                 >
                 <option value={"게시글 번호 (이상)"}>게시글 번호 (이상)</option>
                 <option value={"게시글 번호 (이하)"}>게시글 번호 (이하)</option>

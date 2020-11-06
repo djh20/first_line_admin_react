@@ -19,6 +19,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles( (theme) => ({
     root:{
@@ -88,6 +89,22 @@ const ReplyManageView = observer( (props) =>{
     const searchButtonClick = () => {
         replyStore.search(category.current.value, input.current.value, 1)
     }
+
+    const selectCategory = () => {
+        var input = document.getElementById("input");
+        var dic = {""}
+        if(category.current.value == "작성일 (이후)" || category.current.value ==  "작성일 (이전)" ||  category.current.value ==  "수정일 (이후)" ||  category.current.value ==  "수정일 (이전)")
+        {
+            input.type = "datetime-local";
+            var today = new Date().toISOString;
+            input.defaultValue = today;
+        }
+        else 
+        {
+            input.type = "none";
+        }
+    }
+
     return( 
         <div className={classes.root}> 
         <div className={classes.search}>
@@ -95,6 +112,7 @@ const ReplyManageView = observer( (props) =>{
                 className={classes.select}
                 defaultValue={"내용"}
                 inputRef={category}
+                onChange={selectCategory}
                 >
                 <option value={'댓글 번호 (이상)'}>댓글 번호 (이상)</option>
                 <option value={'댓글 번호 (이하)'}>댓글 번호 (이하)</option>
@@ -111,8 +129,10 @@ const ReplyManageView = observer( (props) =>{
                 <option value={"삭제 여부"}>삭제 여부</option>
                 <option value={"블라인드 여부"}>블라인드 여부</option>
             </NativeSelect>
+
             <InputBase
               placeholder="Search"
+              id="input"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -142,6 +162,7 @@ const ReplyManageView = observer( (props) =>{
                                     )
                                 }
                                 )   
+                                
                             }
                         </TableRow>
                     </TableHead>
