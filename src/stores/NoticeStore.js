@@ -1,6 +1,6 @@
 import { observable, action } from "mobx";
 import { createContext } from "react";
-import requestReadNotices from '../controllers/NoticeController'
+import requestReadNotices, {requestCreateNotice} from '../controllers/NoticeController'
 
 class NoticeStore {
     @observable notices = []
@@ -16,6 +16,14 @@ class NoticeStore {
     }
     constructor() {
         this.context = createContext(this);
+    }
+
+
+    @action
+    createNotice(receiver_id, sender_id, text){
+        return requestCreateNotice(receiver_id, sender_id, text).then( result => {
+            return result;
+        })
     }
 
     @action

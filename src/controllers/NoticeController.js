@@ -20,3 +20,17 @@ export default async function readNotices(condition, query){
         return []
     });
 }
+
+
+export async function requestCreateNotice(_receiver_id, _sender_id, _text){
+    return await axios.post('/api/notice/manage/', 
+    {
+        receiver_id: _receiver_id,
+        sender_id: _sender_id,
+        text: _text
+    },{withCredentials: true}
+    ).catch(result => {return result}).then(result=>{
+        return result
+    })
+
+}
