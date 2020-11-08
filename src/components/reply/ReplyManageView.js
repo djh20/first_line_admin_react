@@ -8,10 +8,8 @@ import SeachSpace from '../common/SearchSpace'
 
 const useStyles = makeStyles( (theme) => ({
     root:{
-        width:"90%",
+        width:"100%",
         height:"100vh",
-        marginRight: 'auto',
-        marginLeft : 'auto'
       },
       inputRoot: {
           width: "50%",
@@ -23,11 +21,9 @@ const useStyles = makeStyles( (theme) => ({
           },
       },
       table: {
-        width: '90%',
+        width: '100%',
         height: '70%',
         background: 'white',
-        marginRight: 'auto',
-        marginLeft : 'auto'
       },
       colHeader:{
           width : "6%",
@@ -59,15 +55,15 @@ const useStyles = makeStyles( (theme) => ({
 
 const columns = 
 [
-    { field: 'reply_id', type : 'number',headerName: '댓글 번호', width: getWidth(0.95,1/9), align:'left', headerAlign:'left' },
-    { field: 'post_id', type : 'number',headerName: '게시글 번호', width: getWidth(0.95,1/9) , align:'left', headerAlign:'left'},
-    { field: 'text', type : 'string',headerName: '내용' , width: getWidth(1.5,1/9), align:'left', headerAlign:'left'},
-    { field: 'writer', type : 'string',headerName: '작성자' , width: getWidth(0.95,1/9), align:'left', headerAlign:'left'},
-    { field: 'writing_date',type : 'dateTime', headerName: '작성일' , width: getWidth(0.95,1/9), align:'left', headerAlign:'left'},
-    { field: 'editing_date',type : 'dateTime', headerName: '수정일', width: getWidth(0.95,1/9) , align:'left', headerAlign:'left'},
-    { field: 'is_deleted',type : 'number', headerName: '욕설 확률', width: getWidth(0.95,1/9) , align:'left', headerAlign:'left'},
-    { field: 'is_blinded',type : 'string', headerName: '삭제 여부', width: getWidth(0.95,1/9) , align:'left', headerAlign:'left'},
-    { field: 'prob_is_slang',type : 'string', headerName: '블라인드 여부', width: getWidth(0.95,1/9) , align:'left', headerAlign:'left'},
+    { field: 'reply_id', type : 'number',headerName: '댓글 번호', align:'left',width: '8%', headerAlign:'left',resizable: true },
+    { field: 'post_id', type : 'number',headerName: '게시글 번호',  align:'left',width: '8%', headerAlign:'left',resizable: true},
+    { field: 'text', type : 'string',headerName: '내용' ,  align:'left', width: '20%',headerAlign:'left' ,resizable: true},
+    { field: 'writer', type : 'string',headerName: '작성자' , align:'left',width: '10%', headerAlign:'left' ,resizable: true},
+    { field: 'writing_date',type : 'dateTime', headerName: '작성일' , align:'left',width: '10%', headerAlign:'left' ,resizable: true},
+    { field: 'editing_date',type : 'dateTime', headerName: '수정일',align:'left',width: '10%', headerAlign:'left' ,resizable: true},
+    { field: 'is_deleted',type : 'number', headerName: '욕설 확률',  align:'left',width: '10%', headerAlign:'left' ,resizable: true},
+    { field: 'is_blinded',type : 'string', headerName: '삭제 여부',  align:'left',width: '10%', headerAlign:'left',resizable: true},
+    { field: 'prob_is_slang',type : 'string', headerName: '블라인드 여부',align:'left',width: '10%', headerAlign:'left',resizable: true},
     ];
 
 function createOptions() {
@@ -88,18 +84,6 @@ function createOptions() {
         { name : "블라인드 여부",type : "text"},
     ]
 }
-
-var elem = (document.compatMode === "CSS1Compat") ? 
-    document.documentElement :
-    document.body;
-
-var width = elem.clientWidth;
-
-
-function getWidth(tableRate,rate){
-  return width*tableRate*rate
-}
-
     
 const ReplyManageView = observer( (props) =>{
     const classes = useStyles();
@@ -121,13 +105,12 @@ const ReplyManageView = observer( (props) =>{
     <div className={classes.root}> 
         <SeachSpace category={category} input={input} options={options} onSearch={searchButtonClick}/>          
         <div className={classes.table}>     
-            <DataGrid rows={replyStore.replies} columns={columns} pageSize={10}
-                checkboxSelection
+            <DataGrid rows={replyStore.replies} columns={columns} pageSize={10} checkboxSelection   CanUserSortColumns="True"
                 onSelectionChange={(data) => {
-                for(var i = 0 ; i < data['rows'].length ; i++){
+                    for(var i = 0 ; i < data['rows'].length ; i++){
                     console.log(toJS(data['rows'][i]))
-                }
-                setReply(data)
+                    }
+                    setReply(data)
                 }}
             /> 
         </div>

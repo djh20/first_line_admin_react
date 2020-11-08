@@ -79,7 +79,7 @@ const useStyle = makeStyles(theme=>({
         justifyContent: 'flex-end'
     },
     contentArea:{
-        width: '100vw',
+        width: '96vw',
         minHeight:'93vh',
         background:"#2a2a40", 
         marginTop:'7vh', 
