@@ -72,6 +72,7 @@ function createOptions(){
     { name : "수신 ID",type : "test"},
     { name : "발신 ID",type : "test"},
     { name : "발신 시각(이하)",type : "datetime-local"},
+    { name : "발신 시각(이상)",type : "datetime-local"},
     { name : "내용",type : "text"},
     { name : "읽음",type : "text"},
   ]
@@ -95,7 +96,7 @@ const NoticeManageView = observer( (props) => {
   const input = React.useRef();
   const options = createOptions()
   const searchButtonClick = () => {
-    noticeStore.readNotices(category.current.value , input.current.value)
+    noticeStore.readNotices(options[category.current.value]['name'] , input.current.value)
   }    
 
   React.useEffect(() => {

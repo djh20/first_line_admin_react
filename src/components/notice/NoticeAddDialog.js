@@ -14,6 +14,7 @@ export default function NoticeAddDialog() {
   const [open, setOpen] = React.useState(false);
   const [code, setCode] = React.useState(0);
   const [barOpen, setBarOpen] = React.useState(false);
+  const [message, setMessage] = React.useState(false);
   const noticeStore = React.useContext(NoticeStore.context)
   const receiver_id = React.useRef()
   const sender_id = React.useRef()
@@ -24,12 +25,14 @@ export default function NoticeAddDialog() {
 
   const handleClose = () => {
     noticeStore.createNotice(receiver_id.current.value, sender_id.current.value, text.current.value).then(result => {
+      console.log(result)
       if(result['status'] == 200){
         noticeStore.readNotices("내용","")
         setCode(1)
       }else
         setCode(2)
-        setBarOpen(true)
+      setBarOpen(true)
+      setMessage(result['data']['message'])
     })
     setOpen(false)
   };
@@ -83,10 +86,10 @@ export default function NoticeAddDialog() {
         {
         code == 1 ?(
         <Alert onClose={() => {setBarOpen(false)}} severity="success">
-          등록에 성공했습니다.
+          {message}
         </Alert>):(
           <Alert onClose={() => {setBarOpen(false)}} severity="error">
-          등록에 실패했습니다.
+          {message}
         </Alert>
         )
       }

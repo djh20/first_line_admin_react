@@ -4,8 +4,6 @@ import requestReadNotices, {requestCreateNotice} from '../controllers/NoticeCont
 
 class NoticeStore {
     @observable notices = []
-    @observable currentPage = 1
-    @observable totalPage = 0
     static instance = null;
 
     static getInstance() {
@@ -29,11 +27,8 @@ class NoticeStore {
     @action
     readNotices(condition, query)
     {
-        return requestReadNotices(condition, query).then( ([notices, currentPage, totalPage]) =>{
+        return requestReadNotices(condition, query).then( (notices) =>{
             this.notices = [...notices]
-            this.currentPage = currentPage
-            this.totalPage = totalPage
-            console.log(this.notices)
         })
     }
 }
