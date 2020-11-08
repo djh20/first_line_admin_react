@@ -39,10 +39,10 @@ export default function NoticeAddDialog() {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        추가
+      <Button variant="contained" color="secondary" onClick={handleClickOpen}>
+        처리
       </Button>
-      <Dialog open={open} aria-labelledby="form-dialog-title">
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">알림 등록</DialogTitle>
         <DialogContent>
           <TextField

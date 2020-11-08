@@ -7,6 +7,7 @@ import "./App.css"
 import PostManageView from './components/post/PostManageView'
 import ReplyManageView from './components/reply/ReplyManageView'
 import NoticeManageView from './components/notice/NoticeManageView'
+import ReportManageView from './components/report/ReportManageView'
 import {
     BrowserRouter as Router,
     Switch,
@@ -62,6 +63,7 @@ const App = observer( () =>  {
                 <Switch>
                     <Route exact path="/replyManage" component={ReplyManageView}/>
                     <Route exact path="/noticeManage" component={NoticeManageView}/> 
+                    <Route exact path="/reportManage" component={ReportManageView}/> 
                     <Route exact path="/postManage" component={PostManageView}/>
                 </Switch>
             </UserHomeLayout>
