@@ -7,5 +7,16 @@ export default class Notice{
         this.send_datetime = send_datetime,
         this.is_read = is_read
     }
+
+    getDic(){
+        return{
+            id : this.notice_id,
+            receiver_id : this.receiver_id,
+            sender_id : this.sender_id,
+            text : this.text,
+            send_datetime : this.send_datetime,
+            is_read : this.is_read
+        }
+    }
 }
 

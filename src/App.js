@@ -15,6 +15,32 @@ import {
 import {observer} from "mobx-react"
 
 const useStyle = makeStyles(theme=>({
+    '@global': {
+        'body, html' : {
+          padding : 0,
+          margin : 0,
+          background: '#2a2a40',
+          minWidth: '100vw',
+          minHeight: '100vh',
+          maxWidth: '100vw',
+          maxHeight: '100vh'
+        },
+        '*::-webkit-scrollbar': {
+          width: '0.1rem',
+          backgroundColor: '#2a2a40',
+        },
+        '*::-webkit-scrollbar-track': {
+          '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+        },
+        '*::-webkit-scrollbar-thumb': {
+          backgroundColor: '#eabc28',
+          outline: '1px solid slategrey'
+        },
+        '*::-webkit-scrollbar:horizontal': {
+            display:'none'
+          },
+        background:'#2a2a40',
+      },
     root : {
         background : '#2a2a40',
         width : "100%",
@@ -24,7 +50,6 @@ const useStyle = makeStyles(theme=>({
         overflowY: 'hidden',
         background: '#2a2a40'
     },
-
 }))
 
 

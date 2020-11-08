@@ -20,23 +20,6 @@ import UserInfoPopOver from "../components/member/UserInfoPopOver"
 import cookie from 'react-cookies'
 
 const useStyle = makeStyles(theme=>({
-    '@global': {
-        '*::-webkit-scrollbar': {
-          width: '0.1rem',
-          backgroundColor: '#2a2a40',
-        },
-        '*::-webkit-scrollbar-track': {
-          '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
-        },
-        '*::-webkit-scrollbar-thumb': {
-          backgroundColor: '#eabc28',
-          outline: '1px solid slategrey'
-        },
-        '*::-webkit-scrollbar:horizontal': {
-            display:'none'
-          },
-        background:'#2a2a40',
-      },
     root:{
         width:'100%',
         height:'100%',
@@ -79,7 +62,7 @@ const useStyle = makeStyles(theme=>({
         justifyContent: 'flex-end'
     },
     contentArea:{
-        width: '100vw',
+        width: '96vw',
         minHeight:'93vh',
         background:"#2a2a40", 
         marginTop:'7vh', 

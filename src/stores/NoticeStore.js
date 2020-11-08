@@ -25,6 +25,7 @@ class NoticeStore {
             this.notices = [...notices]
             this.currentPage = currentPage
             this.totalPage = totalPage
+            console.log(this.notices)
         })
     }
 }

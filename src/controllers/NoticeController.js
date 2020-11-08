@@ -13,7 +13,7 @@ export default async function readNotices(condition, query){
                 tmp[key]['receiver_id'],tmp[key]['sender_id'],
                 tmp[key]['text'],tmp[key]['send_datetime'],
                 tmp[key]['is_read']
-                ))
+                ).getDic())
             ))
             return [data, result.data.currentPage, result.data.totalPage]
         }
