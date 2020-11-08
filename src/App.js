@@ -30,19 +30,16 @@ const useStyle = makeStyles(theme=>({
 const App = observer( () =>  {
   const classes = useStyle();
   return (
-        <div className={classes.root}>
-            <UserHomeLayout>
-                <ReplyManageView></ReplyManageView>
-            <Router>
-                <Switch>
-                    {/*<Route path="/posts/:a([A-Za-z]+)" component={PostUserView}/>
-                    <Route path="/post/detail/:a(\d+)">dasdasd</Route>
-                    <Route exact path="/post/write" component={PostEditor}/> 
-                    <Route path="/replyManage" component={ReplyManageView}/>*/}
-                </Switch>
-            </Router> 
-            </UserHomeLayout>
-        </div>
+    <div className={classes.root}>
+    <Router>
+    <UserHomeLayout>
+        <Switch>
+            <Route exact path="/replyManage" component={ReplyManageView}/>
+            <Route exact path="/postManage" component={PostManageView}/>
+        </Switch>
+    </UserHomeLayout>
+    </Router> 
+</div>
   );
 })
 
