@@ -49,12 +49,12 @@ const useStyles = makeStyles( (theme) => ({
         float : 'right',
     }
 }))
-
+// 검색 필드
 function createOptions() {
   return [
+      { name : "제목",type : "number"},
       { name : "게시글 번호 (이상)",type : "number"},
       { name : "게시글 번호 (이하)",type : "number"},
-      { name : "제목",type : "number"},
       { name : "조회수",type : "text"},
       { name : "좋아요 (이상)",type : "text"},
       { name : "좋아요 (이하)",type : "text"},
@@ -79,11 +79,12 @@ function createOptions() {
       { name : "블라인드 여부",type : "text"},
   ]
 }
+
+//테이블
 const columns = [
-  { field: 'post_id', type : 'number', headerName: '글 번호', width: '5%', align:'left', headerAlign:'left' },
+  { field: 'id', type : 'number', headerName: '글 번호', width: '5%', align:'left', headerAlign:'left' },
   { field: 'title', type : 'string', headerName: '제목', width:'10%', align:'left', headerAlign:'left'},
   { field: 'text', type : 'string', headerName: '내용' , width: '10%', align:'left', headerAlign:'left'},
-  { field: 'num_lookup', type : 'strinumberng', headerName: '조회수' , width: '5%', align:'left', headerAlign:'left'},
   { field: 'like',type : 'number', headerName: '좋아요' , width: '5%', align:'left', headerAlign:'left'},
   { field: 'num_reply',type : 'number', headerName: '댓글수', width: '5%' , align:'left', headerAlign:'left'},
   { field: 'tag',type : 'string', headerName: '태그', width: '5%', align:'left', headerAlign:'left'},
@@ -99,10 +100,9 @@ const columns = [
   { field: 'is_blinded',type : 'string', headerName: '블라인드', width: '7%' , align:'left', headerAlign:'left'},
 ];
 
-
 const PostManageView = observer( (props) =>{
     const classes = useStyles();
-    const [post,setPost] = useState(0)
+    const [selected,setSelection] = useState(0)
     const category = useRef();
     const input = useRef();
     const options = createOptions()
@@ -117,21 +117,20 @@ const PostManageView = observer( (props) =>{
 
     return (
       <div className={classes.root}>
-      <SeachSpace category={category} input={input} options={options} onSearch={searchButtonClick}/>
+      <SeachSpace category={category} input={input} options={options} onSearch={searchButtonClick} />
       <div className={classes.table}>
-        <DataGrid rows={postStore.posts} columns={columns} pageSize={10}
-        checkboxSelection
-        onSelectionChange={(data) => {
+        <DataGrid rows={postStore.posts} columns={columns} pageSize={10} checkboxSelection
+         onSelectionChange={(data) => {
           for(var i = 0 ; i < data['rows'].length ; i++){
             console.log(toJS(data['rows'][i]))
           }
-          setPost(data)
+          setSelection(data)
         }}
         />
       </div>
       <div className={classes.buttons}>
-      <Button  variant="contained" color="secondary" >삭제</Button>
-                    <Button  variant="contained" color="third" >블라인드</Button>
+        <Button  variant="contained" color="secondary" >삭제</Button>
+        <Button  variant="contained" color="third" >블라인드</Button>
       </div>
 </div>
     );

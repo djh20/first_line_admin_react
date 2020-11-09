@@ -12,7 +12,7 @@ export default async function requestReadReplies(_post_id){
             Object.keys(tmp).map((key,index) => (
                 data.push(new Reply(tmp[key]['reply_id'],tmp[key]['text'],tmp[key]['writer']
                 ,tmp[key]['writing_date']))
-            ))
+            ).get_dic())
             console.log(data)
             return data
         }
@@ -22,7 +22,7 @@ export default async function requestReadReplies(_post_id){
 
 export async function requestReadAllReplies(){ 
     return await axios.get(
-        '/api/reply/', {withCredentials: true}
+        '/api/reply/manage/', {withCredentials: true}
     ).catch(error => {return [] }).then(result =>{
         var data = [];
         if(result.data != null){ 

@@ -89,7 +89,7 @@ const ReplyManageView = observer( (props) =>{
     const classes = useStyles();
     const category = useRef();
     const input = useRef();
-    const [reply,setReply] = React.useState([]);
+    const [selected,setSelection] = React.useState([]);
     const replyStore = useContext(ReplyStore.context);
     const options = createOptions()
 
@@ -110,7 +110,7 @@ const ReplyManageView = observer( (props) =>{
                     for(var i = 0 ; i < data['rows'].length ; i++){
                     console.log(toJS(data['rows'][i]))
                     }
-                    setReply(data)
+                    setSelection(data)
                 }}
             /> 
         </div>
