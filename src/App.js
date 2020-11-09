@@ -8,13 +8,14 @@ import PostManageView from './components/post/PostManageView'
 import ReplyManageView from './components/reply/ReplyManageView'
 import NoticeManageView from './components/notice/NoticeManageView'
 import ReportManageView from './components/report/ReportManageView'
+import SignInView from './components/member/SignInView'
 import {
     BrowserRouter as Router,
     Switch,
     Route,
   } from "react-router-dom";
 import {observer} from "mobx-react"
-
+import {useCookies} from 'react-cookie'
 const useStyle = makeStyles(theme=>({
     '@global': {
         'body, html' : {
@@ -56,18 +57,31 @@ const useStyle = makeStyles(theme=>({
 
 const App = observer( () =>  {
   const classes = useStyle();
+  const [cookies, setCookie,removeCookie] = useCookies(['jwt'])
+  const [hasCookie,setHasCookie] = React.useState(false)
+  React.useEffect(()=>{
+    if(cookies['jwt'] != undefined)
+        setHasCookie(true)
+    console.log(cookies)
+})
   return (
         <div className={classes.root}>
-            <Router>
-            <UserHomeLayout>
-                <Switch>
-                    <Route exact path="/replyManage" component={ReplyManageView}/>
-                    <Route exact path="/noticeManage" component={NoticeManageView}/> 
-                    <Route exact path="/reportManage" component={ReportManageView}/> 
-                    <Route exact path="/postManage" component={PostManageView}/>
-                </Switch>
-            </UserHomeLayout>
-            </Router> 
+          <Router>
+          {
+            hasCookie == false ? <SignInView setHasCookie={setHasCookie}></SignInView> :
+            (
+              <UserHomeLayout cookies={cookies} hasCookie={hasCookie} setHasCookie={setHasCookie} removeCookie={removeCookie} hasCookie={hasCookie}>
+                  <Switch>
+                      <Route exact path="/replyManage" component={ReplyManageView}/>
+                      <Route exact path="/noticeManage" component={NoticeManageView}/> 
+                      <Route exact path="/reportManage" component={ReportManageView}/> 
+                      <Route exact path="/postManage" component={PostManageView}/>
+                  </Switch>
+              </UserHomeLayout>
+            )
+          }
+          </Router>
+ 
         </div>
   );
 })

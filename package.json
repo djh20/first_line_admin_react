@@ -18,7 +18,7 @@
     "mobx-react": "^6.3.0",
     "react": "^16.13.1",
     "react-analytics-charts": "^1.2.11",
-    "react-cookies": "^0.1.1",
+    "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
     "react-ga": "^3.1.2",
     "react-jwt-auth": "^0.6.0",
