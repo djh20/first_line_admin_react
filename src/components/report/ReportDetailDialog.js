@@ -25,7 +25,7 @@ export default function ReportAddDialog(props) {
         조회
       </Button>
       <Dialog open={open} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">상세 조회</DialogTitle>
+        <DialogTitle id="form-dialog-title">신고 처리</DialogTitle>
         <DialogContent>
          <TextField
             autoFocus

@@ -1,7 +1,8 @@
 export default class Reply{
-    constructor(report_id,report_text,process_text,report_date,process_date,report_writer,process_writer,is_processed,reply_id,post){
+    constructor(report_id,report_text,process_type,process_text,report_date,process_date,report_writer,process_writer,is_processed,reply_id,post){
         this.report_id = report_id
         this.report_text = report_text
+        this.process_type =process_type
         this.process_text = process_text
         this.report_date = report_date
         this.process_date = process_date
@@ -15,17 +16,18 @@ export default class Reply{
     getDic(){
         return{
             id : this.report_id,
+            report_writer : this.report_writer,
             report_text : this.report_text,
+            process_writer: this.process_writer,
+            process_type : this.process_type,
             process_text : this.process_text,
             report_date : this.report_date,
             process_date : this.process_date,
-            report_writer : this.report_writer,
-            process_writer: this.process_writer,
             is_processed : this.is_processed,
             reply : this.reply,
             post : this.post,
             detail : {'report_text' : this.report_text, 'report_id' : this.report_id, process_text : this.process_text},
-            process : this.report_id
+            process : {'report_text' : this.report_text, 'report_id' : this.report_id, is_processed : this.is_processed},
         }
     }
 }

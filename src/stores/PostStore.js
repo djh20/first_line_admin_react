@@ -21,10 +21,6 @@ class PostStore{
   }
   @action
   search(code, query, pageNo) {
-    console.log(code)
-    console.log(query)
-    console.log(pageNo)
-
     const codeTable = {'게시글 번호':0,'제목':1,'좋아요':2,'댓글 수':3,'태그':4,'작성자':5,'작성일':6,'수정일':7,'온도':8, "키워드":9, "P/DP":10, "A/DA":11, "욕설 확률":12, "삭제 여부":13, "블라인드 여부":14}
     return search(codeTable[code], query, pageNo).then(result=>{
       this.posts = [...result]

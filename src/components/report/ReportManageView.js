@@ -66,28 +66,30 @@ const useStyles = makeStyles( (theme) => ({
 function createOptions(){
   return [
     { name : "신고 번호",type : "number"},
-    { name : "신고 내용",type : "test"},
-    { name : "처리 내용",type : "test"},
+    { name : "신고 내용",type : "text"},
+    { name : "처리 결과",type : "text"},
+    { name : "처리 내용",type : "text"},
     { name : "신고일(이상)",type : "datetime-local"},
     { name : "신고일(이하)",type : "datetime-local"},
     { name : "처리일(이상)",type : "datetime-local"},
     { name : "처리일(이하)",type : "datetime-local"},
-    { name : "신고자",type : "test"},
-    { name : "처리자",type : "test"},
-    { name : "처리 여부",type : "test"},
-    { name : "대상 게시글 ID",type : "test"},
-    { name : "대상 댓글 ID",type : "test"}
+    { name : "신고자",type : "text"},
+    { name : "처리자",type : "text"},
+    { name : "처리 여부",type : "text"},
+    { name : "대상 게시글 ID",type : "text"},
+    { name : "대상 댓글 ID",type : "text"}
   ]
 }
 
 const columns = [
   { field: 'id', type : 'number',headerName: '신고 번호', width: getWidth(0.95,3/44), align:'left', headerAlign:'left' },
   { field: 'report_writer', type : 'string',headerName: '신고자', width: getWidth(0.95,3/44), align:'left', headerAlign:'left' },
-  { field: 'report_text', type : 'string',headerName: '신고 내용', width: getWidth(0.95,6/44), align:'left', headerAlign:'left' },
-  { field: 'process_text', type : 'string',headerName: '처리 내용', width: getWidth(0.95,6/44), align:'left', headerAlign:'left' },
+  { field: 'report_text', type : 'string',headerName: '신고 내용', width: getWidth(0.95,5/44), align:'left', headerAlign:'left' },
+  { field: 'process_writer', type : 'string',headerName: '처리자', width: getWidth(0.95,3/44), align:'left', headerAlign:'left' },
+  { field: 'process_type', type : 'string',headerName: '처리 결과', width: getWidth(0.95,3/44), align:'left', headerAlign:'left' },
+  { field: 'process_text', type : 'string',headerName: '처리 내용', width: getWidth(0.95,5/44), align:'left', headerAlign:'left' },
   { field: 'report_date', type : 'datetime',headerName: '신고일', width: getWidth(0.95,4/44), align:'left', headerAlign:'left' },
   { field: 'process_date', type : 'datetime',headerName: '처리일', width: getWidth(0.95,4/44), align:'left', headerAlign:'left' },
-  { field: 'process_writer', type : 'string',headerName: '처리자', width: getWidth(0.95,3/44), align:'left', headerAlign:'left' },
   { field: 'is_processed', type : 'string',headerName: '처리 여부', width: getWidth(0.95,3/44), align:'left', headerAlign:'left' },
   { field: 'reply', type : 'string',headerName: '댓글 ID', width: getWidth(0.95,3/44), align:'left', headerAlign:'left' },
   { field: 'post', type : 'string',headerName: '게시글 ID', width: getWidth(0.95,3/44), align:'left', headerAlign:'left' },
@@ -102,7 +104,9 @@ const columns = [
     field: 'process',
     headerName: '처리',
     renderCell: (params) => (
-        <ReportProcessDialog report_id = {params['id']} text = {params['text']}/>
+        params.value['is_processed'] == "미처리" ? 
+        (<ReportProcessDialog report_id = {params.value['report_id']} report_text={params.value['report_text']}/>)
+        : "처리됨"
     ),
   },
 ];
