@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import ReplyStore from '../../stores/ReplyStore'
 import { DataGrid } from '@material-ui/data-grid';
 import SeachSpace from '../common/SearchSpace'
+import Popup from "reactjs-popup";
 
 const useStyles = makeStyles( (theme) => ({
     root:{
