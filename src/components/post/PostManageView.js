@@ -7,7 +7,6 @@ import SeachSpace from '../common/SearchSpace'
 import { DataGrid } from '@material-ui/data-grid';
 import Button from '@material-ui/core/Button';
 import Popup from "reactjs-popup";
-
 const useStyles = makeStyles( (theme) => ({
     root:{
       width:"100%",
@@ -149,7 +148,7 @@ const blindButtonClick = () => {
           <Button  variant="contained" color="secondary" onClick={deleteButtonClick} >삭제</Button>
           <Button  variant="contained" color="third" onClick={blindButtonClick}>블라인드</Button>
           <Popup trigger={<Button  variant="contained" color="primary">자세히 보기</Button>} position="right center">
-              <PostDetailCard post={selected}></PostDetailCard>
+              {/** 수정중  */}
           </Popup>
       </div>
 </div>
