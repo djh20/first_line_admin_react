@@ -7,6 +7,19 @@ import SeachSpace from '../common/SearchSpace'
 import { DataGrid } from '@material-ui/data-grid';
 import Button from '@material-ui/core/Button';
 import Popup from "reactjs-popup";
+
+var elem = (document.compatMode === "CSS1Compat") ? 
+    document.documentElement :
+    document.body;
+
+var height = elem.clientHeight;
+var width = elem.clientWidth;
+
+
+function getWidth(tableRate,rate){
+  return width*tableRate*rate
+}
+
 const useStyles = makeStyles( (theme) => ({
     root:{
       width:"100%",
@@ -84,23 +97,22 @@ function createOptions() {
 
 //테이블
 const columns = [
-  { field: 'id', type : 'number', headerName: '글 번호', width: '5%', align:'left', headerAlign:'left' },
-  { field: 'title', type : 'string', headerName: '제목', width:'10%', align:'left', headerAlign:'left'},
-  { field: 'num_lookup', type : 'number', headerName: '조회수', width:'10%', align:'left', headerAlign:'left'},
-  { field: 'text', type : 'string', headerName: '내용' , width: '10%', align:'left', headerAlign:'left'},
-  { field: 'like',type : 'number', headerName: '좋아요' , width: '5%', align:'left', headerAlign:'left'},
-  { field: 'num_reply',type : 'number', headerName: '댓글수', width: '5%' , align:'left', headerAlign:'left'},
-  { field: 'tag',type : 'string', headerName: '태그', width: '5%', align:'left', headerAlign:'left'},
-  { field: 'writer',type : 'string', headerName: '작성자', width: '5%', align:'left', headerAlign:'left'},
-  { field: 'writing_date',type : 'dateTime', headerName: '작성 시간', width: '7%' , align:'left', headerAlign:'left'},
-  { field: 'editing_date',type : 'dateTime', headerName: '수정 시간', width:'7%', align:'left', headerAlign:'left'},
-  { field: 'temperature',type : 'number', headerName: '온도', width: '5%' , align:'left', headerAlign:'left'},
-  { field: 'keyword',type : 'string', headerName: '키워드', width:'7%' , align:'left', headerAlign:'left'},
-  { field: 'prob_p_dp',type : 'number', headerName: '긍정/부정', width: '7%' , align:'left', headerAlign:'left'},
-  { field: 'prob_a_da',type : 'number', headerName: '격렬/차분', width: '7%', align:'left', headerAlign:'left'},
-  { field: 'prob_is_slang',type : 'number', headerName: '욕설 확률', width: '7%', align:'left', headerAlign:'left'},
-  { field: 'is_deleted',type : 'string', headerName: '삭제', width:'7%' , align:'left', headerAlign:'left'},
-  { field: 'is_blinded',type : 'string', headerName: '블라인드', width: '7%' , align:'left', headerAlign:'left'},
+  { field: 'id', type : 'number', headerName: '글 번호', width: getWidth(0.95,2/34), align:'left', headerAlign:'left' },
+  { field: 'title', type : 'string', headerName: '제목', width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
+  { field: 'num_lookup', type : 'number', headerName: '조회수', width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
+  { field: 'like',type : 'number', headerName: '좋아요' , width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
+  { field: 'num_reply',type : 'number', headerName: '댓글수', width: getWidth(0.95,2/34) , align:'left', headerAlign:'left'},
+  { field: 'tag',type : 'string', headerName: '태그', width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
+  { field: 'writer',type : 'string', headerName: '작성자', width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
+  { field: 'writing_date',type : 'datetime', headerName: '작성 시간', width: getWidth(0.95,2/34) , align:'left', headerAlign:'left'},
+  { field: 'editing_date',type : 'datetime', headerName: '수정 시간', width :getWidth(0.95,2/34), align:'left', headerAlign:'left'},
+  { field: 'temperature',type : 'number', headerName: '온도', width: getWidth(0.95,2/34) , align:'left', headerAlign:'left'},
+  { field: 'keyword',type : 'string', headerName: '키워드', width :getWidth(0.95,2/34) , align:'left', headerAlign:'left'},
+  { field: 'prob_p_dp',type : 'number', headerName: '긍정/부정', width: getWidth(0.95,2/34) , align:'left', headerAlign:'left'},
+  { field: 'prob_a_da',type : 'number', headerName: '격렬/차분', width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
+  { field: 'prob_is_slang',type : 'number', headerName: '욕설 확률', width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
+  { field: 'is_deleted',type : 'string', headerName: '삭제', width: getWidth(0.95,2/34) , align:'left', headerAlign:'left'},
+  { field: 'is_blinded',type : 'string', headerName: '블라인드', width: getWidth(0.95,2/34) , align:'left', headerAlign:'left'},
 ];
 
 const PostManageView = observer( (props) =>{
@@ -137,7 +149,7 @@ const blindButtonClick = () => {
       <div className={classes.table}>
         <DataGrid rows={postStore.posts} columns={columns} pageSize={10} checkboxSelection
          onSelectionChange={(data) => {
-          for(var i = 0 ; i < data['rows'].length ; i++){
+          for(var i = 0 ; i < data['rows'].length ;  i++){
             console.log(toJS(data['rows'][i]))
           }
           setSelection(data)

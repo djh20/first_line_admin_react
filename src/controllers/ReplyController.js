@@ -4,7 +4,7 @@ import cookie from 'react-cookies'
 
 export default async function requestReadReplies(_post_id){ 
     return await axios.get(
-        '/api/reply/', {params:{ post_id :  _post_id}},{withCredentials: true}
+        '/api/reply/manage/', {params:{ post_id :  _post_id}},{withCredentials: true}
     ).catch(error => {return [] }).then(result =>{
         var data = [];
         if(result.data != null){ 
@@ -55,7 +55,7 @@ export async function search(code, query, pageNo){
 
 export async function requestSearchReply(code, query, pageNo){
     return await axios.get(
-        'api/post/manage',{code : code, query : query, pageNo : pageNo}
+        'api/post/manage/',{code : code, query : query, pageNo : pageNo}
     )
 }
 
@@ -66,5 +66,5 @@ export async function reaquestDeleteReply(reply_id){
 
 export async function reaquestBlindReply(reply_id){
     return await axios.post(
-        'api/post/manage/blind',{reply_id : reply_id} , {withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
+        'api/post/manage/blind/',{reply_id : reply_id} , {withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
 }
