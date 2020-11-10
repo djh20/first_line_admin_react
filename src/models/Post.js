@@ -1,7 +1,8 @@
 export default class Post{
-    constructor(id,title,text,like,num_reply,tag,writer,writing_date,editing_date,temperature,keyword, prop_p_dp, prob_a_da,prob_is_slang,is_deleted,is_blinded){
+    constructor(id,title,num_lookup,text,like,num_reply,tag,writer,writing_date,editing_date,temperature,keyword, prop_p_dp, prob_a_da,prob_is_slang,is_deleted,is_blinded){
         this.id = id
         this.title = title
+        this.num_lookup = num_lookup
         this.text = text
         this.like = like
         this.num_reply = num_reply
@@ -22,6 +23,7 @@ export default class Post{
         return{
             id : this.id,
             title : this.title,
+            num_lookup : this.num_lookup,
             text : this.text,
             like : this.like,
             num_reply : this.num_reply,

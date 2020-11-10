@@ -15,7 +15,7 @@ export default async function requestReadAllPost(){ // 5-1
                 tmp[key]['writing_date'],tmp[key]['edting_date'],
                 tmp[key]['temperature'],tmp[key]['keyword'],tmp[key]['prob_p_dp']
                 ,tmp[key]['prob_a_da'],tmp[key]['prob_is_slang'],tmp[key]['is_deleted']
-                ,tmp[key]['is_blinded']
+                ,tmp[key]['is_blinded'],tmp[key]['num_lookup']
                 ).get_dic())
             ))
 

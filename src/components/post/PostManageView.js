@@ -84,6 +84,7 @@ function createOptions() {
 const columns = [
   { field: 'id', type : 'number', headerName: '글 번호', width: '5%', align:'left', headerAlign:'left' },
   { field: 'title', type : 'string', headerName: '제목', width:'10%', align:'left', headerAlign:'left'},
+  { field: 'num_lookup', type : 'number', headerName: '조회수', width:'10%', align:'left', headerAlign:'left'},
   { field: 'text', type : 'string', headerName: '내용' , width: '10%', align:'left', headerAlign:'left'},
   { field: 'like',type : 'number', headerName: '좋아요' , width: '5%', align:'left', headerAlign:'left'},
   { field: 'num_reply',type : 'number', headerName: '댓글수', width: '5%' , align:'left', headerAlign:'left'},
@@ -108,13 +109,13 @@ const PostManageView = observer( (props) =>{
     const options = createOptions()
     const postStore = useContext(PostStore.context)
     useEffect(() => {
-        postStore.readAll();
-      }, []); 
+          postStore.readAll();
+        }, []); 
 
     const searchButtonClick = () => {
         postStore.search(category.current.value, input.current.value, 1)
     }    
-
+    
     return (
       <div className={classes.root}>
       <SeachSpace category={category} input={input} options={options} onSearch={searchButtonClick} />
