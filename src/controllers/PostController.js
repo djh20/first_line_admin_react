@@ -3,7 +3,7 @@ import Post from '../models/Post'
 
 export default async function requestReadAllPost(){ // 5-1
     return await axios.get(
-        `/api/post/manage`, {withCredentials: true}
+        `/api/post/manage/`, {withCredentials: true}
     ).catch(error => {return [] }).then(result =>{
         var data = [];
         if(result.data != null){ // 5-2
