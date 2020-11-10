@@ -8,6 +8,7 @@ import PostManageView from './components/post/PostManageView'
 import ReplyManageView from './components/reply/ReplyManageView'
 import NoticeManageView from './components/notice/NoticeManageView'
 import ReportManageView from './components/report/ReportManageView'
+import KeywordManageView from './components/keyword/KeywordManageView'
 import SignInView from './components/member/SignInView'
 import {
     BrowserRouter as Router,
@@ -76,6 +77,7 @@ const App = observer( () =>  {
                       <Route exact path="/noticeManage" component={NoticeManageView}/> 
                       <Route exact path="/reportManage" component={ReportManageView}/> 
                       <Route exact path="/postManage" component={PostManageView}/>
+                      <Route exact path="/keywordManage" component={KeywordManageView}/>
                   </Switch>
               </UserHomeLayout>
             )
