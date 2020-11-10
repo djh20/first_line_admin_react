@@ -3,7 +3,7 @@ import Post from '../models/Post'
 
 export default async function requestReadAllPost(){ // 5-1
     return await axios.get(
-        `/api/post/manage/`, {withCredentials: true}
+        `/api/post/manage`, {withCredentials: true}
     ).catch(error => {return [] }).then(result =>{
         var data = [];
         if(result.data != null){ // 5-2
@@ -29,7 +29,18 @@ export function readPost(){ // 5-1
     console.log("haha")
 }
 
-export async function search(code, query, pageNo){
-    return []
+export async function requestSearchPost(code, query, pageNo){
+    return await axios.get(
+        'api/post/manage',{code : code, query : query, pageNo : pageNo}
+    )
 }
 
+export async function reaquestBlindPost(post_id){
+    return await axios.delete(
+        'api/post/manage/',{post_id : post_id}, {withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
+}
+
+export async function reaquestDeletePost(post_id){
+    return await axios.post(
+        'api/post/manage/blind',{post_id : post_id} , {withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
+}

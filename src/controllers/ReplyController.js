@@ -52,3 +52,19 @@ export async function requestPostReply(_post_id, _text)
 export async function search(code, query, pageNo){
     return []
 }
+
+export async function requestSearchReply(code, query, pageNo){
+    return await axios.get(
+        'api/post/manage',{code : code, query : query, pageNo : pageNo}
+    )
+}
+
+export async function reaquestDeleteReply(reply_id){
+    return await axios.delete(
+        'api/post/manage/',{reply_id : reply_id}, {withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
+}
+
+export async function reaquestBlindReply(reply_id){
+    return await axios.post(
+        'api/post/manage/blind',{reply_id : reply_id} , {withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
+}

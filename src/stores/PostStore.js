@@ -1,6 +1,6 @@
 import { observable, action} from 'mobx';
 import {createContext} from "react";
-import requestReadAllPost, {search} from "../controllers/PostController"
+import requestReadAllPost, {reaquestDeletePost, search} from "../controllers/PostController"
 class PostStore{
   @observable posts = [] // 4-3
   static instance = null; // 4-1
@@ -30,8 +30,30 @@ class PostStore{
     '태그':8,'작성자':9,'작성일 (이후)':10,'작성일 (이전)':11, '수정일(이후)':12,'수정일(이전)':13,'온도 (이상)':14,'온도 (이하)':15, "키워드":16, 
     "P/DP (이상)":17, "P/DP (이하)":18, "A/DA(이상)":19, "A/DA(이하)":20, '욕설 확률 (이상)':21,'욕설 확률 (이하)':22, "삭제 여부":23, "블라인드 여부":24}
 
-    return search(codeTable[code], query, pageNo).then(result=>{
+    return requestSearchPost(codeTable[code], query, pageNo).then(result=>{
       this.posts = [...result]
+    })
+  }
+
+  @action
+  deletePost(post_id){
+    console.log(post_id)
+    return reaquestDeletePost(post_id).then(result=>{
+      if(result==200)
+        return true
+      else
+        return false
+    })
+  }
+
+  @action
+  blindPost(post_id){
+    console.log(post_id)
+    return reaquestBlindPost(post_id).then(result=>{
+      if(result==200)
+        return true
+      else
+        return false
     })
   }
 }

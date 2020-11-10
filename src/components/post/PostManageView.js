@@ -6,6 +6,8 @@ import {toJS} from 'mobx'
 import SeachSpace from '../common/SearchSpace'
 import { DataGrid } from '@material-ui/data-grid';
 import Button from '@material-ui/core/Button';
+import Popup from "reactjs-popup";
+
 const useStyles = makeStyles( (theme) => ({
     root:{
       width:"100%",
@@ -49,6 +51,7 @@ const useStyles = makeStyles( (theme) => ({
         float : 'right',
     }
 }))
+
 // 검색 필드
 function createOptions() {
   return [
@@ -103,7 +106,7 @@ const columns = [
 
 const PostManageView = observer( (props) =>{
     const classes = useStyles();
-    const [selected,setSelection] = useState(0)
+    const [selected,setSelection] = useState([])
     const category = useRef();
     const input = useRef();
     const options = createOptions()
@@ -112,10 +115,23 @@ const PostManageView = observer( (props) =>{
           postStore.readAll();
         }, []); 
 
-    const searchButtonClick = () => {
-        postStore.search(category.current.value, input.current.value, 1)
-    }    
-    
+const searchButtonClick = () => {
+    postStore.searchPost(category.current.value, input.current.value, 1)
+}    
+  
+const deleteButtonClick = () => {
+    if(postStore.deletePost(selected))
+        alert("삭제에 성공했습니다.")
+    else
+        alert("삭제에 실패하였습니다.")
+}
+
+const blindButtonClick = () => {
+    if(postStore.blindPost(selected))
+        alert("블라인드에 성공했습니다.")
+    else
+        alert("블라인드에 실패하였습니다.")
+}
     return (
       <div className={classes.root}>
       <SeachSpace category={category} input={input} options={options} onSearch={searchButtonClick} />
@@ -130,8 +146,11 @@ const PostManageView = observer( (props) =>{
         />
       </div>
       <div className={classes.buttons}>
-        <Button  variant="contained" color="secondary" >삭제</Button>
-        <Button  variant="contained" color="third" >블라인드</Button>
+          <Button  variant="contained" color="secondary" onClick={deleteButtonClick} >삭제</Button>
+          <Button  variant="contained" color="third" onClick={blindButtonClick}>블라인드</Button>
+          <Popup trigger={<Button  variant="contained" color="primary">자세히 보기</Button>} position="right center">
+              <PostDetailCard post={selected}></PostDetailCard>
+          </Popup>
       </div>
 </div>
     );

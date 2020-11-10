@@ -58,6 +58,29 @@ class ReplyStore {
             console.log(this.replies)
         })
     }
+
+        @action
+    deleteReply(reply_id){
+        console.log(reply_id)
+        return reaquestDeleteReply(reply_id).then(result=>{
+        if(result==200)
+            return true
+        else
+            return false
+        })
+    }
+
+    @action
+    blindReply(reply_id){
+        console.log(reply_id)
+        return reaquestBlindReply(reply_id).then(result=>{
+        if(result==200)
+            return true
+        else
+            return false
+        })
+    }
+
 }
 
 export default ReplyStore = ReplyStore.getInstance();
