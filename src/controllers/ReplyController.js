@@ -10,10 +10,10 @@ export default async function requestReadReplies(_post_id){
         if(result.data != null){ 
             var tmp = result.data
             Object.keys(tmp).map((key,index) => (
-                data.push(new Reply(tmp[key]['reply_id'],tmp[key]['text'],tmp[key]['writer']
-                ,tmp[key]['writing_date']))
-            ).get_dic())
-            console.log(data)
+                data.push((new Reply(tmp[key]['reply_id'],tmp[key]['post_id'],tmp[key]['text'],tmp[key]['writer']
+                ,tmp[key]['writing_date'],tmp[key]['editing_date'],tmp[key]['prob_is_slang'],tmp[key]['is_deleted'],tmp[key]['is_blinded']
+                )).get_dic())
+            ))
             return data
         }
         return []

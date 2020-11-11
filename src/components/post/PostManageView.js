@@ -6,7 +6,7 @@ import {toJS} from 'mobx'
 import SeachSpace from '../common/SearchSpace'
 import { DataGrid } from '@material-ui/data-grid';
 import Button from '@material-ui/core/Button';
-import Popup from "reactjs-popup";
+import PostDetailDialog from './PostDetailDialog'
 
 var elem = (document.compatMode === "CSS1Compat") ? 
     document.documentElement :
@@ -113,6 +113,20 @@ const columns = [
   { field: 'prob_is_slang',type : 'number', headerName: '욕설 확률', width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
   { field: 'is_deleted',type : 'string', headerName: '삭제', width: getWidth(0.95,2/34) , align:'left', headerAlign:'left'},
   { field: 'is_blinded',type : 'string', headerName: '블라인드', width: getWidth(0.95,2/34) , align:'left', headerAlign:'left'},
+  {
+    field: 'detail',
+    headerName : '상세',
+    renderCell:(params) => (
+      <PostDetailDialog 
+        post_id = {params.value['post_id']} 
+        title = {params.value['title']} 
+        text = {params.value['text']} 
+        tag = {params.value['tag']} 
+        writer = {params.value['writer']} 
+        temperature = {params.value['temperature']} 
+        keyword = {params.value['keyword']} ></PostDetailDialog>
+    ),
+  }  
 ];
 
 const PostManageView = observer( (props) =>{
@@ -131,17 +145,27 @@ const searchButtonClick = () => {
 }    
   
 const deleteButtonClick = () => {
-    if(postStore.deletePost(selected))
-        alert("삭제에 성공했습니다.")
-    else
-        alert("삭제에 실패하였습니다.")
-}
-
-const blindButtonClick = () => {
-    if(postStore.blindPost(selected))
+    postStore.deletePost(selected).then(result => {
+    if(result == true)
+    {
         alert("블라인드에 성공했습니다.")
+        window.location.reload()
+    }
     else
         alert("블라인드에 실패하였습니다.")
+  }
+  )
+}
+        
+
+const blindButtonClick = () => {
+    postStore.blindPost(selected).then(result=> {
+        if(result == true)
+            alert("블라인드에 성공했습니다.")
+        else
+            alert("블라인드에 실패하였습니다.")
+    } 
+        )
 }
     return (
       <div className={classes.root}>
@@ -159,9 +183,6 @@ const blindButtonClick = () => {
       <div className={classes.buttons}>
           <Button  variant="contained" color="secondary" onClick={deleteButtonClick} >삭제</Button>
           <Button  variant="contained" color="third" onClick={blindButtonClick}>블라인드</Button>
-          <Popup trigger={<Button  variant="contained" color="primary">자세히 보기</Button>} position="right center">
-              {/** 수정중  */}
-          </Popup>
       </div>
 </div>
     );

@@ -11,12 +11,12 @@ export default async function requestReadAllPost(){ // 5-1
             var tmp = result.data
             Object.keys(tmp).map((key,index) => (
                 data.push((new Post(tmp[key]['post_id'], tmp[key]['title'],
-                tmp[key]['text'],tmp[key]['like'],tmp[key]['num_reply'],
+                tmp[key]['num_lookup'],tmp[key]['text'],tmp[key]['like'],tmp[key]['num_reply'],
                 tmp[key]['tag'],tmp[key]['writer'],
                 tmp[key]['writing_date'],tmp[key]['edting_date'],
                 tmp[key]['temperature'],tmp[key]['keyword'],tmp[key]['prob_p_dp']
                 ,tmp[key]['prob_a_da'],tmp[key]['prob_is_slang'],tmp[key]['is_deleted']
-                ,tmp[key]['is_blinded'],tmp[key]['num_lookup']
+                ,tmp[key]['is_blinded']
                 )).get_dic())
             ))
             return data
@@ -35,12 +35,10 @@ export async function requestSearchPost(code, query, pageNo){
     )
 }
 
-export async function reaquestDeletePost(post_id){
-    return await axios.delete(
-        'api/post/manage/',{post_id : post_id}, {withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
+export async function requestDeletePost(post){
+    return await axios({method:'DELETE',url:'api/post/manage/', data:{post : post}, withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
 }
 
-export async function reaquestBlindPost(post_id){
-    return await axios.post(
-        'api/post/manage/blind/',{post_id : post_id} , {withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
+export async function requestBlindPost(post){
+    return await axios.post('api/post/manage/blind/',{post: post}, {withCredentials: true}).catch(err => console.warn(err)).then(res => {return res.status})
 }

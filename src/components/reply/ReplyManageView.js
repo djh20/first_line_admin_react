@@ -5,7 +5,20 @@ import Button from '@material-ui/core/Button';
 import ReplyStore from '../../stores/ReplyStore'
 import { DataGrid } from '@material-ui/data-grid';
 import SeachSpace from '../common/SearchSpace'
-import Popup from "reactjs-popup";
+import {toJS} from 'mobx'
+
+var elem = (document.compatMode === "CSS1Compat") ? 
+    document.documentElement :
+    document.body;
+
+var height = elem.clientHeight;
+var width = elem.clientWidth;
+
+
+function getWidth(tableRate,rate){
+  return width*tableRate*rate
+}
+
 
 const useStyles = makeStyles( (theme) => ({
     root:{
@@ -56,15 +69,15 @@ const useStyles = makeStyles( (theme) => ({
 
 const columns = 
 [
-    { field: 'reply_id', type : 'number',headerName: '댓글 번호', align:'left',width: '8%', headerAlign:'left',resizable: true },
-    { field: 'post_id', type : 'number',headerName: '게시글 번호',  align:'left',width: '8%', headerAlign:'left',resizable: true},
-    { field: 'text', type : 'string',headerName: '내용' ,  align:'left', width: '20%',headerAlign:'left' ,resizable: true},
-    { field: 'writer', type : 'string',headerName: '작성자' , align:'left',width: '10%', headerAlign:'left' ,resizable: true},
-    { field: 'writing_date',type : 'dateTime', headerName: '작성일' , align:'left',width: '10%', headerAlign:'left' ,resizable: true},
-    { field: 'editing_date',type : 'dateTime', headerName: '수정일',align:'left',width: '10%', headerAlign:'left' ,resizable: true},
-    { field: 'is_deleted',type : 'number', headerName: '욕설 확률',  align:'left',width: '10%', headerAlign:'left' ,resizable: true},
-    { field: 'is_blinded',type : 'string', headerName: '삭제 여부',  align:'left',width: '10%', headerAlign:'left',resizable: true},
-    { field: 'prob_is_slang',type : 'string', headerName: '블라인드 여부',align:'left',width: '10%', headerAlign:'left',resizable: true},
+    { field: 'id', type : 'number',headerName: '댓글 번호', align:'left',width: getWidth(0.95,2/20), headerAlign:'left',resizable: true },
+    { field: 'post_id', type : 'number',headerName: '게시글 번호',  align:'left',width: getWidth(0.95,2/20), headerAlign:'left',resizable: true},
+    { field: 'text', type : 'string',headerName: '내용' ,  align:'left', width: getWidth(0.95,2/20),headerAlign:'left' ,resizable: true},
+    { field: 'writer', type : 'string',headerName: '작성자' , align:'left',width:getWidth(0.95,2/20), headerAlign:'left' ,resizable: true},
+    { field: 'writing_date',type : 'dateTime', headerName: '작성일' , align:'left',width: getWidth(0.95,2/20), headerAlign:'left' ,resizable: true},
+    { field: 'editing_date',type : 'dateTime', headerName: '수정일',align:'left',width: getWidth(0.95,2/20), headerAlign:'left' ,resizable: true},
+    { field: 'is_deleted',type : 'number', headerName: '욕설 확률',  align:'left',width: getWidth(0.95,2/20), headerAlign:'left' ,resizable: true},
+    { field: 'is_blinded',type : 'string', headerName: '삭제 여부',  align:'left',width:getWidth(0.95,2/20), headerAlign:'left',resizable: true},
+    { field: 'prob_is_slang',type : 'string', headerName: '블라인드 여부',align:'left',width: getWidth(0.95,2/20), headerAlign:'left',resizable: true},
     ];
 
 function createOptions() {
@@ -115,6 +128,7 @@ const ReplyManageView = observer( (props) =>{
         else
             alert("블라인드에 실패하였습니다.")
     }
+    
     return( 
     <div className={classes.root}> 
         <SeachSpace category={category} input={input} options={options} onSearch={searchButtonClick}/>          
@@ -131,9 +145,6 @@ const ReplyManageView = observer( (props) =>{
         <div className={classes.buttons}>
             <Button  variant="contained" color="secondary" onClick={deleteButtonClick} >삭제</Button>
             <Button  variant="contained" color="third" onClick={blindButtonClick}>블라인드</Button>
-            <Popup trigger={<Button  variant="contained" color="primary">자세히 보기</Button>} position="right center">
-                {/** 수정중  */}
-            </Popup>
         </div>
     </div>
     )

@@ -1,6 +1,6 @@
 import { observable, action} from 'mobx';
 import {createContext} from "react";
-import requestReadAllPost, {reaquestDeletePost, search} from "../controllers/PostController"
+import requestReadAllPost, {requestDeletePost,requestBlindPost, search} from "../controllers/PostController"
 class PostStore{
   @observable posts = [] // 4-3
   static instance = null; // 4-1
@@ -36,9 +36,9 @@ class PostStore{
   }
 
   @action
-  deletePost(post_id){
-    console.log(post_id)
-    return reaquestDeletePost(post_id).then(result=>{
+  deletePost(post){
+    console.log(post)
+    return requestDeletePost(post).then(result=>{
       if(result==200)
         return true
       else
@@ -47,9 +47,9 @@ class PostStore{
   }
 
   @action
-  blindPost(post_id){
-    console.log(post_id)
-    return reaquestBlindPost(post_id).then(result=>{
+  blindPost(post){
+    console.log(post)
+    return requestBlindPost(post).then(result=>{
       if(result==200)
         return true
       else
