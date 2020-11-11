@@ -6,6 +6,10 @@ import ReplyStore from '../../stores/ReplyStore'
 import { DataGrid } from '@material-ui/data-grid';
 import SeachSpace from '../common/SearchSpace'
 import {toJS} from 'mobx'
+import ReplyDetailDialog from './ReplyDetailDialog'
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+
 
 var elem = (document.compatMode === "CSS1Compat") ? 
     document.documentElement :
@@ -78,7 +82,18 @@ const columns =
     { field: 'is_deleted',type : 'number', headerName: '욕설 확률',  align:'left',width: getWidth(0.95,2/20), headerAlign:'left' ,resizable: true},
     { field: 'is_blinded',type : 'string', headerName: '삭제 여부',  align:'left',width:getWidth(0.95,2/20), headerAlign:'left',resizable: true},
     { field: 'prob_is_slang',type : 'string', headerName: '블라인드 여부',align:'left',width: getWidth(0.95,2/20), headerAlign:'left',resizable: true},
-    ];
+    { 
+        field: 'detail',
+        headerName : '상세',
+        renderCell:(params) => (
+            <ReplyDetailDialog
+                reply_id = {params.value['reply_id']}
+                text = {params.value['text']}
+                writer = {params.value['writer']}
+            ></ReplyDetailDialog>
+        )
+    }    
+];
 
 function createOptions() {
     return [
@@ -101,32 +116,54 @@ function createOptions() {
     
 const ReplyManageView = observer( (props) =>{
     const classes = useStyles();
+    const [selected,setSelection] = useState([]);
+    const [open,setOpen] = useState(false);
+    const [code, setCode] = React.useState(0);
+    const [type, setType] = useState('삭제');
     const category = useRef();
     const input = useRef();
-    const [selected,setSelection] = React.useState([]);
-    const replyStore = useContext(ReplyStore.context);
     const options = createOptions()
+    const replyStore = useContext(ReplyStore.context);
 
     React.useEffect(() => {
         replyStore.readAllReplies();
       }, []); 
     
     const searchButtonClick = () => {
-        replyStore.search(category.current.value, input.current.value, 1)
+        replyStore.search(options[category.current.value]['name'] , input.current.value)
     }
 
     const deleteButtonClick = () => {
-        if(replyStore.deleteReply(selected))
-            alert("삭제에 성공했습니다.")
+        replyStore.deleteReply(selected).then(result => {
+            setType('삭제');
+        if(result == true)
+        {
+            setCode(0);
+            setOpen(true);
+            replyStore.readAllReplies();
+        }
         else
-            alert("삭제에 실패하였습니다.")
+            setCode(1);
+            setOpen(true);
+      }
+      )
     }
     
     const blindButtonClick = () => {
-        if(replyStore.blindReply(selected))
-            alert("블라인드에 성공했습니다.")
-        else
-            alert("블라인드에 실패하였습니다.")
+        replyStore.blindReply(selected).then(result=> {
+            setType('블라인드');
+            if(result == true)
+            {
+                setCode(0);
+                setOpen(true);
+                replyStore.readAllReplies();
+            }
+            else
+                setCode(0);
+                setOpen(true);
+                replyStore.readAllReplies();
+        } 
+            )
     }
     
     return( 
@@ -146,6 +183,18 @@ const ReplyManageView = observer( (props) =>{
             <Button  variant="contained" color="secondary" onClick={deleteButtonClick} >삭제</Button>
             <Button  variant="contained" color="third" onClick={blindButtonClick}>블라인드</Button>
         </div>
+        <Snackbar open={open} autoHideDuration={6000} onClose={() => {setOpen(false)}}>
+            {
+                code == 1 ?(
+                <Alert onClose={() => {setOpen(false)}} severity="error">
+                {type} 실패하였습니다.
+                </Alert>):(
+                <Alert onClose={() => {setOpen(false)}} severity="success">
+                {type} 성공하였습니다.
+                </Alert>
+                )
+            }
+      </Snackbar>
     </div>
     )
 })

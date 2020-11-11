@@ -1,7 +1,7 @@
 import { observable, action } from "mobx";
 import { createContext } from "react";
 import requestReadAllReplies from "../controllers/ReplyController";
-import requestReadReplies,{requestPostReply, search} from "../controllers/ReplyController";
+import requestReadReplies,{requestPostReply, requestDeleteReply, requestBlindReply, search} from "../controllers/ReplyController";
 
 
 class ReplyStore {
@@ -22,7 +22,7 @@ class ReplyStore {
     readAllReplies()
     {
         return requestReadAllReplies().then(result=>{
-            this.replies = [...this.replies,...result]
+            this.replies = [...result]
             console.log(this.replies)
         })
     }
@@ -62,7 +62,7 @@ class ReplyStore {
         @action
     deleteReply(reply_id){
         console.log(reply_id)
-        return reaquestDeleteReply(reply_id).then(result=>{
+        return requestDeleteReply(reply_id).then(result=>{
         if(result==200)
             return true
         else
@@ -73,7 +73,7 @@ class ReplyStore {
     @action
     blindReply(reply_id){
         console.log(reply_id)
-        return reaquestBlindReply(reply_id).then(result=>{
+        return requestBlindReply(reply_id).then(result=>{
         if(result==200)
             return true
         else

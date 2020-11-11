@@ -21,7 +21,6 @@ export default class Post{
     
     get_dic(){
         return{
-            
             id : this.post_id,
             title : this.title,
             num_lookup : this.num_lookup,
@@ -33,12 +32,12 @@ export default class Post{
             editing_date : this.editing_date,
             temperature : this.temperature,
             keyword : this.keyword,
-            prob_p_dp : this.prop_p_dp,
+            prob_p_dp : this.prob_p_dp,
             prob_a_da : this.prob_a_da,
             prob_is_slang : this.prob_is_slang,
             is_deleted : this.is_deleted,
             is_blinded : this.is_blinded,
-            detail : {'post_id' : this.post_id, 'title' : this.title, 'text' : this.text , 'tag' : this.tag, 'writer' : this.writer, 'temperature' : this.temperature,}
+            detail : {'post_id' : this.post_id, 'title' : this.title, 'text' : this.text , 'tag' : this.tag, 'writer' : this.writer, 'temperature' : this.temperature}
         }
     }
 }

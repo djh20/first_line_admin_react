@@ -22,7 +22,8 @@ export default class Reply{
             editing_date : this.editing_date,
             is_deleted : this.is_deleted,
             is_blinded : this.is_blinded,
-            prob_is_slang : this.prob_is_slang
+            prob_is_slang : this.prob_is_slang,
+            detail : {'reply_id' : this.reply_id, 'text' : this.text, 'writer' : this.writer}
         }
     }
 }

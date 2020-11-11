@@ -55,16 +55,14 @@ export async function search(code, query, pageNo){
 
 export async function requestSearchReply(code, query, pageNo){
     return await axios.get(
-        'api/post/manage/',{code : code, query : query, pageNo : pageNo}
+        'api/reply/manage/',{code : code, query : query, pageNo : pageNo}
     )
 }
 
-export async function reaquestDeleteReply(reply_id){
-    return await axios.delete(
-        'api/post/manage/',{reply_id : reply_id}, {withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
+export async function requestDeleteReply(reply){
+    return await axios({method:'DELETE',url:'api/reply/manage/', data:{reply : reply}, withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
 }
 
-export async function reaquestBlindReply(reply_id){
-    return await axios.post(
-        'api/post/manage/blind/',{reply_id : reply_id} , {withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
+export async function requestBlindReply(reply){
+    return await axios.post('api/reply/manage/blind/',{reply: reply}, {withCredentials: true}).catch(err => console.warn(err)).then(res => {return res.status})
 }
