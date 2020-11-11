@@ -31,7 +31,7 @@ export async function requestSearchPost(_code, _query){
     ).catch(error => {return [] }).then(result =>{
         var data = [];
         if(result.data != null){ // 5-2
-            var tmp = result.data.data
+            var tmp = result.data
             Object.keys(tmp).map((key,index) => (
                 data.push((new Post(tmp[key]['post_id'], tmp[key]['title'],
                 tmp[key]['num_lookup'],tmp[key]['text'],tmp[key]['like'],tmp[key]['num_reply'],
@@ -42,7 +42,6 @@ export async function requestSearchPost(_code, _query){
                 ,tmp[key]['is_blinded']
                 )).get_dic())
             ))
-            console.log(data)
             return data
         }
         return []

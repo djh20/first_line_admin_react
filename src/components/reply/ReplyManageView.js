@@ -159,9 +159,8 @@ const ReplyManageView = observer( (props) =>{
                 replyStore.readAllReplies();
             }
             else
-                setCode(0);
+                setCode(1);
                 setOpen(true);
-                replyStore.readAllReplies();
         } 
             )
     }
@@ -187,10 +186,10 @@ const ReplyManageView = observer( (props) =>{
             {
                 code == 1 ?(
                 <Alert onClose={() => {setOpen(false)}} severity="error">
-                {type} 실패하였습니다.
+                    {type} 실패하였습니다.
                 </Alert>):(
                 <Alert onClose={() => {setOpen(false)}} severity="success">
-                {type} 성공하였습니다.
+                    {type} 성공하였습니다.
                 </Alert>
                 )
             }
