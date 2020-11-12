@@ -45,7 +45,6 @@ export async function requestDeleteMember(member){
         err => console.warn(err)).then(res => {return res.status})
 }
 
-export async function requestEditMember(id,pw,name,nickname,age,gender,authority,phonenumber,email){
-    return await axios.put('/api/member/manage/',{id: id,pw: pw,name: name,nickname: nickname,age: age,gender: gender,authority: authority,
-        phonenumber: phonenumber,email: email }, {withCredentials: true}).catch(err => console.warn(err)).then(res => {return res.status})
+export async function requestEditMember(_member){
+    return await axios.put('/api/member/manage/',{member : _member}, {withCredentials: true}).catch(err => console.warn(err)).then(res => {return res.status})
 }

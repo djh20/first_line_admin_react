@@ -3,6 +3,7 @@ import {createContext} from "react";
 import cookie from 'react-cookies'
 import axios from 'axios'
 import requestReadAllMembers, {requestDeleteMember,requestEditMember, requestSearchMember} from "../controllers/MemberController"
+import Member from "../models/Member"
 class MemberStore{
   @observable members = []
   static instance = null;
@@ -20,7 +21,8 @@ class MemberStore{
   }
   @action 
   createMember(id,pw,name,nickname,age,gender,authority,phonenumber,email){
-      return requestEditMember(id,pw,name,nickname,age,gender,authority,phonenumber,email).then( 
+      const newMember = new Member(id,pw,name,nickname,age,gender,authority,phonenumber,email)
+      return requestEditMember(newMember).then( 
         result => {
           return result;
     })
