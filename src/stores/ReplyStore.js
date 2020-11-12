@@ -56,7 +56,7 @@ class ReplyStore {
         })
     }
 
-        @action
+    @action
     deleteReply(reply_id){
         console.log(reply_id)
         return requestDeleteReply(reply_id).then(result=>{

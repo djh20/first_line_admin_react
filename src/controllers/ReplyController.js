@@ -29,7 +29,8 @@ export async function requestReadAllReplies(){
             var tmp = result.data
             Object.keys(tmp).map((key,index) => (
                 data.push(new Reply(tmp[key]['reply_id'],tmp[key]['text'],tmp[key]['writer']
-                ,tmp[key]['writing_date']))
+                ,tmp[key]['writing_date']
+                )).get_dic()
             ))
             console.log(data)
             return data
