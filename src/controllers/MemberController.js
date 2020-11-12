@@ -46,5 +46,5 @@ export async function requestDeleteMember(member){
 }
 
 export async function requestEditMember(_member){
-    return await axios.put('/api/member/manage/',{member : _member}, {withCredentials: true}).catch(err => console.warn(err)).then(res => {return res.status})
+    return await axios.put('/api/member/manage/',{member : _member}, {withCredentials: true}).catch(err => {console.warn(err); return err.response}).then(res => {return res.status})
 }

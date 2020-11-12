@@ -19,14 +19,7 @@ class MemberStore{
   @action logout = () => {
     cookie.remove("jwt")
   }
-  @action 
-  createMember(id,pw,name,nickname,age,gender,authority,phonenumber,email){
-      const newMember = new Member(id,pw,name,nickname,age,gender,authority,phonenumber,email)
-      return requestEditMember(newMember).then( 
-        result => {
-          return result;
-    })
-  }
+  
   @action
   readAllMembers()
   {
@@ -44,14 +37,16 @@ class MemberStore{
           return false
       })
   }
-  @action
-  editMember(member){
-      return requestDeleteMember(member).then(result=>{
-      if(result==200)
-          return true
-      else
-          return false
-      })
+  @action 
+  createMember(id,pw,name,nickname,age,gender,authority,phonenumber,email){
+      const newMember = new Member(id,pw,name,nickname,age,gender,authority,phonenumber,email)
+      return requestEditMember(newMember).then( 
+        result => {
+          if(result==200)
+            return true
+          else
+            return false
+    })
   }
   @action
   searchMember(code, query) {

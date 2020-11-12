@@ -41,10 +41,11 @@ export default function PostDetailDialog(props) {
             setCrntGender(false)
         memberStore.createMember(id.current.value, pw.current.value,name.current.value,nickname.current.value,age.current.value,
             crntGender,authority.current.value,phonenumber.current.value,email.current.value).then(result => {
-            if(result['status'] == 200)
-                setCode(2)
-            else
+            console.log(result)
+            if(result == true)
                 setCode(1)
+            else
+                setCode(2)
             setOpen(false)
             setBarOpen(true)
         })
