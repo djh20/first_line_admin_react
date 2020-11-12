@@ -47,9 +47,9 @@ export default function PostDetailDialog(props) {
                 setCode(1)
             setOpen(false)
             setBarOpen(true)
-            window.location.reload(true)
         })
         setOpen(false)
+        memberStore.readAllMembers()
     };
 
     return (
@@ -69,6 +69,9 @@ export default function PostDetailDialog(props) {
                 label="아이디"
                 type="text"
                 fullWidth
+                InputProps={{
+                readOnly: true,
+                }}
             />
             <TextField
                 autoFocus
