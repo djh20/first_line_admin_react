@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,21 +9,30 @@ import MemberStore from '../../stores/MemberStore'
 
 export default function PostDetailDialog(props) {
     const [open, setOpen] = React.useState(false);
-    const id = props.id
-    const pw = props.pw    
-    const name = props.name
-    const nickname = props.nickname
-    const age = props.age
-    const gender = props.gender
-    const authority = props.authority
-    const phonenumber = props.phonenumber
-    const email = props.email
+    const defult_id = props.id
+    const defult_pw = props.pw    
+    const defult_name = props.name
+    const defult_nickname = props.nickname
+    const defult_age = props.age
+    const defult_gender = props.gender
+    const defult_authority = props.authority
+    const defult_phonenumber = props.phonenumber
+    const defult_email = props.email
+    const id = useRef()
+    const pw = useRef()    
+    const name = useRef()
+    const nickname = useRef()
+    const age = useRef()
+    const gender = useRef()
+    const authority = useRef()
+    const phonenumber = useRef()
+    const email = useRef()
     const memberStore = React.useContext(MemberStore.context)
     const handleClickOpen = () => {
         setOpen(true);
     }
     const handleClose = () => {
-       memberStore.createMember(id.current.value, pw.current.value,name.current.value,nickname.current.value,age.current.value,
+        memberStore.createMember(id.current.value, pw.current.value,name.current.value,nickname.current.value,age.current.value,
         gender.current.value,authority.current.value,phonenumber.current.value,email.current.value).then(result => {
             if(result['status'] == 200){
                 setCodess(1)
@@ -47,7 +56,8 @@ export default function PostDetailDialog(props) {
                 autoFocus
                 margin="dense"
                 id="id"
-                defaultValue={id}
+                inputRef={id}
+                defaultValue={defult_id}
                 label="아이디"
                 type="text"
                 fullWidth
@@ -56,7 +66,8 @@ export default function PostDetailDialog(props) {
                 autoFocus
                 margin="dense"
                 id="pw"
-                defaultValue={pw}
+                inputRef={pw}
+                defaultValue={defult_pw}
                 label="비밀번호"
                 type="text"
                 fullWidth
@@ -64,7 +75,8 @@ export default function PostDetailDialog(props) {
             <TextField
                 margin="dense"
                 id="name"
-                defaultValue={name}
+                inputRef={name}
+                defaultValue={defult_name}
                 label="이름"
                 type="text"
                 multiline
@@ -73,7 +85,8 @@ export default function PostDetailDialog(props) {
             <TextField
                 margin="dense"
                 id="nickname"
-                defaultValue={nickname}
+                inputRef={nickname}
+                defaultValue={defult_nickname}
                 label="필명"
                 type="text"
                 multiline
@@ -82,7 +95,8 @@ export default function PostDetailDialog(props) {
             <TextField
                 margin="dense"
                 id="age"
-                defaultValue={age}
+                inputRef={age}
+                defaultValue={defult_age}
                 label="나이"
                 type="number"
                 multiline
@@ -91,7 +105,8 @@ export default function PostDetailDialog(props) {
             <TextField
                 margin="dense"
                 id="gender"
-                defaultValue={gender}
+                inputRef={gender}
+                defaultValue={defult_gender}
                 label="성별"
                 type="text"
                 multiline
@@ -100,7 +115,8 @@ export default function PostDetailDialog(props) {
             <TextField
                 margin="dense"
                 id="authority"
-                defaultValue={authority}
+                inputRef={authority}
+                defaultValue={defult_authority}
                 label="권한"
                 type="text"
                 multiline
@@ -109,7 +125,8 @@ export default function PostDetailDialog(props) {
             <TextField
                 margin="dense"
                 id="phonenumber"
-                defaultValue={phonenumber}
+                inputRef={phonenumber}
+                defaultValue={defult_phonenumber}
                 label="휴대전화번호"
                 type="phonenumber"
                 multiline
@@ -118,7 +135,8 @@ export default function PostDetailDialog(props) {
             <TextField
                 margin="dense"
                 id="email"
-                defaultValue={email}
+                inputRef={email}
+                defaultValue={defult_email}
                 label="이메일"
                 type="number"
                 multiline

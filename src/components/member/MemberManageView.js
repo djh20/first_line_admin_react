@@ -82,15 +82,15 @@ function createOptions() {
 
 //테이블
 const columns = [
-    { field: 'id', type : 'string', headerName: '아이디', width: getWidth(0.95,2/34), align:'left', headerAlign:'left' },
-    { field: 'pw', type : 'string', headerName: '비밀번호', width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
-    { field: 'name', type : 'string', headerName: '이름', width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
-    { field: 'nickname', type : 'string', headerName: '필명', width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
-    { field: 'age',type : 'number', headerName: '나이' , width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
-    { field: 'gender',type : 'number', headerName: '성별', width: getWidth(0.95,2/34) , align:'left', headerAlign:'left'},
-    { field: 'authority',type : 'string', headerName: '권한', width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
-    { field: 'phonenumber',type : 'string', headerName: '휴대폰 번호', width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
-    { field: 'email',type : 'string', headerName: '이메일', width: getWidth(0.95,2/34) , align:'left', headerAlign:'left'},
+    { field: 'id', type : 'string', headerName: '아이디', width: getWidth(0.95,2/18), align:'left', headerAlign:'left' },
+    { field: 'pw', type : 'string', headerName: '비밀번호', width: getWidth(0.95,2/18), align:'left', headerAlign:'left'},
+    { field: 'name', type : 'string', headerName: '이름', width: getWidth(0.95,2/18), align:'left', headerAlign:'left'},
+    { field: 'nickname', type : 'string', headerName: '필명', width: getWidth(0.95,2/18), align:'left', headerAlign:'left'},
+    { field: 'age',type : 'number', headerName: '나이' , width: getWidth(0.95,2/30), align:'left', headerAlign:'left'},
+    { field: 'gender',type : 'number', headerName: '성별', width: getWidth(0.95,2/30) , align:'left', headerAlign:'left'},
+    { field: 'authority',type : 'string', headerName: '권한', width: getWidth(0.95,2/30), align:'left', headerAlign:'left'},
+    { field: 'phonenumber',type : 'string', headerName: '휴대폰 번호', width: getWidth(0.95,2/19), align:'left', headerAlign:'left'},
+    { field: 'email',type : 'string', headerName: '이메일', width: getWidth(0.95,2/13) , align:'left', headerAlign:'left'},
     {
         field: 'detail',
         headerName : '상세',
