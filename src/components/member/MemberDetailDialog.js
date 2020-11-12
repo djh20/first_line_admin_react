@@ -6,9 +6,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MemberStore from '../../stores/MemberStore'
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 export default function PostDetailDialog(props) {
     const [open, setOpen] = React.useState(false);
+    const [barOpen, setBarOpen]= React.useState(false);
+    const [crntGender, setCrntGender] = React.useState(true);
+    const [code, setCode] = React.useState(0);
     const defult_id = props.id
     const defult_pw = props.pw    
     const defult_name = props.name
@@ -32,10 +37,12 @@ export default function PostDetailDialog(props) {
         setOpen(true);
     }
     const handleClose = () => {
+        if(gender.current.value == '여성')
+            setCrntGender(false)
         memberStore.createMember(id.current.value, pw.current.value,name.current.value,nickname.current.value,age.current.value,
-        gender.current.value,authority.current.value,phonenumber.current.value,email.current.value).then(result => {
+            crntGender,authority.current.value,phonenumber.current.value,email.current.value).then(result => {
             if(result['status'] == 200){
-                setCodess(1)
+                setCode(1)
             }
             else
                 setCode(2)
@@ -152,6 +159,18 @@ export default function PostDetailDialog(props) {
             </Button>
             </DialogActions>
         </Dialog>
+        <Snackbar open={open} autoHideDuration={6000} onClose={() => {setBarOpen(false)}}>
+        {
+        code == 1 ?(
+        <Alert onClose={() => {setBarOpen(false)}} severity="error">
+          수정 실패하였습니다.
+        </Alert>):(
+          <Alert onClose={() => {setBarOpen(false)}} severity="success">
+          수정 성공하였습니다.
+        </Alert>
+        )
+        }
+      </Snackbar>
     </div>
     );
 }
