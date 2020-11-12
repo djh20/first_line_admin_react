@@ -6,7 +6,7 @@ import {toJS} from 'mobx'
 import SeachSpace from '../common/SearchSpace'
 import { DataGrid } from '@material-ui/data-grid';
 import Button from '@material-ui/core/Button';
-import PostDetailDialog from './PostDetailDialog'
+import MemberDetailDialog from './MemberDetailDialog'
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
@@ -96,7 +96,7 @@ const columns = [
         field: 'detail',
         headerName : '상세',
         renderCell:(params) => (
-            <PostDetailDialog 
+            <MemberDetailDialog 
                 id = {params.value['id']} 
                 pw = {params.value['pw']} 
                 name = {params.value['name']} 
@@ -107,7 +107,7 @@ const columns = [
                 phonenumber = {params.value['phonenumber']}
                 email = {params.value['email']}
             >  
-            </PostDetailDialog>
+            </MemberDetailDialog>
         ),
     }  
 ];
@@ -122,10 +122,10 @@ const MemberManageView = observer( (props) =>{
     const options = createOptions()
     const memberStore = useContext(MemberStore.context)
     useEffect(() => {
-        memberStore.readAll();
+        memberStore.readAllMembers();
         }, []); 
     const searchButtonClick = () => {
-        memberStore.searchPost(options[category.current.value]['name'] , input.current.value)
+        memberStore.searchMember(options[category.current.value]['name'] , input.current.value)
     }    
   
     const deleteButtonClick = () => {
@@ -134,7 +134,7 @@ const MemberManageView = observer( (props) =>{
         {
             setCode(0);
             setOpen(true);
-            memberStore.readAll();
+            memberStore.readAllMembers();
         }
         else
         {
@@ -146,37 +146,36 @@ const MemberManageView = observer( (props) =>{
     }
         
     return (
-      <div className={classes.root}>
-      <SeachSpace category={category} input={input} options={options} onSearch={searchButtonClick} />
-      <div className={classes.table}>
-        <DataGrid rows={memberStore.posts} columns={columns} pageSize={10} checkboxSelection
-         onSelectionChange={(data) => {
-          for(var i = 0 ; i < data['rows'].length ;  i++){
-            console.log(toJS(data['rows'][i]))
-          }
-          setSelection(data)
-        }}
+        <div className={classes.root}>
+        <SeachSpace category={category} input={input} options={options} onSearch={searchButtonClick} />
+        <div className={classes.table}>
+            <DataGrid rows={memberStore.members} columns={columns} pageSize={10} checkboxSelection
+            onSelectionChange={(data) => {
+            for(var i = 0 ; i < data['rows'].length ;  i++){
+                console.log(toJS(data['rows'][i]))
+            }
+            setSelection(data)
+            }}
         />
-      </div>
-      <div className={classes.buttons}>
-          <Button  variant="contained" color="secondary" onClick={deleteButtonClick} >삭제</Button>
-          <Button  variant="contained" color="third" onClick={blindButtonClick}>블라인드</Button>
-      </div>
-      <Snackbar open={open} autoHideDuration={6000} onClose={() => {setOpen(false)}}>
-        {
-        code == 1 ?(
-        <Alert onClose={() => {setOpen(false)}} severity="error">
-          삭제 실패하였습니다.
-        </Alert>):(
-          <Alert onClose={() => {setOpen(false)}} severity="success">
-          삭제 성공하였습니다.
-        </Alert>
-        )
-        }
-      </Snackbar>
+        </div>
+        <div className={classes.buttons}>
+            <Button  variant="contained" color="secondary" onClick={deleteButtonClick} >삭제</Button>
+            </div>
+        <Snackbar open={open} autoHideDuration={6000} onClose={() => {setOpen(false)}}>
+            {
+            code == 1 ?(
+            <Alert onClose={() => {setOpen(false)}} severity="error">
+            삭제 실패하였습니다.
+            </Alert>):(
+            <Alert onClose={() => {setOpen(false)}} severity="success">
+            삭제 성공하였습니다.
+            </Alert>
+            )
+            }
+        </Snackbar>
 </div>
     );
 }
 )
 
-export default PostManageView
+export default MemberManageView

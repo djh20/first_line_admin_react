@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import {createContext} from "react";
 import cookie from 'react-cookies'
 import axios from 'axios'
+import requestReadAllMembers, {requestDeleteMember,requestEditMember, requestSearchMember} from "../controllers/MemberController"
 class MemberStore{
   @observable members = []
   static instance = null;
@@ -44,11 +45,11 @@ class MemberStore{
       })
   }
   @action
-  search(code, query) {
+  searchMember(code, query) {
 
     const codeTable = {'아이디':0,'비밀번호':1,"필명":2,"나이 (이상)":3, '나이 (이하)':4,'성별':5,'권한':6,
       '휴대폰 번호':7, '이메일':8}
-    return requestSearchReply(codeTable[code], query).then(result=>{
+    return requestSearchMember(codeTable[code], query).then(result=>{
       this.replies = [...result]
     })
   }

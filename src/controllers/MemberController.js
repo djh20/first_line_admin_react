@@ -1,7 +1,7 @@
 import axios from 'axios'
-import Reply from '../models/Member'
+import Member from '../models/Member'
 
-export async function requestReadAllMembers(){ 
+export default async function requestReadAllMembers(){ 
     return await axios.get(
         '/api/member/manage/', {withCredentials: true}
     ).catch(error => {return [] }).then(result =>{
@@ -9,10 +9,10 @@ export async function requestReadAllMembers(){
         if(result.data != null){ 
             var tmp = result.data
             Object.keys(tmp).map((key,index) => (
-                data.push(new Reply(tmp[key]['id'],tmp[key]['pw'],tmp[key]['name']
+                data.push((new Member(tmp[key]['id'],tmp[key]['pw'],tmp[key]['name']
                 ,tmp[key]['nickname'],tmp[key]['age'],tmp[key]['gender']
                 ,tmp[key]['authority'],tmp[key]['phonenumber'],tmp[key]['email']
-                )).get_dic()
+                )).get_dic())
             ))
             return data
         }
@@ -29,7 +29,7 @@ export async function requestSearchMember(_code, _query){
         if(result.data != null){ // 5-2
             var tmp = result.data.data
             Object.keys(tmp).map((key,index) => (
-                data.push(new Reply(tmp[key]['id'],tmp[key]['pw'],tmp[key]['name']
+                data.push(new Member(tmp[key]['id'],tmp[key]['pw'],tmp[key]['name']
                 ,tmp[key]['nickname'],tmp[key]['age'],tmp[key]['gender']
                 ,tmp[key]['authority'],tmp[key]['phonenumber'],tmp[key]['email']
                 )).get_dic()

@@ -57,7 +57,7 @@ export async function requestSearchReply(_code, _query){
     ).catch(error => {return [] }).then(result =>{
         var data = [];
         if(result.data != null){ // 5-2
-            var tmp = result.data.data
+            var tmp = result.data
             Object.keys(tmp).map((key,index) => (
                 data.push((new Reply(tmp[key]['reply_id'],tmp[key]['post_id'],tmp[key]['text'],tmp[key]['writer']
                 ,tmp[key]['writing_date'],tmp[key]['editing_date'],tmp[key]['prob_is_slang'],tmp[key]['is_deleted'],tmp[key]['is_blinded']

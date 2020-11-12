@@ -1,11 +1,10 @@
 import React, {useContext} from 'react';
 import UserHomeLayout from './layout/UserHomeLayout';
 import {makeStyles} from '@material-ui/core';
-import PostUserView from './components/post/PostUserView'
-import PostEditor from './components/post/PostEditor'
 import "./App.css"
 import PostManageView from './components/post/PostManageView'
 import ReplyManageView from './components/reply/ReplyManageView'
+import MemberManageView from './components/member/MemberManageView'
 import {
     BrowserRouter as Router,
     Switch,
@@ -36,6 +35,7 @@ const App = observer( () =>  {
         <Switch>
             <Route exact path="/replyManage" component={ReplyManageView}/>
             <Route exact path="/postManage" component={PostManageView}/>
+            <Route exact path="/memberManage" component={MemberManageView}/>
         </Switch>
     </UserHomeLayout>
     </Router> 
