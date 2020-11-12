@@ -41,17 +41,13 @@ export default function PostDetailDialog(props) {
             setCrntGender(false)
         memberStore.createMember(id.current.value, pw.current.value,name.current.value,nickname.current.value,age.current.value,
             crntGender,authority.current.value,phonenumber.current.value,email.current.value).then(result => {
-            if(result['status'] == 200){
-                setCode(1)
-                setOpen(false)
-                setBarOpen(true)
-                memberStore.readAllMembers();
-            }
-            else
-                setOpen(false)
+            if(result['status'] == 200)
                 setCode(2)
-                setBarOpen(true)
-            setOpen(true)
+            else
+                setCode(1)
+            setOpen(false)
+            setBarOpen(true)
+            window.location.reload(true)
         })
         setOpen(false)
     };
@@ -164,14 +160,14 @@ export default function PostDetailDialog(props) {
             </Button>
             </DialogActions>
         </Dialog>
-        <Snackbar open={open} autoHideDuration={6000} onClose={() => {setBarOpen(false)}}>
+        <Snackbar open={barOpen} autoHideDuration={6000} onClose={() => {setBarOpen(false)}}>
         {
         code == 1 ?(
-        <Alert onClose={() => {setBarOpen(false)}} severity="error">
-          수정 실패하였습니다.
-        </Alert>):(
-          <Alert onClose={() => {setBarOpen(false)}} severity="success">
+        <Alert onClose={() => {setBarOpen(false)}} severity="success">
           수정 성공하였습니다.
+        </Alert>):(
+          <Alert onClose={() => {setBarOpen(false)}} severity="error">
+          수정 실패하였습니다.
         </Alert>
         )
         }
