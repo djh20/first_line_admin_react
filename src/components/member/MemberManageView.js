@@ -70,7 +70,6 @@ const useStyles = makeStyles( (theme) => ({
 function createOptions() {
     return [
         { name : "아이디",type : "text"},
-        { name : "비밀번호",type : "text"},
         { name : "필명",type : "text"},
         { name : "나이 (이상)",type : "number"},
         { name : "나이 (이하)",type : "number"},

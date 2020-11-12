@@ -47,8 +47,7 @@ class MemberStore{
   @action
   searchMember(code, query) {
 
-    const codeTable = {'아이디':0,'비밀번호':1,"필명":2,"나이 (이상)":3, '나이 (이하)':4,'성별':5,'권한':6,
-      '휴대폰 번호':7, '이메일':8}
+    const codeTable = {'아이디':0,'필명':1,"나이 (이상)":2,"나이 (이하)":3, '성별':4,'권한':5,'휴대폰 번호':6,'이메일':7,}
     return requestSearchMember(codeTable[code], query).then(result=>{
       this.replies = [...result]
     })
