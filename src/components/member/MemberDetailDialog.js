@@ -43,9 +43,14 @@ export default function PostDetailDialog(props) {
             crntGender,authority.current.value,phonenumber.current.value,email.current.value).then(result => {
             if(result['status'] == 200){
                 setCode(1)
+                setOpen(false)
+                setBarOpen(true)
+                memberStore.readAllMembers();
             }
             else
+                setOpen(false)
                 setCode(2)
+                setBarOpen(true)
             setOpen(true)
         })
         setOpen(false)
@@ -154,7 +159,7 @@ export default function PostDetailDialog(props) {
             <Button onClick={handleClose} color="primary">
                 수정
             </Button> 
-            <Button onClick={() => {setOpen(false)}} color="primary">
+            <Button onClick={() => {setOpen(false) }} color="primary">
                 닫기
             </Button>
             </DialogActions>
