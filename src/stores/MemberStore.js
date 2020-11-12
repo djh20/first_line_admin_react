@@ -18,6 +18,13 @@ class MemberStore{
   @action logout = () => {
     cookie.remove("jwt")
   }
+  @action 
+  createMember(id,pw,name,nickname,age,gender,authority,phonenumber,email){
+      return requestEditMember(id,pw,name,nickname,age,gender,authority,phonenumber,email).then( 
+        result => {
+          return result;
+    })
+  }
   @action
   readAllMembers()
   {
@@ -46,10 +53,9 @@ class MemberStore{
   }
   @action
   searchMember(code, query) {
-
     const codeTable = {'아이디':0,'필명':1,"나이 (이상)":2,"나이 (이하)":3, '성별':4,'권한':5,'휴대폰 번호':6,'이메일':7,}
     return requestSearchMember(codeTable[code], query).then(result=>{
-      this.replies = [...result]
+      this.members = [...result]
     })
   }
   @action 

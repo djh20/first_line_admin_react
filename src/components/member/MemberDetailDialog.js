@@ -5,7 +5,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Typography from '@material-ui/core/Typography';
+import MemberStore from '../../stores/MemberStore'
+
 export default function PostDetailDialog(props) {
     const [open, setOpen] = React.useState(false);
     const id = props.id
@@ -17,10 +18,22 @@ export default function PostDetailDialog(props) {
     const authority = props.authority
     const phonenumber = props.phonenumber
     const email = props.email
-
+    const memberStore = React.useContext(MemberStore.context)
     const handleClickOpen = () => {
         setOpen(true);
     }
+    const handleClose = () => {
+       memberStore.createMember(id.current.value, pw.current.value,name.current.value,nickname.current.value,age.current.value,
+        gender.current.value,authority.current.value,phonenumber.current.value,email.current.value).then(result => {
+            if(result['status'] == 200){
+                setCodess(1)
+            }
+            else
+                setCode(2)
+            setOpen(true)
+        })
+        setOpen(false)
+    };
 
     return (
         <div>
@@ -33,7 +46,7 @@ export default function PostDetailDialog(props) {
             <TextField
                 autoFocus
                 margin="dense"
-                id="text"
+                id="id"
                 defaultValue={id}
                 label="아이디"
                 type="text"
@@ -42,7 +55,7 @@ export default function PostDetailDialog(props) {
             <TextField
                 autoFocus
                 margin="dense"
-                id="text"
+                id="pw"
                 defaultValue={pw}
                 label="비밀번호"
                 type="text"
@@ -50,7 +63,7 @@ export default function PostDetailDialog(props) {
             />
             <TextField
                 margin="dense"
-                id="text"
+                id="name"
                 defaultValue={name}
                 label="이름"
                 type="text"
@@ -59,7 +72,7 @@ export default function PostDetailDialog(props) {
             />
             <TextField
                 margin="dense"
-                id="text"
+                id="nickname"
                 defaultValue={nickname}
                 label="필명"
                 type="text"
@@ -68,7 +81,7 @@ export default function PostDetailDialog(props) {
             />
             <TextField
                 margin="dense"
-                id="text"
+                id="age"
                 defaultValue={age}
                 label="나이"
                 type="number"
@@ -77,7 +90,7 @@ export default function PostDetailDialog(props) {
             />
             <TextField
                 margin="dense"
-                id="text"
+                id="gender"
                 defaultValue={gender}
                 label="성별"
                 type="text"
@@ -86,7 +99,7 @@ export default function PostDetailDialog(props) {
             />
             <TextField
                 margin="dense"
-                id="text"
+                id="authority"
                 defaultValue={authority}
                 label="권한"
                 type="text"
@@ -95,7 +108,7 @@ export default function PostDetailDialog(props) {
             />
             <TextField
                 margin="dense"
-                id="text"
+                id="phonenumber"
                 defaultValue={phonenumber}
                 label="휴대전화번호"
                 type="phonenumber"
@@ -104,7 +117,7 @@ export default function PostDetailDialog(props) {
             />
             <TextField
                 margin="dense"
-                id="text"
+                id="email"
                 defaultValue={email}
                 label="이메일"
                 type="number"
@@ -113,9 +126,12 @@ export default function PostDetailDialog(props) {
             />
         </DialogContent>
         <DialogActions>
+            <Button onClick={handleClose} color="primary">
+                수정
+            </Button> 
             <Button onClick={() => {setOpen(false)}} color="primary">
                 닫기
-                </Button>
+            </Button>
             </DialogActions>
         </Dialog>
     </div>

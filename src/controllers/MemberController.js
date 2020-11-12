@@ -27,12 +27,12 @@ export async function requestSearchMember(_code, _query){
     ).catch(error => {return [] }).then(result =>{
         var data = [];
         if(result.data != null){ // 5-2
-            var tmp = result.data.data
+            var tmp = result.data
             Object.keys(tmp).map((key,index) => (
-                data.push(new Member(tmp[key]['id'],tmp[key]['pw'],tmp[key]['name']
+                data.push((new Member(tmp[key]['id'],tmp[key]['pw'],tmp[key]['name']
                 ,tmp[key]['nickname'],tmp[key]['age'],tmp[key]['gender']
                 ,tmp[key]['authority'],tmp[key]['phonenumber'],tmp[key]['email']
-                )).get_dic()
+                )).get_dic())
             ))
             return data
         }
@@ -41,9 +41,11 @@ export async function requestSearchMember(_code, _query){
 }
 
 export async function requestDeleteMember(member){
-    return await axios({method:'DELETE',url:'/api/member/manage/', data:{member : member}, withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
+    return await axios({method:'DELETE',url:'/api/member/manage/', data:{member : member}, withCredentials : true}).catch(
+        err => console.warn(err)).then(res => {return res.status})
 }
 
-export async function requestEditMember(member){
-    return await axios.post('/api/member/manage/blind/',{member: member}, {withCredentials: true}).catch(err => console.warn(err)).then(res => {return res.status})
+export async function requestEditMember(id,pw,name,nickname,age,gender,authority,phonenumber,email){
+    return await axios.put('/api/member/manage/',{id: id,pw: pw,name: name,nickname: nickname,age: age,gender: gender,authority: authority,
+        phonenumber: phonenumber,email: email }, {withCredentials: true}).catch(err => console.warn(err)).then(res => {return res.status})
 }
