@@ -15,6 +15,7 @@ import {
 import { Menu, ChevronLeft, Home, Inbox, Mail } from '@material-ui/icons';
 import Link from '@material-ui/core/Link';
 import AccountButton from '../components/common/AccountButton'
+import NoticeButton from '../components/common/NoticeButton'
 import UserInfoPopOver from "../components/member/UserInfoPopOver"
 
 const useStyle = makeStyles(theme=>({
@@ -64,8 +65,8 @@ const useStyle = makeStyles(theme=>({
         minHeight:'93vh',
         background:"#2a2a40", 
         marginTop:'7vh', 
-        position:'sticky'
-    }
+        position:'sticky',
+    },
 }))
 
 
@@ -93,6 +94,7 @@ function UserHomeLayout(props){
                          첫 줄 관리자
                     </div>
                     <div alignSelf="flex-end" className={classes.accountIconArea}>
+                        <NoticeButton />
                          <AccountButton removeCookie={removeCookie}  setHasCookie={setHasCookie} />
                     </div>
                 </Toolbar>

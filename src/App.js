@@ -1,14 +1,13 @@
 import React, {useContext} from 'react';
 import UserHomeLayout from './layout/UserHomeLayout';
 import {makeStyles} from '@material-ui/core';
-import PostUserView from './components/post/PostUserView'
-import PostEditor from './components/post/PostEditor'
 import "./App.css"
 import PostManageView from './components/post/PostManageView'
 import ReplyManageView from './components/reply/ReplyManageView'
 import NoticeManageView from './components/notice/NoticeManageView'
 import ReportManageView from './components/report/ReportManageView'
 import KeywordManageView from './components/keyword/KeywordManageView'
+import MemberManageView from './components/member/MemberManageView'
 import SignInView from './components/member/SignInView'
 import {
     BrowserRouter as Router,
@@ -17,6 +16,7 @@ import {
   } from "react-router-dom";
 import {observer} from "mobx-react"
 import {useCookies} from 'react-cookie'
+import UserNoticeItem from './components/member/UserNoticeItem'
 const useStyle = makeStyles(theme=>({
     '@global': {
         'body, html' : {
@@ -77,13 +77,14 @@ const App = observer( () =>  {
                       <Route exact path="/noticeManage" component={NoticeManageView}/> 
                       <Route exact path="/reportManage" component={ReportManageView}/> 
                       <Route exact path="/postManage" component={PostManageView}/>
+                      <Route exact path="/memberManage" component={MemberManageView}/>
                       <Route exact path="/keywordManage" component={KeywordManageView}/>
                   </Switch>
               </UserHomeLayout>
             )
           }
           </Router>
- 
+          <UserNoticeItem></UserNoticeItem>
         </div>
   );
 })

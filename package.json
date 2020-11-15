@@ -13,6 +13,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.20.0",
+    "html-react-parser": "^0.14.1",
     "http-proxy-middleware": "^1.0.5",
     "mobx": "^5.15.7",
     "mobx-react": "^6.3.0",
@@ -23,7 +24,8 @@
     "react-ga": "^3.1.2",
     "react-jwt-auth": "^0.6.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "socket.io": "^3.0.1"
   },
   "scripts": {
     "start": "react-app-rewired start",

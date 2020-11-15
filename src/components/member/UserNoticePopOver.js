@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {observer} from 'mobx-react'
-
+import UserNoticeItem from './UserNoticeItem'
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: 'flex',
@@ -14,13 +14,19 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   content:{
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
+  },
+  item:{
+    marginBottom: '2.5%',
+    "&:last-child": {
+      marginBottom: '10%'
+    }
   }
 }));
 
 
 
-const UserInfoPopOver = observer( (props) => {
+const UserNoticePopOver = observer( (props) => {
     const classes = useStyles();
     const handleClose = props.dialogClose
     const removeCookie = props.removeCookie
@@ -36,23 +42,12 @@ const UserInfoPopOver = observer( (props) => {
     return (
         <div className={classes.paper}>
           <div className={classes.content}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick ={logout}
-              >
-                  <Typography variant="subheading" color="inherit" noWrap>
-                     로그아웃
-                  </Typography>
-              </Button>
-
+                <UserNoticeItem className={classes.item} text={"정환님이 내 게시글에 댓글을 달았습니다"} date={"2019.10.01"} link={"/"}/>
+                <UserNoticeItem className={classes.item} text={"정환님이 내 게시글에 댓글을 달았습니다"} date={"2019.10.01"} link={"/"}/>
             </div>
         </div>
     );
   }
 )
 
-export default UserInfoPopOver
+export default UserNoticePopOver

@@ -107,13 +107,6 @@ const NoticeManageView = observer( (props) => {
           <SeachSpace category={category} input={input} options={options} onSearch={searchButtonClick}/>
           <div className={classes.table}>
             <DataGrid rows={noticeStore.notices} columns={columns} pageSize={10}
-            checkboxSelection
-            onSelectionChange={(data) => {
-              for(var i = 0 ; i < data['rows'].length ; i++){
-                console.log(toJS(data['rows'][i]))
-              }
-              setSelection(data)
-            }}
             />
           </div>
           <div className={classes.buttons}>
