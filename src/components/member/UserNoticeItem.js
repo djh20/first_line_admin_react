@@ -9,25 +9,31 @@ import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
 import ListItem from '@material-ui/core/ListItem'
+import NoticeStore from '../../stores/NoticeStore'
 const useStyles = makeStyles((theme) => ({
   root: {
+    width: '100%'
   },
   wrapper: {
+    width: '100%',
     display: 'inline-flex',
   },
   textField: {
-    marginRight:'3%'
+    marginRight:'3%',
+    width : '15vw',
   },
   text: {
-    fontSize : "0.9rem",
+    fontSize : "1rem",
     color : 'black',
+    
   },
-  date: {
+  send_datetime: {
     fontSize : '0.8rem',
     color : 'black',
   },
   iconField:{
-      alignSelf:'center'
+      alignSelf:'center',
+      width : '10%'
   },
   link:{
       textDecoration:'None'
@@ -39,22 +45,30 @@ const useStyles = makeStyles((theme) => ({
 const UserNoticeItem = observer( (props) => {
     const classes = useStyles();
     const text = props.text
-    const date = props.date
-    const link = props.link
+    const send_datetime = props.send_datetime
+    const notice_id = props.notice_id
+    const source_url = props.source_url
+    const noticeStore = React.useContext(NoticeStore.context)
+    const setAnchor = props.setAnchor;
+    function deleteNotice(){
+      if(noticeStore.myNotices.length == 1)
+        setAnchor(null)
+      noticeStore.deleteNotice(notice_id)
+    }
 
     return (
         <div className={classes.root}>
             <div className={classes.wrapper}>
-            <Link href={link} underline='none'>
+            <Link href={source_url} underline='none'>
                 <ListItem button>
                     <div className={classes.textField}>
                         <ListItemText classes={{primary:classes.text}} primary={text}/>
-                        <ListItemText classes={{primary:classes.date}} primary={date} bold/>
+                        <ListItemText classes={{primary:classes.send_datetime}} primary={send_datetime} bold/>
                     </div>
                 </ListItem>
             </Link>
                 <div className={classes.iconField}>
-                <IconButton>
+                <IconButton onClick={deleteNotice}>
                         <ClearIcon/>
                 </IconButton>
                 </div>

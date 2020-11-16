@@ -82,10 +82,10 @@ function createOptions() {
 
 //테이블
 const columns = [
-    { field: 'id', type : 'string', headerName: '아이디', width: getWidth(0.95,3/24), align:'left', headerAlign:'left' },
-    { field: 'name', type : 'string', headerName: '이름', width: getWidth(0.95,3/24), align:'left', headerAlign:'left'},
-    { field: 'nickname', type : 'string', headerName: '필명', width: getWidth(0.95,3/24), align:'left', headerAlign:'left'},
-    { field: 'age',type : 'number', headerName: '나이' , width: getWidth(0.95,3/24), align:'left', headerAlign:'left'},
+    { field: 'id', type : 'string', headerName: '아이디', width: getWidth(0.95,2/24), align:'left', headerAlign:'left' },
+    { field: 'name', type : 'string', headerName: '이름', width: getWidth(0.95,2/24), align:'left', headerAlign:'left'},
+    { field: 'nickname', type : 'string', headerName: '필명', width: getWidth(0.95,2/24), align:'left', headerAlign:'left'},
+    { field: 'age',type : 'number', headerName: '나이' , width: getWidth(0.95,2/24), align:'left', headerAlign:'left'},
     { field: 'gender',type : 'number', headerName: '성별', width: getWidth(0.95,3/24) , align:'left', headerAlign:'left'},
     { field: 'authority',type : 'string', headerName: '권한', width: getWidth(0.95,3/24), align:'left', headerAlign:'left'},
     { field: 'phonenumber',type : 'string', headerName: '휴대폰 번호', width: getWidth(0.95,3/24), align:'left', headerAlign:'left'},
