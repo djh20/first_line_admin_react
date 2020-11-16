@@ -4,10 +4,18 @@ import { IconButton } from '@material-ui/core';
 import Popover from '@material-ui/core/Popover';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import UserNoticePopOver from "../member/UserNoticePopOver"
-function NoticeButton(props){
+import NoticeStore from '../../stores/NoticeStore'
+import Badge from '@material-ui/core/Badge'
+import {observer} from 'mobx-react'
+const NoticeButton = observer( (props) => {
   const removeCookie = props.removeCookie
   const setHasCookie = props.setHasCookie
   const hasCookie = props.hasCookie
+  const noticeStore = React.useContext(NoticeStore.context)
+  
+  React.useEffect(()=>{
+    noticeStore.readMyNotices()
+  }, [])
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -20,7 +28,9 @@ function NoticeButton(props){
 return (
     <div style={{display:'inline'}}>
     <IconButton color="inherit">
-        <NotificationsIcon onClick={handleClick} fontSize="large" />
+      <Badge badgeContent={noticeStore.myNotices.length} color="secondary">
+          <NotificationsIcon onClick={handleClick} fontSize="large" />
+      </Badge>
     </IconButton>
       <Popover
       open={open}
@@ -28,17 +38,18 @@ return (
       onClose={handleClose}
       anchorOrigin={{
         vertical: 'bottom',
-        horizontal: 'center',
+        horizontal: 'left',
       }}
       transformOrigin={{
         vertical: 'top',
         horizontal: 'right',
     }}
+      transitionDuration={0}
     >
-      <UserNoticePopOver dialogClose={handleClose} removeCookie={removeCookie} setHasCookie={setHasCookie} hasCookie={hasCookie}/>
+      <UserNoticePopOver dialogClose={handleClose} removeCookie={removeCookie} setHasCookie={setHasCookie} hasCookie={hasCookie} setAnchor={setAnchorEl}/>
   </Popover>
     </div>
   );
-}
+})
 
   export default NoticeButton;

@@ -75,16 +75,18 @@ function createOptions(){
     { name : "발신 시각(이상)",type : "datetime-local"},
     { name : "내용",type : "text"},
     { name : "읽음",type : "text"},
+    { name : "url",type : "text"},
   ]
 }
 
 const columns = [
-  { field: 'id', type : 'number',headerName: '알림번호', width: getWidth(0.95,1/6), align:'left', headerAlign:'left' },
-  { field: 'receiver_id', type : 'string',headerName: '수신ID', width: getWidth(0.95,1/6) , align:'left', headerAlign:'left'},
-  { field: 'sender_id', type : 'string',headerName: '발신ID' , width: getWidth(0.95,1/6), align:'left', headerAlign:'left'},
-  { field: 'text', type : 'string',headerName: '내용' , width: getWidth(0.95,1/6), align:'left', headerAlign:'left'},
-  { field: 'send_datetime',type : 'dateTime', headerName: '발신 시각' , width: getWidth(0.95,1/6), align:'left', headerAlign:'left'},
-  { field: 'is_read',type : 'string', headerName: '읽음', width: getWidth(0.95,1/6) , align:'left', headerAlign:'left'},
+  { field: 'id', type : 'number',headerName: '알림번호', width: getWidth(0.95,1/7), align:'left', headerAlign:'left' },
+  { field: 'receiver_id', type : 'string',headerName: '수신ID', width: getWidth(0.95,1/7) , align:'left', headerAlign:'left'},
+  { field: 'sender_id', type : 'string',headerName: '발신ID' , width: getWidth(0.95,1/7), align:'left', headerAlign:'left'},
+  { field: 'text', type : 'string',headerName: '내용' , width: getWidth(0.95,1/7), align:'left', headerAlign:'left'},
+  { field: 'send_datetime',type : 'dateTime', headerName: '발신 시각' , width: getWidth(0.95,1/7), align:'left', headerAlign:'left'},
+  { field: 'is_read',type : 'string', headerName: '읽음', width: getWidth(0.95,1/7) , align:'left', headerAlign:'left'},
+  { field: 'source_url',type : 'string', headerName: '링크', width: getWidth(0.95,1/7) , align:'left', headerAlign:'left'},
 ];
 
 

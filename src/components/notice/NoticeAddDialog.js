@@ -19,12 +19,13 @@ export default function NoticeAddDialog() {
   const receiver_id = React.useRef()
   const sender_id = React.useRef()
   const text = React.useRef()
+  const source_url = React.useRef()
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
-    noticeStore.createNotice(receiver_id.current.value, sender_id.current.value, text.current.value).then(result => {
+    noticeStore.createNotice(receiver_id.current.value, sender_id.current.value, text.current.value, source_url.current.value).then(result => {
       console.log(result)
       if(result['status'] == 200){
         noticeStore.readNotices("내용","")
@@ -69,6 +70,15 @@ export default function NoticeAddDialog() {
             id="text"
             inputRef={text}
             label="내용"
+            type="text"
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="text"
+            inputRef={source_url}
+            label="url"
             type="text"
             fullWidth
           />
