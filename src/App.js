@@ -10,6 +10,7 @@ import KeywordManageView from './components/keyword/KeywordManageView'
 import MemberManageView from './components/member/MemberManageView'
 import SignInView from './components/member/SignInView'
 import LoginLogManageView from './components/log/LoginLogManageView'
+import LogManageView from './components/log/LogManageView'
 import {
     BrowserRouter as Router,
     Switch,
@@ -80,6 +81,7 @@ const App = observer( () =>  {
                       <Route exact path="/postManage" component={PostManageView}/>
                       <Route exact path="/memberManage" component={MemberManageView}/>
                       <Route exact path="/keywordManage" component={KeywordManageView}/>
+                      <Route exact path="/log" component={LogManageView}/>
                       <Route exact path="/loginLogManage" component={LoginLogManageView}/>
                   </Switch>
               </UserHomeLayout>

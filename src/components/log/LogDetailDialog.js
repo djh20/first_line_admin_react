@@ -7,13 +7,16 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import LoginLogStore from '../../stores/LoginLogStore'
 
-export default function LoginLogDetailDialog(props) {
+export default function LogDetailDialog(props) {
     const [open, setOpen] = React.useState(false);
     const defult_id = props.id
     const requester_ip = props.requester_ip
-    const login_id = props.login_id
+    const requester_id = props.requester_id
+    const request_method = props.request_method
+    const url = props.url
     const logging_date = props.logging_date
-    const login_result = props.login_result
+    const result_code = props.result_code
+    const result_code_detail = props.result_code_detail
     const handleClickOpen = () => {
         setOpen(true);
     }
@@ -51,8 +54,8 @@ export default function LoginLogDetailDialog(props) {
             />
             <TextField
                 margin="dense"
-                defaultValue={login_id}
-                label="아이디"
+                defaultValue={requester_id}
+                label="요청자 id"
                 type="text"
                 multiline
                 fullWidth
@@ -63,8 +66,8 @@ export default function LoginLogDetailDialog(props) {
             <TextField
                 margin="dense"
                 id="age"
-                defaultValue={logging_date}
-                label="로그인 날짜"
+                defaultValue={request_method}
+                label="요청 종류"
                 type="number"
                 multiline
                 fullWidth
@@ -75,8 +78,8 @@ export default function LoginLogDetailDialog(props) {
             <TextField
                 margin="dense"
                 id="gender"
-                defaultValue={login_result}
-                label="로그인 결과"
+                defaultValue={url}
+                label="요청 경로"
                 type="text"
                 multiline
                 fullWidth
@@ -84,6 +87,42 @@ export default function LoginLogDetailDialog(props) {
                 readOnly: true,
                 }}
             />
+            <TextField
+                margin="dense"
+                id="gender"
+                defaultValue={logging_date}
+                label="요청 시간"
+                type="text"
+                multiline
+                fullWidth
+                InputProps={{
+                readOnly: true,
+                }}
+            />
+            <TextField
+                margin="dense"
+                id="gender"
+                defaultValue={result_code}
+                label="수신 코드"
+                type="text"
+                multiline
+                fullWidth
+                InputProps={{
+                readOnly: true,
+                }}
+            />
+            <TextField
+                margin="dense"
+                id="gender"
+                defaultValue={result_code_detail}
+                label="수신 코드 내용"
+                type="text"
+                multiline
+                fullWidth
+                InputProps={{
+                readOnly: true,
+            }}
+        />
         </DialogContent>
         <DialogActions>
             <Button onClick={() => {setOpen(false) }} color="primary">

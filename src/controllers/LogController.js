@@ -1,16 +1,17 @@
 import axios from 'axios'
-import LoginLog from '../models/LoginLog'
+import Log from '../models/Log'
 
-export default async function requestReadLoginLog(){ 
+export default async function requestReadLog(){ 
     return await axios.get(
-        '/api/log/manage/login/', {withCredentials: true}
+        '/api/log/manage/', {withCredentials: true}
     ).catch(error => {return [] }).then(result =>{
         var data = [];
         if(result.data != null){ 
             var tmp = result.data
             Object.keys(tmp).map((key,index) => (
-                data.push((new LoginLog(tmp[key]['login_log_id'],tmp[key]['requester_ip']
-                ,tmp[key]['login_id'],tmp[key]['logging_date'],tmp[key]['login_result']
+                data.push((new Log(tmp[key]['log_id'],tmp[key]['requester_ip']
+                ,tmp[key]['requester_id'],tmp[key]['request_method'],tmp[key]['url']
+                ,tmp[key]['logging_date'],tmp[key]['result_code'],tmp[key]['result_code_detail']
                 )).get_dic())
             ))
             console.log(data)
@@ -22,14 +23,15 @@ export default async function requestReadLoginLog(){
 
 export async function requestSearchLoginLog(_code,_query) {
     return await axios.get(
-        '/api/log/manage/login/', {params:{ code :  _code, query : _query}}, {withCredentials: true}
+        '/api/log/manage/', {params:{ code :  _code, query : _query}}, {withCredentials: true}
     ).catch(error => {return [] }).then(result =>{
         var data = [];
         if(result.data != null){ 
             var tmp = result.data
             Object.keys(tmp).map((key,index) => (
-                data.push((new LoginLog(tmp[key]['login_log_id'],tmp[key]['requester_ip']
-                ,tmp[key]['login_id'],tmp[key]['logging_date'],tmp[key]['login_result']
+                data.push((new Log(tmp[key]['log_id'],tmp[key]['requester_ip']
+                ,tmp[key]['requester_id'],tmp[key]['request_method'],tmp[key]['url']
+                ,tmp[key]['logging_date'],tmp[key]['result_code'],tmp[key]['result_code_detail']
                 )).get_dic())
             ))
             console.log(data)

@@ -25,8 +25,7 @@ class LoginLogStore{
   @action
   searchLoginLog(code, query) {
 
-    const codeTable = {"제목":4,"게시글 번호 (이상)":5,'게시글 번호 (이하)':6,'조회수 (이상)':7,'조회수 (이하)':8}
-
+    const codeTable = {"전체":0,"로그 번호 (이상)":1,'로그 번호 (이하)':2,'요청자 ip':3,'아이디':4,'로그인 날짜 (이후)':5,'로그인 날짜 (이전)':6,'로그인 결과':7}
     return requestSearchLoginLog(codeTable[code],query).then(result=>{
       this.loginLogs = [...result]
     })

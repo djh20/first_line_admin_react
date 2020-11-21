@@ -1,14 +1,11 @@
 import React, {useEffect, useContext, useRef, useState} from 'react'
 import { fade, makeStyles } from '@material-ui/core/styles';
 import {observer} from 'mobx-react'
-import LoginLogStore from '../../stores/LoginLogStore'
+import LogStore from '../../stores/LogStore'
 import {toJS} from 'mobx'
 import SeachSpace from '../common/SearchSpace'
 import { DataGrid } from '@material-ui/data-grid';
-import Button from '@material-ui/core/Button';
-import LoginLogDetailDialog from './LoginLogDetailDialog'
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
+import LogDetailDialog from './LogDetailDialog'
 
 var elem = (document.compatMode === "CSS1Compat") ? 
     document.documentElement :
@@ -70,36 +67,43 @@ const useStyles = makeStyles( (theme) => ({
 function createOptions() {
     return [
         { name : "전체", type : "text"},
-        { name : "로그 번호 (이상)",type : "number"},
-        { name : "로그 번호 (이하)",type : "number"},
+        { name : "로그 번호 (이상)",type : "text"},
+        { name : "로그 번호 (이하)",type : "text"},
         { name : "요청자 ip",type : "text"},
-        { name : "아이디",type : "text"},
-        { name : "로그인 날짜 (이후)",type : "datetime-local"},
-        { name : "로그인 날짜 (이전)",type : "datetime-local"},
-        { name : "로그인 결과",type : "text"},
+        { name : "요청자 id",type : "text"},
+        { name : "요청 종류",type : "text",},
+        { name : "요청 경로",type : "text"},
+        { name : "요청 시간", type : "local_datatime"},
+        { name : "수신 코드",type : "number"},
+        { name : "수신 코드 내용",type : "text"},
     ]
 }
 
 //테이블
 const columns = [
-    { field: 'id', type : 'string', headerName: '로그 번호', width: getWidth(0.95,2/24), align:'left', headerAlign:'left' },
-    { field: 'requester_ip', type : 'string', headerName: '요청자 ip', width: getWidth(0.95,2/16), align:'left', headerAlign:'left'},
-    { field: 'login_id', type : 'string', headerName: '아이디', width: getWidth(0.95,2/16), align:'left', headerAlign:'left'},
-    { field: 'logging_date',type : 'datetime', headerName: '로그인 날짜' , width: getWidth(0.95,2/12), align:'left', headerAlign:'left'},
-    { field: 'login_result',type : 'number', headerName: '로그인 결과', width: getWidth(0.95,3/16), align:'left', headerAlign:'left'},
+    { field: 'id', type : 'number', headerName: '로그 번호', width: getWidth(0.95,2/24), align:'left', headerAlign:'left' },
+    { field: 'requester_ip', type : 'string', headerName: '요청자 ip', width: getWidth(0.95,2/22), align:'left', headerAlign:'left'},
+    { field: 'requester_id', type : 'string', headerName: '요청자 id', width: getWidth(0.95,2/22), align:'left', headerAlign:'left'},
+    { field: 'request_method',type : 'string', headerName: '요청 종류' , width: getWidth(0.95,2/22), align:'left', headerAlign:'left'},
+    { field: 'url',type : 'string', headerName: '요청 경로', width: getWidth(0.95,3/22), align:'left', headerAlign:'left'},
+    { field: 'logging_date', type : 'datetime', headerName: '요청 시간', width: getWidth(0.95,2/22), align:'left', headerAlign:'left'},
+    { field: 'result_code',type : 'number', headerName: '수신 코드' , width: getWidth(0.95,2/22), align:'left', headerAlign:'left'},
+    { field: 'result_code_detail',type : 'string', headerName: '수신 코드 내용', width: getWidth(0.95,3/22), align:'left', headerAlign:'left'},
     {
         field: 'detail',
         headerName : '상세',
         renderCell:(params) => (
-            <LoginLogDetailDialog 
+            <LogDetailDialog 
                 id = {params.value['id']} 
                 requester_ip = {params.value['requester_ip']} 
-                login_id = {params.value['login_id']} 
-                nickname = {params.value['nickname']} 
+                requester_id = {params.value['requester_id']} 
+                request_method = {params.value['request_method']} 
+                url = {params.value['url']} 
                 logging_date = {params.value['logging_date']} 
-                login_result = {params.value['login_result']} 
+                result_code = {params.value['result_code']} 
+                result_code_detail = {params.value['result_code_detail']} 
             >  
-            </LoginLogDetailDialog>
+            </LogDetailDialog>
         ),
     }  
 ];
@@ -107,31 +111,25 @@ const columns = [
 const LoginLogManageView = observer( (props) =>{
     const classes = useStyles();
     const [selected,setSelection] = useState([]);
-    const [open,setOpen] = useState(false);
-    const [code, setCode] = React.useState(0);
     const category = useRef();
     const input = useRef();
     const options = createOptions()
-    const loginLogStore = useContext(LoginLogStore.context)
-
+    const logStore = useContext(LogStore.context)
     useEffect(() => {
-        loginLogStore.readLoginLog();
+        logStore.readLog();
         }, []); 
         
     const searchButtonClick = () => {
-        loginLogStore.searchLoginLog(options[category.current.value]['name'] , input.current.value)
+        logStore.searchLog(options[category.current.value]['name'] , input.current.value)
     }    
         
     return (
         <div className={classes.root}>
         <SeachSpace category={category} input={input} options={options} onSearch={searchButtonClick} />
         <div className={classes.table}>
-            <DataGrid rows={loginLogStore.loginLogs} columns={columns} pageSize={10} checkboxSelection
+            <DataGrid rows={logStore.logs} columns={columns} pageSize={10} checkboxSelection
             onSelectionChange={(data) => {
-            for(var i = 0 ; i < data['rows'].length ;  i++){
-                console.log(toJS(data['rows'][i]))
-            }
-            setSelection(data)
+                setSelection(data)
             }}
             />
         </div>
