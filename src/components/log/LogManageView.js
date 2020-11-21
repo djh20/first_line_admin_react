@@ -67,13 +67,12 @@ const useStyles = makeStyles( (theme) => ({
 function createOptions() {
     return [
         { name : "전체", type : "text"},
-        { name : "로그 번호 (이상)",type : "text"},
-        { name : "로그 번호 (이하)",type : "text"},
         { name : "요청자 ip",type : "text"},
         { name : "요청자 id",type : "text"},
         { name : "요청 종류",type : "text",},
         { name : "요청 경로",type : "text"},
-        { name : "요청 시간", type : "local_datatime"},
+        { name : "요청 시간 (이후)", type : "local_datetime"},
+        { name : "요청 시간 (이전)", type : "local_datetime"},
         { name : "수신 코드",type : "number"},
         { name : "수신 코드 내용",type : "text"},
     ]
@@ -86,7 +85,7 @@ const columns = [
     { field: 'requester_id', type : 'string', headerName: '요청자 id', width: getWidth(0.95,2/22), align:'left', headerAlign:'left'},
     { field: 'request_method',type : 'string', headerName: '요청 종류' , width: getWidth(0.95,2/22), align:'left', headerAlign:'left'},
     { field: 'url',type : 'string', headerName: '요청 경로', width: getWidth(0.95,3/22), align:'left', headerAlign:'left'},
-    { field: 'logging_date', type : 'datetime', headerName: '요청 시간', width: getWidth(0.95,2/22), align:'left', headerAlign:'left'},
+    { field: 'logging_date', type : 'datetime', headerName: '요청 시간', width: getWidth(0.95,2/18), align:'left', headerAlign:'left'},
     { field: 'result_code',type : 'number', headerName: '수신 코드' , width: getWidth(0.95,2/22), align:'left', headerAlign:'left'},
     { field: 'result_code_detail',type : 'string', headerName: '수신 코드 내용', width: getWidth(0.95,3/22), align:'left', headerAlign:'left'},
     {

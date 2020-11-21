@@ -21,7 +21,7 @@ export default async function requestReadLog(){
     });
 }
 
-export async function requestSearchLoginLog(_code,_query) {
+export async function requestSearchLog(_code,_query) {
     return await axios.get(
         '/api/log/manage/', {params:{ code :  _code, query : _query}}, {withCredentials: true}
     ).catch(error => {return [] }).then(result =>{
