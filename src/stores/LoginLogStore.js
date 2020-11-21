@@ -1,6 +1,6 @@
 import { observable, action} from 'mobx';
 import {createContext} from "react";
-import requestReadLoginLog from "../controllers/LoginLogController"
+import requestReadLoginLog , {requestSearchLoginLog} from "../controllers/LoginLogController"
 class LoginLogStore{
   @observable loginLogs = [] // 4-3
   static instance = null; // 4-1
@@ -25,7 +25,7 @@ class LoginLogStore{
   @action
   searchLoginLog(code, query) {
 
-    const codeTable = {"전체":0,"로그 번호 (이상)":1,'로그 번호 (이하)':2,'요청자 ip':3,'아이디':4,'로그인 날짜 (이후)':5,'로그인 날짜 (이전)':6,'로그인 결과':7}
+    const codeTable = {"전체":0,'요청자 ip':1,'아이디':2,'로그인 날짜 (이후)':3,'로그인 날짜 (이전)':4,'로그인 결과':5}
     return requestSearchLoginLog(codeTable[code],query).then(result=>{
       this.loginLogs = [...result]
     })

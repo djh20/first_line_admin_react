@@ -71,8 +71,8 @@ function createOptions() {
         { name : "요청자 id",type : "text"},
         { name : "요청 종류",type : "text",},
         { name : "요청 경로",type : "text"},
-        { name : "요청 시간 (이후)", type : "local_datetime"},
-        { name : "요청 시간 (이전)", type : "local_datetime"},
+        { name : "요청 시간 (이후)", type : "datetime-local"},
+        { name : "요청 시간 (이전)", type : "datetime-local"},
         { name : "수신 코드",type : "number"},
         { name : "수신 코드 내용",type : "text"},
     ]

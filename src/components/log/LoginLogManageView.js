@@ -70,8 +70,6 @@ const useStyles = makeStyles( (theme) => ({
 function createOptions() {
     return [
         { name : "전체", type : "text"},
-        { name : "로그 번호 (이상)",type : "number"},
-        { name : "로그 번호 (이하)",type : "number"},
         { name : "요청자 ip",type : "text"},
         { name : "아이디",type : "text"},
         { name : "로그인 날짜 (이후)",type : "datetime-local"},
