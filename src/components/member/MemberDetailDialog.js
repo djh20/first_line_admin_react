@@ -15,7 +15,6 @@ export default function PostDetailDialog(props) {
     const [crntGender, setCrntGender] = React.useState(true);
     const [code, setCode] = React.useState(0);
     const defult_id = props.id
-    const defult_pw = props.pw    
     const defult_name = props.name
     const defult_nickname = props.nickname
     const defult_age = props.age
@@ -24,7 +23,6 @@ export default function PostDetailDialog(props) {
     const defult_phonenumber = props.phonenumber
     const defult_email = props.email
     const id = useRef()
-    const pw = useRef()    
     const name = useRef()
     const nickname = useRef()
     const age = useRef()
@@ -39,11 +37,13 @@ export default function PostDetailDialog(props) {
     const handleClose = () => {
         if(gender.current.value == '여성')
             setCrntGender(false)
-        memberStore.createMember(id.current.value, pw.current.value,name.current.value,nickname.current.value,age.current.value,
+        memberStore.createMember(id.current.value,name.current.value,nickname.current.value,age.current.value,
             crntGender,authority.current.value,phonenumber.current.value,email.current.value).then(result => {
             console.log(result)
             if(result == true)
+            {
                 setCode(1)
+            }
             else
                 setCode(2)
             setOpen(false)

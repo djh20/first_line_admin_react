@@ -34,8 +34,8 @@ class MemberStore{
       })
   }
   @action 
-  createMember(id,pw,name,nickname,age,gender,authority,phonenumber,email){
-      const newMember = new Member(id,pw,name,nickname,age,gender,authority,phonenumber,email)
+  createMember(id,name,nickname,age,gender,authority,phonenumber,email){
+      const newMember = new Member(id,name,nickname,age,gender,authority,phonenumber,email)
       return requestEditMember(newMember).then( 
         result => {
           if(result==200)
