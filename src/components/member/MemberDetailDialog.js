@@ -69,6 +69,7 @@ export default function PostDetailDialog(props) {
     };
 
     const selectClose = () => {
+        console.log(gender.current.value);
         setSelect(false);
     };
 
@@ -175,7 +176,7 @@ export default function PostDetailDialog(props) {
                     defaultValue={'관리자'}
                     onClose={selectClose}
                     onOpen={selectOpen}
-                    inputRef={gender}
+                    inputRef={authority}
                 >
                     <MenuItem value={'회원'}>회원</MenuItem>
                     <MenuItem value={'관리자'}>관리자</MenuItem>
