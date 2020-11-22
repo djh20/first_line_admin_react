@@ -9,6 +9,8 @@ import KeywordAddDialog from './KeywordAddDialog'
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+
 var elem = (document.compatMode === "CSS1Compat") ? 
     document.documentElement :
     document.body;
@@ -108,9 +110,7 @@ const KeywordManageView = observer( (props) => {
     keywordStore.readKeywords(options[category.current.value]['name'] , input.current.value)
   }    
   const deleteClick = () => {
-    console.log(selected)
     keywordStore.deleteKeywords(selected).then(result => {
-      console.info(result)
       if(result['status'] == 200){
         keywordStore.readKeywords("키워드","")
         setCode(1)
@@ -136,8 +136,10 @@ const KeywordManageView = observer( (props) => {
             />
           </div>
           <div className={classes.buttons}>
-            <KeywordAddDialog/>
-            <Button variant="contained" color="secondary" onClick={deleteClick} >삭제</Button>
+            <Grid container direction="row">
+              <KeywordAddDialog/> 
+              <Button variant="contained" color="secondary" onClick={deleteClick} >삭제</Button>
+            </Grid>
           </div>
           <Snackbar open={barOpen} autoHideDuration={6000} onClose={() => {setBarOpen(false)}}>
             {

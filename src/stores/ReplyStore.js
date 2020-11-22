@@ -23,7 +23,6 @@ class ReplyStore {
     {
         return requestReadAllReplies().then(result=>{
             this.replies = [...result]
-            console.log(this.replies)
         })
     }
 
@@ -52,7 +51,6 @@ class ReplyStore {
     readReplies(post_id){
         requestReadReplies(post_id).then(result=>{
             this.replies = [...this.replies,...result]
-            console.log(this.replies)
         })
     }
 
@@ -60,10 +58,7 @@ class ReplyStore {
     deleteReply(reply_id){
         console.log(reply_id)
         return requestDeleteReply(reply_id).then(result=>{
-        if(result==200)
-            return true
-        else
-            return false
+            return result
         })
     }
 
@@ -71,10 +66,7 @@ class ReplyStore {
     blindReply(reply_id){
         console.log(reply_id)
         return requestBlindReply(reply_id).then(result=>{
-        if(result==200)
-            return true
-        else
-            return false
+            return result
         })
     }
 

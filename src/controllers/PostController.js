@@ -50,9 +50,9 @@ export async function requestSearchPost(_code, _query){
 
 
 export async function requestDeletePost(post){
-    return await axios({method:'DELETE',url:'api/post/manage/', data:{post : post}, withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
+    return await axios({method:'DELETE',url:'api/post/manage/', data:{post : post}, withCredentials : true}).catch(err => {console.log(err); return err.response}).then(res => {return res})
 }
 
 export async function requestBlindPost(post){
-    return await axios.post('api/post/manage/blind/',{post: post}, {withCredentials: true}).catch(err => console.warn(err)).then(res => {return res.status})
+    return await axios.post('api/post/manage/blind/',{post: post}, {withCredentials: true}).catch(err => {console.log(err); return err.response}).then(res => {console.log(res); return res})
 }

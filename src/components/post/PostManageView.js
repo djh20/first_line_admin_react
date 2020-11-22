@@ -140,10 +140,10 @@ const columns = [
 
 const PostManageView = observer( (props) =>{
     const classes = useStyles();
+    const [message, setMessage] = React.useState("");
     const [selected,setSelection] = useState([]);
     const [open,setOpen] = useState(false);
     const [code, setCode] = React.useState(0);
-    const [type, setType] = useState('삭제');
     const category = useRef();
     const input = useRef();
     const options = createOptions()
@@ -157,8 +157,7 @@ const PostManageView = observer( (props) =>{
   
 const deleteButtonClick = () => {
     postStore.deletePost(selected).then(result => {
-        setType('삭제');
-    if(result == true)
+    if(result['status'] == 200)
     {
         setCode(0);
         setOpen(true);
@@ -166,16 +165,15 @@ const deleteButtonClick = () => {
     }
     else
         setCode(1);
-        setOpen(true);
-  }
-  )
+    setOpen(true)
+    setMessage(result['data']['message'])
+    })
 }
         
 
 const blindButtonClick = () => {
     postStore.blindPost(selected).then(result=> {
-        setType('블라인드');
-        if(result == true)
+        if(result['status'] == 200)
         {
             setCode(0);
             setOpen(true);
@@ -183,21 +181,18 @@ const blindButtonClick = () => {
         }
         else
             setCode(0);
-            setOpen(true);
-            postStore.readAll();
-    } 
-        )
+        setOpen(true);
+        postStore.readAll();
+        setMessage(result['data']['message'])
+    })
 }
     return (
       <div className={classes.root}>
       <SeachSpace category={category} input={input} options={options} onSearch={searchButtonClick} />
       <div className={classes.table}>
         <DataGrid rows={postStore.posts} columns={columns} pageSize={10} checkboxSelection
-         onSelectionChange={(data) => {
-          for(var i = 0 ; i < data['rows'].length ;  i++){
-            console.log(toJS(data['rows'][i]))
-          }
-          setSelection(data)
+            onSelectionChange={(data) => {
+            setSelection(data)
         }}
         />
       </div>
@@ -209,10 +204,10 @@ const blindButtonClick = () => {
         {
         code == 1 ?(
         <Alert onClose={() => {setOpen(false)}} severity="error">
-          {type} 실패하였습니다.
+            {message}
         </Alert>):(
           <Alert onClose={() => {setOpen(false)}} severity="success">
-          {type} 성공하였습니다.
+            {message}
         </Alert>
         )
         }

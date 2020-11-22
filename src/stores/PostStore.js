@@ -35,23 +35,16 @@ class PostStore{
 
   @action
   deletePost(post){
-    console.log(post)
     return requestDeletePost(post).then(result=>{
-      if(result==200)
-        return true
-      else
-        return false
+      console.log(result)
+      return result
     })
   }
 
   @action
   blindPost(post){
-    console.log(post)
     return requestBlindPost(post).then(result=>{
-      if(result==200)
-        return true
-      else
-        return false
+      return result
     })
   }
 }

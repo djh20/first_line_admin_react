@@ -66,9 +66,9 @@ export async function requestSearchReply(_code, _query){
 }
 
 export async function requestDeleteReply(reply){
-    return await axios({method:'DELETE',url:'api/reply/manage/', data:{reply : reply}, withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
+    return await axios({method:'DELETE',url:'api/reply/manage/', data:{reply : reply}, withCredentials : true}).catch(err => {console.log(err); return err.response}).then(res => {return res})
 }
 
 export async function requestBlindReply(reply){
-    return await axios.post('api/reply/manage/blind/',{reply: reply}, {withCredentials: true}).catch(err => console.warn(err)).then(res => {return res.status})
+    return await axios.post('api/reply/manage/blind/',{reply: reply}, {withCredentials: true}).catch(err => {console.log(err); return err.response}).then(res => {return res})
 }

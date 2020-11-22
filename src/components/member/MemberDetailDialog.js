@@ -31,6 +31,7 @@ export default function PostDetailDialog(props) {
     const [barOpen, setBarOpen]= React.useState(false);
     const [code, setCode] = React.useState(0);
     const [select, setSelect] = React.useState(false);
+    const [message, setMessage] = React.useState("");
     const defult_id = props.id
     const defult_name = props.name
     const defult_nickname = props.nickname
@@ -55,7 +56,7 @@ export default function PostDetailDialog(props) {
         memberStore.createMember(id.current.value,name.current.value,nickname.current.value,age.current.value,
             gender.current.value,authority.current.value,phonenumber.current.value,email.current.value).then(result => {
             console.log(result)
-            if(result == true)
+            if(result['status'] == 200)
             {
                 setCode(1)
             }
@@ -63,6 +64,7 @@ export default function PostDetailDialog(props) {
                 setCode(2)
             setOpen(false)
             setBarOpen(true)
+            setMessage(result['data']['message'])
         })
         setOpen(false)
         memberStore.readAllMembers()
@@ -217,10 +219,10 @@ export default function PostDetailDialog(props) {
         {
         code == 1 ?(
         <Alert onClose={() => {setBarOpen(false)}} severity="success">
-          수정 성공하였습니다.
+          {message}
         </Alert>):(
           <Alert onClose={() => {setBarOpen(false)}} severity="error">
-          수정 실패하였습니다.
+          {message}
         </Alert>
         )
         }

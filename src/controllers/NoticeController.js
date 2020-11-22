@@ -37,7 +37,7 @@ export async function requestCreateNotice(_receiver_id, _sender_id, _text, _sour
 }
 
 export async function requestDeleteNotice(notice_id){
-    return await axios({method:'DELETE',url:'api/notice/', data:{notice_id : notice_id}, withCredentials : true}).catch(err => console.warn(err)).then(res => {return res.status})
+    return await axios({method:'DELETE',url:'api/notice/', data:{notice_id : notice_id}, withCredentials : true}).catch(err => {console.log(err); return err.response}).then(res => {return res.status})
 }
 
 

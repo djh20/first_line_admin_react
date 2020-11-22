@@ -41,8 +41,7 @@ export async function requestSearchMember(_code, _query){
 }
 
 export async function requestDeleteMember(member){
-    return await axios({method:'DELETE',url:'/api/member/manage/', data:{member : member}, withCredentials : true}).catch(
-        err => console.warn(err)).then(res => {return res.status})
+    return await axios({method:'DELETE',url:'/api/member/manage/', data:{member : member}, withCredentials : true}).catch(err => {console.log(err); return err.response}).then(res => {return res.status})
 }
 
 export async function requestEditMember(_member){
@@ -62,5 +61,5 @@ export async function requestLogin(id, pw){
 
           return true
         }
-  }).catch(error => {console.log('error : ',error.response)});
+  }).catch(err => {console.log(err); return err.response});
 }

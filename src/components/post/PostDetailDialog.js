@@ -18,8 +18,6 @@ export default function PostDetailDialog(props) {
     const handleClickOpen = () => {
         setOpen(true);
     }
-    console.log(post_id)
-    console.log(text)
     return (
         <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
