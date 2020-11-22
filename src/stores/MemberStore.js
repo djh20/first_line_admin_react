@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx';
 import {createContext} from "react";
 import axios from 'axios'
-import requestReadAllMembers, {requestDeleteMember,requestEditMember, requestSearchMember, requestLogin} from "../controllers/MemberController"
+import requestReadAllMembers, {requestDeleteMember,requestEditMember, requestSearchMember, requestLogin,requestChangePw} from "../controllers/MemberController"
 import Member from "../models/Member"
 class MemberStore{
   @observable members = []
@@ -27,21 +27,14 @@ class MemberStore{
   @action
   deleteMember(member){
       return requestDeleteMember(member).then(result=>{
-      if(result==200)
-          return true
-      else
-          return false
+        return result
       })
   }
   @action 
   createMember(id,name,nickname,age,gender,authority,phonenumber,email){
       const newMember = new Member(id,name,nickname,age,gender,authority,phonenumber,email)
       return requestEditMember(newMember).then( 
-        result => {
-          if(result==200)
-            return true
-          else
-            return false
+        result => { return result
     })
   }
   @action
@@ -54,8 +47,19 @@ class MemberStore{
 
   @action 
   async login(id, pw){
-    return requestLogin(id,pw)
+    return requestLogin(id,pw).then(
+      (result) => {
+        return result
+      }
+    )
   }
 
+  @action 
+  changePw(id)
+  {
+    return requestChangePw(id).then(
+      (result) => {return result}
+    )
+  }
 }
 export default  MemberStore = MemberStore.getInstance()

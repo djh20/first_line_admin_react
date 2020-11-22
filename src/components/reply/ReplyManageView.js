@@ -119,7 +119,6 @@ const ReplyManageView = observer( (props) =>{
     const [selected,setSelection] = useState([]);
     const [open,setOpen] = useState(false);
     const [code, setCode] = React.useState(0);
-    const [type, setType] = useState('삭제');
     const [message, setMessage] = React.useState("");
     const category = useRef();
     const input = useRef();

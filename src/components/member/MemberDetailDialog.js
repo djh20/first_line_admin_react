@@ -71,7 +71,6 @@ export default function PostDetailDialog(props) {
     };
 
     const selectClose = () => {
-        console.log(gender.current.value);
         setSelect(false);
     };
 
