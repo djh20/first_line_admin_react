@@ -11,7 +11,7 @@ export default async function readKeywords(_condition, _query){
             Object.keys(tmp).map((key,index) => (
                 data.push(new Keyword(tmp[key]['keyword'],
                 tmp[key]['registrator'],tmp[key]['registration_date'],
-                tmp[key]['recent_used_date'],tmp[key]['suggest_amount'],
+                tmp[key]['recent_used_date'],tmp[key]['suggest_amount'],tmp[key]['suggest_date']
                 ).getDic())
             ))
             return data
@@ -31,4 +31,8 @@ export async function requestCreateKeyword(_keyword, _to_use_date){
         return result
     })
 
+}
+
+export async function requestDeleteKeywords(_keywords) {
+    return await axios({method:'DELETE',url:'/api/keyword/manage/', data:{keyword : _keywords}, withCredentials : true}).catch(err => {console.log(err); return err.response}).then(res => {return res})
 }
