@@ -88,7 +88,7 @@ const App = observer( () =>  {
             )
           }
           </Router>
-          <UserNoticeItem></UserNoticeItem>
+        
         </div>
   );
 })

@@ -100,6 +100,7 @@ function createOptions() {
         { name : "삭제 여부",type : "text"},
         { name : "블라인드 여부",type : "text"},
         { name : "내용",type : "text"},
+        {name : "성별" , type : 'select'}
     ]
 }
 
@@ -108,7 +109,7 @@ const columns = [
     { field: 'id', type : 'number', headerName: '글 번호', width: getWidth(0.95,3/60), align:'left', headerAlign:'left' },
     { field: 'title', type : 'string', headerName: '제목', width: getWidth(0.95,3/60), align:'left', headerAlign:'left'},
     { field: 'num_lookup', type : 'number', headerName: '조회수', width: getWidth(0.95,3/50), align:'left', headerAlign:'left'},
-    { field: 'like',type : 'number', headerName: '좋아요' , width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
+    { field: 'num_good',type : 'number', headerName: '좋아요' , width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
     { field: 'num_reply',type : 'number', headerName: '댓글수', width: getWidth(0.95,2/34) , align:'left', headerAlign:'left'},
     { field: 'tag',type : 'string', headerName: '태그', width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},
     { field: 'writer',type : 'string', headerName: '작성자', width: getWidth(0.95,2/34), align:'left', headerAlign:'left'},

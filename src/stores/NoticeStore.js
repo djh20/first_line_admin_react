@@ -52,6 +52,7 @@ class NoticeStore {
 
     find(notice_id){
         for(var i = 0 ; i < this.myNotices.length ; i++){
+            console.log(this.myNotices[i]['notice_id'])
             if(this.myNotices[i]['notice_id'] == notice_id)
                 return i;
         }

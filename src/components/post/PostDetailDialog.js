@@ -17,10 +17,9 @@ export default function PostDetailDialog(props) {
     const temperature = props.temperature
     const handleClickOpen = () => {
         setOpen(true);
-        console.log(post_id)
-        console.log(text)
     }
-
+    console.log(post_id)
+    console.log(text)
     return (
         <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
@@ -65,18 +64,9 @@ export default function PostDetailDialog(props) {
                 readOnly: true,
                 }}
             />
-            <TextField
-                margin="dense"
-                id="text"
-                defaultValue={text}
-                label="내용"
-                type="text"
-                multiline
-                fullWidth
-                InputProps={{
-                readOnly: true,
-                }}
-            />
+            <Typography variant="h7" >
+                {text}
+            </Typography>
             <TextField
                 margin="dense"
                 id="text"

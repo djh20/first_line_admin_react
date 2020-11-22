@@ -10,12 +10,12 @@ export default async function requestReadAllPost(){ // 5-1
             var tmp = result.data
             Object.keys(tmp).map((key,index) => (
                 data.push((new Post(tmp[key]['post_id'], tmp[key]['title'],
-                tmp[key]['num_lookup'],tmp[key]['text'],tmp[key]['like'],tmp[key]['num_reply'],
+                tmp[key]['num_lookup'],tmp[key]['text'],tmp[key]['num_reply'],
                 tmp[key]['tag'],tmp[key]['writer'],
                 tmp[key]['writing_date'],tmp[key]['edting_date'],
                 tmp[key]['temperature'],tmp[key]['keyword'],tmp[key]['prob_p_dp']
                 ,tmp[key]['prob_a_da'],tmp[key]['prob_is_slang'],tmp[key]['is_deleted']
-                ,tmp[key]['is_blinded']
+                ,tmp[key]['is_blinded'],tmp[key]['num_good']
                 )).get_dic())
             ))
             return data
@@ -34,12 +34,12 @@ export async function requestSearchPost(_code, _query){
             var tmp = result.data
             Object.keys(tmp).map((key,index) => (
                 data.push((new Post(tmp[key]['post_id'], tmp[key]['title'],
-                tmp[key]['num_lookup'],tmp[key]['text'],tmp[key]['like'],tmp[key]['num_reply'],
+                tmp[key]['num_lookup'],tmp[key]['text'],tmp[key]['num_reply'],
                 tmp[key]['tag'],tmp[key]['writer'],
                 tmp[key]['writing_date'],tmp[key]['edting_date'],
                 tmp[key]['temperature'],tmp[key]['keyword'],tmp[key]['prob_p_dp']
                 ,tmp[key]['prob_a_da'],tmp[key]['prob_is_slang'],tmp[key]['is_deleted']
-                ,tmp[key]['is_blinded']
+                ,tmp[key]['is_blinded'],tmp[key]['num_good']
                 )).get_dic())
             ))
             return data
