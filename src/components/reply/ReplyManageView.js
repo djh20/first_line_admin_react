@@ -97,6 +97,7 @@ const columns =
 
 function createOptions() {
     return [
+        { name : "전체",type : "text"},
         { name : "댓글 번호 (이상)",type : "number"},
         { name : "댓글 번호 (이하)",type : "number"},
         { name : "게시글 번호 (이상)",type : "number"},

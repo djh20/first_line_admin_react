@@ -68,6 +68,7 @@ const useStyles = makeStyles( (theme) => ({
 
 function createOptions(){
   return [
+    { name : "전체",type : "text"},
     { name : "알림 번호",type : "number"},
     { name : "수신 ID",type : "test"},
     { name : "발신 ID",type : "test"},
