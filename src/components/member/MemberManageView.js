@@ -7,7 +7,7 @@ import SeachSpace from '../common/SearchSpace'
 import { DataGrid } from '@material-ui/data-grid';
 import Button from '@material-ui/core/Button';
 import MemberDetailDialog from './MemberDetailDialog'
-import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarStore from '../../stores/SnackbarStore'
 import Alert from '@material-ui/lab/Alert';
 
 var elem = (document.compatMode === "CSS1Compat") ? 
@@ -73,7 +73,7 @@ function createOptions() {
         { name : "필명",type : "text"},
         { name : "나이 (이상)",type : "number"},
         { name : "나이 (이하)",type : "number"},
-        { name : "성별",type : "text"},
+        { name : "성별",type : "select", option:{True:"남자",False:"여자"}},
         { name : "권한",type : "number"},
         { name : "휴대폰 번호",type : "text"},
         { name : "이메일",type : "text"},
@@ -113,9 +113,6 @@ const columns = [
 const MemberManageView = observer( (props) =>{
     const classes = useStyles();
     const [selected,setSelection] = useState([]);
-    const [open,setOpen] = useState(false);
-    const [code, setCode] = React.useState(0);
-    const [message, setMessage] = React.useState("");
     const category = useRef();
     const input = useRef();
     const options = createOptions()
@@ -131,16 +128,11 @@ const MemberManageView = observer( (props) =>{
         memberStore.deleteMember(selected).then(result => {
         if(result['status'] == 200)
         {
-            setCode(0);
-            setOpen(true);
+            SnackbarStore.pushMessage(result['data']['message'], true)
             memberStore.readAllMembers();
         }
         else
-        {
-            setCode(1);
-            setOpen(true);
-        }
-        setMessage(result['data']['message'])
+            SnackbarStore.pushMessage(result['data']['message'], false)
         }
     )
     }
@@ -160,20 +152,9 @@ const MemberManageView = observer( (props) =>{
         </div>
         <div className={classes.buttons}>
             <Button  variant="contained" color="secondary" onClick={deleteButtonClick} >삭제</Button>
-            </div>
-        <Snackbar open={open} autoHideDuration={6000} onClose={() => {setOpen(false)}}>
-            {
-            code == 1 ?(
-            <Alert onClose={() => {setOpen(false)}} severity="error">
-                {message}
-            </Alert>):(
-            <Alert onClose={() => {setOpen(false)}} severity="success">
-                {message}
-            </Alert>
-            )
-            }
-        </Snackbar>
-</div>
+        </div>
+
+        </div>
     );
 }
 )

@@ -75,7 +75,7 @@ function createOptions(){
     { name : "발신 시각(이하)",type : "datetime-local"},
     { name : "발신 시각(이상)",type : "datetime-local"},
     { name : "내용",type : "text"},
-    { name : "읽음",type : "text"},
+    { name : "읽음",type : "select", option:{True:"Y", False:"N"}},
     { name : "url",type : "text"},
   ]
 }

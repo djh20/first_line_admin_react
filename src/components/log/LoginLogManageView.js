@@ -5,10 +5,7 @@ import LoginLogStore from '../../stores/LoginLogStore'
 import {toJS} from 'mobx'
 import SeachSpace from '../common/SearchSpace'
 import { DataGrid } from '@material-ui/data-grid';
-import Button from '@material-ui/core/Button';
 import LoginLogDetailDialog from './LoginLogDetailDialog'
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
 
 var elem = (document.compatMode === "CSS1Compat") ? 
     document.documentElement :
@@ -74,7 +71,7 @@ function createOptions() {
         { name : "아이디",type : "text"},
         { name : "로그인 날짜 (이후)",type : "datetime-local"},
         { name : "로그인 날짜 (이전)",type : "datetime-local"},
-        { name : "로그인 결과",type : "text"},
+        { name : "로그인 결과",type : "select", option:{"성공":"성공", "실패":"실패"}},
     ]
 }
 

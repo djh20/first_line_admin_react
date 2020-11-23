@@ -67,7 +67,7 @@ function createOptions(){
   return [
     { name : "신고 번호",type : "number"},
     { name : "신고 내용",type : "text"},
-    { name : "처리 결과",type : "text"},
+    { name : "처리 결과",type : "select", option:{True:"Y", False:"N"}},
     { name : "처리 내용",type : "text"},
     { name : "신고일(이상)",type : "datetime-local"},
     { name : "신고일(이하)",type : "datetime-local"},
@@ -75,7 +75,7 @@ function createOptions(){
     { name : "처리일(이하)",type : "datetime-local"},
     { name : "신고자",type : "text"},
     { name : "처리자",type : "text"},
-    { name : "처리 여부",type : "text"},
+    { name : "처리 여부",type : "select", option:{True:"Y", False:"N"}},
     { name : "대상 게시글 ID",type : "text"},
     { name : "대상 댓글 ID",type : "text"}
   ]

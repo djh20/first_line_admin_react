@@ -7,7 +7,7 @@ import SeachSpace from '../common/SearchSpace'
 import { DataGrid } from '@material-ui/data-grid';
 import Button from '@material-ui/core/Button';
 import PostDetailDialog from './PostDetailDialog'
-import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarStore from '../../stores/SnackbarStore'
 import Alert from '@material-ui/lab/Alert';
 
 var elem = (document.compatMode === "CSS1Compat") ? 
@@ -97,10 +97,9 @@ function createOptions() {
         { name : "A/DA (이상)",type : "number"},
         { name : "욕설 확률 (이상)",type : "number"},
         { name : "욕설 확률 (이하)",type : "number"},
-        { name : "삭제 여부",type : "text"},
-        { name : "블라인드 여부",type : "text"},
-        { name : "내용",type : "text"},
-        {name : "성별" , type : 'select'}
+        { name : "삭제 여부",type : "select", option:{True:"Y", False:"N"}},
+        { name : "블라인드 여부",type : "select", option:{True:"Y", False:"N"}},
+        { name : "내용",type : "text"}
     ]
 }
 
@@ -140,10 +139,7 @@ const columns = [
 
 const PostManageView = observer( (props) =>{
     const classes = useStyles();
-    const [message, setMessage] = React.useState("");
     const [selected,setSelection] = useState([]);
-    const [open,setOpen] = useState(false);
-    const [code, setCode] = React.useState(0);
     const category = useRef();
     const input = useRef();
     const options = createOptions()
@@ -159,14 +155,11 @@ const deleteButtonClick = () => {
     postStore.deletePost(selected).then(result => {
     if(result['status'] == 200)
     {
-        setCode(0);
-        setOpen(true);
+        SnackbarStore.pushMessage(result['data']['message'], true)
         postStore.readAll();
     }
     else
-        setCode(1);
-    setOpen(true)
-    setMessage(result['data']['message'])
+        SnackbarStore.pushMessage(result['data']['message'], false)
     })
 }
         
@@ -200,18 +193,6 @@ const blindButtonClick = () => {
           <Button   className={classes.button} variant="contained" color="secondary" onClick={deleteButtonClick} >삭제</Button>
           <Button  className={classes.button} variant="contained" color="third" onClick={blindButtonClick}>블라인드</Button>
       </div>
-      <Snackbar open={open} autoHideDuration={6000} onClose={() => {setOpen(false)}}>
-        {
-        code == 1 ?(
-        <Alert onClose={() => {setOpen(false)}} severity="error">
-            {message}
-        </Alert>):(
-          <Alert onClose={() => {setOpen(false)}} severity="success">
-            {message}
-        </Alert>
-        )
-        }
-      </Snackbar>
 </div>
     );
 }

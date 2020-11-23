@@ -8,13 +8,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import NoticeStore from '../../stores/NoticeStore'
 import Alert from '@material-ui/lab/Alert';
-import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarStore from '../../stores/SnackbarStore'
 
 export default function NoticeAddDialog() {
   const [open, setOpen] = React.useState(false);
-  const [code, setCode] = React.useState(0);
-  const [barOpen, setBarOpen] = React.useState(false);
-  const [message, setMessage] = React.useState(false);
   const noticeStore = React.useContext(NoticeStore.context)
   const receiver_id = React.useRef()
   const sender_id = React.useRef()
@@ -26,17 +23,14 @@ export default function NoticeAddDialog() {
 
   const handleClose = () => {
     noticeStore.createNotice(receiver_id.current.value, sender_id.current.value, text.current.value, source_url.current.value).then(result => {
-      console.log(result)
       if(result['status'] == 200){
         noticeStore.readNotices("내용","")
         noticeStore.readMyNotices()
-        setCode(1)
+        SnackbarStore.pushMessage(result['data']['message'], true)
+      setOpen(false)
       }else
-        setCode(2)
-      setBarOpen(true)
-      setMessage(result['data']['message'])
+        SnackbarStore.pushMessage(result['data']['message'], false)
     })
-    setOpen(false)
   };
 
   return (
@@ -93,19 +87,6 @@ export default function NoticeAddDialog() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar open={barOpen} autoHideDuration={6000} onClose={() => {setBarOpen(false)}}>
-        {
-        code == 1 ?(
-        <Alert onClose={() => {setBarOpen(false)}} severity="success">
-          {message}
-        </Alert>):(
-          <Alert onClose={() => {setBarOpen(false)}} severity="error">
-          {message}
-        </Alert>
-        )
-      }
-    </Snackbar>
-
     </div>
   );
 }

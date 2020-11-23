@@ -3,13 +3,11 @@ import { DataGrid } from '@material-ui/data-grid';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import KeywordStore from '../../stores/KeywordStore'
 import {observer} from 'mobx-react'
-import {toJS} from 'mobx'
 import SeachSpace from '../common/SearchSpace'
 import KeywordAddDialog from './KeywordAddDialog'
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import SnackbarStore from '../../stores/SnackbarStore'
 
 var elem = (document.compatMode === "CSS1Compat") ? 
     document.documentElement :
@@ -66,7 +64,12 @@ const useStyles = makeStyles( (theme) => ({
     },
   buttons: {
       marginTop : '2%',
+      marginRight: '1.5%',
+      display : 'flex',
       float : 'right',
+  },
+  button: {
+      marginLeft: '20%',
   }
 }))
 
@@ -98,9 +101,6 @@ const columns = [
 
 const KeywordManageView = observer( (props) => {
   const [selected, setSelection] = React.useState([]);
-  const [message, setMessage] = React.useState("");
-  const [barOpen, setBarOpen] = React.useState(false)
-  const [code, setCode] = React.useState(0);
   const keywordStore = React.useContext(KeywordStore.context)
   const classes = useStyles();
   const category = React.useRef();
@@ -113,12 +113,9 @@ const KeywordManageView = observer( (props) => {
     keywordStore.deleteKeywords(selected).then(result => {
       if(result['status'] == 200){
         keywordStore.readKeywords("키워드","")
-        setCode(1)
+        SnackbarStore.pushMessage(result['data']['message'], true)
       }else
-        setCode(2)
-      setBarOpen(true)
-      
-      setMessage(result['data']['message'])
+      SnackbarStore.pushMessage(result['data']['message'], false)
     })
   };
 
@@ -136,23 +133,9 @@ const KeywordManageView = observer( (props) => {
             />
           </div>
           <div className={classes.buttons}>
-            <Grid container direction="row">
               <KeywordAddDialog/> 
-              <Button variant="contained" color="secondary" onClick={deleteClick} >삭제</Button>
-            </Grid>
+              <Button className={classes.button} variant="contained" color="secondary" onClick={deleteClick} >삭제</Button>
           </div>
-          <Snackbar open={barOpen} autoHideDuration={6000} onClose={() => {setBarOpen(false)}}>
-            {
-            code == 1 ?(
-            <Alert onClose={() => {setBarOpen(false)}} severity="success">
-              {message}
-            </Alert>):(
-              <Alert onClose={() => {setBarOpen(false)}} severity="error">
-              {message}
-            </Alert>
-            )
-          }
-        </Snackbar>
     </div>
   );
 })

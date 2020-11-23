@@ -7,14 +7,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import KeywordStore from '../../stores/KeywordStore'
-import Alert from '@material-ui/lab/Alert';
-import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarStore from '../../stores/SnackbarStore'
 
 export default function KeywordAddDialog() {
   const [open, setOpen] = React.useState(false);
-  const [code, setCode] = React.useState(0);
-  const [barOpen, setBarOpen] = React.useState(false);
-  const [message, setMessage] = React.useState(false);
   const keywordStore = React.useContext(KeywordStore.context)
   const keyword = React.useRef()
   const to_use_date = React.useRef()
@@ -23,24 +19,20 @@ export default function KeywordAddDialog() {
   };
 
   const handleClose = () => {
-    console.log(keyword)
-    console.log(to_use_date)
     keywordStore.createKeyword(keyword.current.value, to_use_date.current.value).then(result => {
       console.log(result)
       if(result['status'] == 200){
         keywordStore.readKeywords("키워드","")
-        setCode(1)
+        SnackbarStore.pushMessage(result['data']['message'], true)
       }else
-        setCode(2)
-      setBarOpen(true)
-      setMessage(result['data']['message'])
+      SnackbarStore.pushMessage(result['data']['message'], false)
     })
     setOpen(false)
   };
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+      <Button variant="contained" color="primary" onClick={handleClickOpen} style={{marginRight:"2%"}}>
         추가
       </Button>
       <Dialog open={open} aria-labelledby="form-dialog-title">
@@ -81,19 +73,6 @@ export default function KeywordAddDialog() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar open={barOpen} autoHideDuration={6000} onClose={() => {setBarOpen(false)}}>
-        {
-        code == 1 ?(
-        <Alert onClose={() => {setBarOpen(false)}} severity="success">
-          {message}
-        </Alert>):(
-          <Alert onClose={() => {setBarOpen(false)}} severity="error">
-          {message}
-        </Alert>
-        )
-      }
-    </Snackbar>
-
     </div>
   );
 }

@@ -5,15 +5,13 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarStore from '../../stores/SnackbarStore'
 import Alert from '@material-ui/lab/Alert';
 import { Typography } from '@material-ui/core';
 import MemberStore from '../../stores/MemberStore'
 export default function ChangePwDialog(props) {
     const [open, setOpen] = React.useState(false);
     const [barOpen, setBarOpen] = React.useState(false);
-    const [code, setCode] = React.useState(0);
-    const [message, setMessage] = React.useState("");
     const id = useRef()
     const memberStore = React.useContext(MemberStore.context)
     const handleClickOpen = () => {
@@ -23,13 +21,10 @@ export default function ChangePwDialog(props) {
         memberStore.changePw(id.current.value).then(result =>{
             if(result['status'] == 200)
             {
-                setCode(1)
+                SnackbarStore.pushMessage(result['data']['message'], true)
             }
             else
-                setCode(2)
-            setOpen(false)
-            setBarOpen(true)
-            setMessage(result['data']['message'])
+                SnackbarStore.pushMessage(result['data']['message'], false)
         })
         setOpen(false)
     };
@@ -67,18 +62,6 @@ export default function ChangePwDialog(props) {
             </Button>
             </DialogActions>
         </Dialog>
-        <Snackbar open={barOpen} autoHideDuration={6000} onClose={() => {setBarOpen(false)}}>
-        {
-        code == 1 ?(
-        <Alert onClose={() => {setBarOpen(false)}} severity="success">
-          {message}
-        </Alert>):(
-          <Alert onClose={() => {setBarOpen(false)}} severity="error">
-          {message}
-        </Alert>
-        )
-        }
-      </Snackbar>
     </div>
     );
 }
