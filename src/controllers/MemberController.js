@@ -24,9 +24,9 @@ export async function requestSearchMember(_code, _query) {
     return await axios.get(
         `/api/member/manage/`, { params: { code: _code, query: _query } },
         { withCredentials: true }
-    ).catch(error => { return [] }).then(result => {
+    ).catch(error => { console.warn(error); return [] }).then(result => {
         var data = [];
-        if (result.data != null) { // 5-2
+        if (result.data != null) {
             var tmp = result.data
             Object.keys(tmp).map((key, index) => (
                 data.push((new Member(tmp[key]['id'], tmp[key]['name']
