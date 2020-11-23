@@ -10,7 +10,7 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import ReportStore from '../../stores/ReportStore'
 import Alert from '@material-ui/lab/Alert';
-import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarStore from '../../stores/SnackbarStore'
 
 const useStyles = makeStyles( (theme) => ({
   select:{
@@ -28,10 +28,6 @@ export default function ReportAddDialog(props) {
   const classes = useStyles()
   const reportStore = React.useContext(ReportStore.context)
 
-  const [code, setCode] = React.useState(0);
-  const [barOpen, setBarOpen] = React.useState(false);
-  const [message, setMessage] = React.useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
     console.log(report_id)
@@ -41,11 +37,10 @@ export default function ReportAddDialog(props) {
       reportStore.processReport(report_id,process_type.current.value, process_text.current.value).then(result =>{
          if(result.status == 200) {
           reportStore.readReports("신고 내용","");
-           setCode(1)
+            SnackbarStore.pushMessage(result['data']['message'], true)
          }
-         else setCode(0)
-         setBarOpen(true)
-         setMessage(result['data']['message'])
+         else
+            SnackbarStore.pushMessage(result['data']['message'], false)
       })
       setOpen(false)
   };
@@ -111,19 +106,6 @@ export default function ReportAddDialog(props) {
           </Button>
         </DialogActions>
       </Dialog>
-
-      <Snackbar open={barOpen} autoHideDuration={6000} onClose={() => {setBarOpen(false)}}>
-        {
-        code == 1 ?(
-        <Alert onClose={() => {setBarOpen(false)}} severity="success">
-          {message}
-        </Alert>):(
-          <Alert onClose={() => {setBarOpen(false)}} severity="error">
-          {message}
-        </Alert>
-        )
-        }
-      </Snackbar>
     </div>
   );
 }

@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton';
-import Link from '@material-ui/core/Link';
+import {Link} from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem'
 import NoticeStore from '../../stores/NoticeStore'
 const useStyles = makeStyles((theme) => ({
@@ -60,13 +60,18 @@ const UserNoticeItem = observer( (props) => {
     return (
         <div className={classes.root}>
             <div className={classes.wrapper}>
-            <Link href={source_url} underline='none'>
-                <ListItem button>
-                    <div className={classes.textField}>
-                        <ListItemText classes={{primary:classes.text}} primary={text}/>
-                        <ListItemText classes={{primary:classes.send_datetime}} primary={send_datetime} bold/>
-                    </div>
-                </ListItem>
+            <Link 
+            to={{
+              pathname: source_url,
+              }}
+              style={{ textDecoration: 'none' }}
+            >
+              <ListItem button>
+                  <div className={classes.textField}>
+                      <ListItemText classes={{primary:classes.text}} primary={text}/>
+                      <ListItemText classes={{primary:classes.send_datetime}} primary={send_datetime} bold/>
+                  </div>
+              </ListItem>
             </Link>
                 <div className={classes.iconField}>
                 <IconButton onClick={deleteNotice}>

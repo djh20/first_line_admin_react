@@ -7,7 +7,7 @@ import { DataGrid } from '@material-ui/data-grid';
 import SeachSpace from '../common/SearchSpace'
 import {toJS} from 'mobx'
 import ReplyDetailDialog from './ReplyDetailDialog'
-import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarStore from '../../stores/SnackbarStore'
 import Alert from '@material-ui/lab/Alert';
 
 
@@ -62,9 +62,10 @@ const useStyles = makeStyles( (theme) => ({
           marginLeft : 'auto',
           marginRight : 'auto',
         },
-      buttons: {
-          marginTop : '2%',
-          float : 'right',
+      button:{
+        float:"right",
+        marginLeft: '2%',
+        marginTop : '2%'
       }
     
 }))
@@ -109,17 +110,14 @@ function createOptions() {
         { name : "수정일 (이전)",type : "datetime-local"},
         { name : "욕설 확률 (이상)",type : "number"},
         { name : "욕설 확률 (이하)",type : "number"},
-        { name : "삭제 여부",type : "text"},
-        { name : "블라인드 여부",type : "text"},
+        { name : "삭제 여부",type : "select", option:{True:"Y", False:"N"}},
+        { name : "블라인드 여부",type : "select", option:{True:"Y", False:"N"}},
     ]
 }
     
 const ReplyManageView = observer( (props) =>{
     const classes = useStyles();
     const [selected,setSelection] = useState([]);
-    const [open,setOpen] = useState(false);
-    const [code, setCode] = React.useState(0);
-    const [message, setMessage] = React.useState("");
     const category = useRef();
     const input = useRef();
     const options = createOptions()
@@ -137,13 +135,11 @@ const ReplyManageView = observer( (props) =>{
         replyStore.deleteReply(selected).then(result => {
         if(result['status'] == 200)
         {
-            setCode(0);
+            SnackbarStore.pushMessage(result['data']['message'], true)
             replyStore.readAllReplies();
         }
         else
-            setCode(1);
-        setOpen(true);
-        setMessage(result['data']['message'])
+        SnackbarStore.pushMessage(result['data']['message'], false)
       }
       )
     }
@@ -152,13 +148,11 @@ const ReplyManageView = observer( (props) =>{
         replyStore.blindReply(selected).then(result=> {
             if(result['status'] == 200)
             {
-                setCode(0);
+                SnackbarStore.pushMessage(result['data']['message'], true)
                 replyStore.readAllReplies();
             }
             else
-                setCode(1);
-            setOpen(true);
-            setMessage(result['data']['message'])
+            SnackbarStore.pushMessage(result['data']['message'], false)
         } 
             )
     }
@@ -177,21 +171,9 @@ const ReplyManageView = observer( (props) =>{
             /> 
         </div>
         <div className={classes.buttons}>
-            <Button  variant="contained" color="secondary" onClick={deleteButtonClick} >삭제</Button>
-            <Button  variant="contained" color="third" onClick={blindButtonClick}>블라인드</Button>
+            <Button className={classes.button} variant="contained" color="secondary" onClick={deleteButtonClick} >삭제</Button>
+            <Button className={classes.button} variant="contained" color="third" onClick={blindButtonClick}>블라인드</Button>
         </div>
-        <Snackbar open={open} autoHideDuration={6000} onClose={() => {setOpen(false)}}>
-            {
-                code == 1 ?(
-                <Alert onClose={() => {setOpen(false)}} severity="error">
-                    {message}
-                </Alert>):(
-                <Alert onClose={() => {setOpen(false)}} severity="success">
-                    {message}
-                </Alert>
-                )
-            }
-      </Snackbar>
     </div>
     )
 })

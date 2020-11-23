@@ -13,11 +13,17 @@ import {
     makeStyles
 } from '@material-ui/core';
 import { Menu, ChevronLeft, Home, Inbox, Mail } from '@material-ui/icons';
-import Link from '@material-ui/core/Link';
-import AccountButton from '../components/common/AccountButton'
+import {Link} from 'react-router-dom';
 import NoticeButton from '../components/common/NoticeButton'
-import UserInfoPopOver from "../components/member/UserInfoPopOver"
-
+import LogoutButton from '../components/common/LogoutButton'
+import CreateIcon from '@material-ui/icons/Create';
+import RateReviewIcon from '@material-ui/icons/RateReview';
+import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+import FontDownloadIcon from '@material-ui/icons/FontDownload';
+import ReportIcon from '@material-ui/icons/Report';
+import StorageIcon from '@material-ui/icons/Storage';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import RouterIcon from '@material-ui/icons/Router';
 const useStyle = makeStyles(theme=>({
     root:{
         width:'100%',
@@ -95,7 +101,7 @@ function UserHomeLayout(props){
                     </div>
                     <div alignSelf="flex-end" className={classes.accountIconArea}>
                         <NoticeButton />
-                         <AccountButton removeCookie={removeCookie}  setHasCookie={setHasCookie} />
+                         <LogoutButton removeCookie={removeCookie}  setHasCookie={setHasCookie} />
                     </div>
                 </Toolbar>
             </AppBar>
@@ -108,57 +114,111 @@ function UserHomeLayout(props){
                     </div>
                     <Divider />
                     <List>
-                        <Link  href='/memberManage'>
+                        <Link   
+                         to={{
+                            pathname: "/memberManage",
+                        }}
+                        onClick={() => setState(!open)}
+                        style={{ textDecoration: 'none' }}
+                        >
                         <ListItem button>
                             <ListItemIcon><Home /></ListItemIcon>                            
                                 <ListItemText className={classes.listItemText}>회원 관리</ListItemText>
                         </ListItem>
                         </Link>
-                        <Link  href='/postManage'>
+                        <Link   
+                         to={{
+                            pathname: "/postManage",
+                        }}
+                        onClick={() => setState(!open)}
+                        style={{ textDecoration: 'none' }}
+                        >
                         <ListItem button>
-                            <ListItemIcon><Home /></ListItemIcon>                            
+                            <ListItemIcon><CreateIcon /></ListItemIcon>                            
                                 <ListItemText className={classes.listItemText}>게시글 관리</ListItemText>
                         </ListItem>
                         </Link>
-                        <Link  href='/replyManage'>
+                        <Link   
+                         to={{
+                            pathname: "/replyManage",
+                        }}
+                        onClick={() => setState(!open)}
+                        style={{ textDecoration: 'none' }}
+                        >
                         <ListItem button>
-                            <ListItemIcon><Home /></ListItemIcon>                            
+                            <ListItemIcon><RateReviewIcon /></ListItemIcon>                            
                                 <ListItemText className={classes.listItemText}>댓글 관리</ListItemText>
                         </ListItem>
                         </Link>
-                        <Link  href='/noticeManage'>
+                        <Link   
+                         to={{
+                            pathname: "/noticeManage",
+                        }}
+                        onClick={() => setState(!open)}
+                        style={{ textDecoration: 'none' }}
+                        >
                         <ListItem button>
-                            <ListItemIcon><Home /></ListItemIcon>                            
+                            <ListItemIcon><NotificationsNoneIcon /></ListItemIcon>                            
                                 <ListItemText className={classes.listItemText}>알림 관리</ListItemText>
                         </ListItem>
                         </Link>
-                        <Link  href='/keywordManage'>
+                        <Link   
+                         to={{
+                            pathname: "/keywordManage",
+                        }}
+                        onClick={() => setState(!open)}
+                        style={{ textDecoration: 'none' }}
+                        >
                         <ListItem button>
-                            <ListItemIcon><Home /></ListItemIcon>                            
+                            <ListItemIcon><FontDownloadIcon /></ListItemIcon>                            
                                 <ListItemText className={classes.listItemText}>키워드 관리</ListItemText>
                         </ListItem>
                         </Link>
-                        <Link  href='/reportManage'>
+                        <Link   
+                         to={{
+                            pathname: "/reportManage",
+                        }}
+                        onClick={() => setState(!open)}
+                        style={{ textDecoration: 'none' }}
+                        >
                         <ListItem button>
-                            <ListItemIcon><Home /></ListItemIcon>                            
+                            <ListItemIcon><ReportIcon /></ListItemIcon>                            
                                 <ListItemText className={classes.listItemText}>신고 관리</ListItemText>
                         </ListItem>
                         </Link>
-                        <Link  href='/log'>
+                        <Link   
+                         to={{
+                            pathname: "/log",
+                        }}
+                        onClick={() => setState(!open)}
+                        style={{ textDecoration: 'none' }}
+                        >
                         <ListItem button>
-                            <ListItemIcon><Home /></ListItemIcon>                            
+                            <ListItemIcon><StorageIcon /></ListItemIcon>                            
                                 <ListItemText className={classes.listItemText}>로그 조회</ListItemText>
                         </ListItem>
                         </Link>
-                        <Link  href='/loginLogManage'>
+                        <Link   
+                         to={{
+                            pathname: "/loginLogManage",
+                        }}
+                        onClick={() => setState(!open)}
+                        style={{ textDecoration: 'none' }}
+                        >
                         <ListItem button>
-                            <ListItemIcon><Home /></ListItemIcon>                            
+                            <ListItemIcon><VpnKeyIcon /></ListItemIcon>                            
                                 <ListItemText className={classes.listItemText}>로그인 로그 조회</ListItemText>
                         </ListItem>
                         </Link>
-                        <Link  href='/traffic'>
+                        <Link   
+                         to={{
+                            pathname: "/traffic",
+                        }}
+                        onClick={() => setState(!open)}
+                        style={{ textDecoration: 'none' }}
+                        >
                         <ListItem button>
-                            <ListItemIcon><Home /></ListItemIcon>                            
+                            <ListItemIcon><RouterIcon /></ListItemIcon>                            
                                 <ListItemText className={classes.listItemText}>트래픽 통계</ListItemText>
                         </ListItem>
                         </Link>

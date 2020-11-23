@@ -3,19 +3,14 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import MemberStore from '../../stores/MemberStore'
 import {observer} from "mobx-react"
-import Modal from '@material-ui/core/Modal';
-import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarStore from '../../stores/SnackbarStore'
 import Alert from '@material-ui/lab/Alert';
 import ChangePwDialog from './ChangePwDialog'
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +49,6 @@ const SignInView = observer( (props) => {
     const id = useRef("")
     const pw = useRef("")
     const [open,setOpen] = useState(false);
-    const [code, setCode] = React.useState(0);
     const [message, setMessage] = React.useState("");
     const setHasCookie = props.setHasCookie
     const memberStore = useContext(MemberStore.context)
@@ -64,13 +58,11 @@ const SignInView = observer( (props) => {
             memberStore.login(id.current.value,pw.current.value).then(result =>{
               if(result['status'] == 200)
               {
-                  setCode(0);
+                SnackbarStore.pushMessage(result['data']['message'], true)
                   setHasCookie(true)
               }
               else
-                  setCode(1);
-              setOpen(true);
-              setMessage(result['data']['message'])
+                SnackbarStore.pushMessage(result['data']['message'], false)
           }
         )
         }
@@ -132,27 +124,10 @@ const SignInView = observer( (props) => {
                 <Grid item xs>
                   <ChangePwDialog/>
                 </Grid>
-                <Grid item>
-                  <Link href="/signup" variant="body2">
-                    {"계정이 없으신가요?"}
-                  </Link>
-                </Grid>
               </Grid>
             </form>
           </div>
         </Grid>
-        <Snackbar open={open} autoHideDuration={6000} onClose={() => {setOpen(false)}}>
-            {
-                code == 1 ?(
-                <Alert onClose={() => {setOpen(false)}} severity="error">
-                    {message}
-                </Alert>):(
-                <Alert onClose={() => {setOpen(false)}} severity="success">
-                    {message}
-                </Alert>
-                )
-            }
-      </Snackbar>
       </Grid>
       
     );

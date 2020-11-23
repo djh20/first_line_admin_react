@@ -18,7 +18,8 @@ import {
   } from "react-router-dom";
 import {observer} from "mobx-react"
 import {useCookies} from 'react-cookie'
-import UserNoticeItem from './components/member/UserNoticeItem'
+import CommonSnackbar from './components/common/CommonSnackbar'
+import TrafficManageView from './components/traffic/TrafficManageView'
 const useStyle = makeStyles(theme=>({
     '@global': {
         'body, html' : {
@@ -31,7 +32,7 @@ const useStyle = makeStyles(theme=>({
           maxHeight: '100vh'
         },
         '*::-webkit-scrollbar': {
-          width: '0.1rem',
+          width: '0.5rem',
           backgroundColor: '#2a2a40',
         },
         '*::-webkit-scrollbar-track': {
@@ -83,12 +84,13 @@ const App = observer( () =>  {
                       <Route exact path="/keywordManage" component={KeywordManageView}/>
                       <Route exact path="/log" component={LogManageView}/>
                       <Route exact path="/loginLogManage" component={LoginLogManageView}/>
+                      <Route exact path="/traffic" component={TrafficManageView}/>
                   </Switch>
               </UserHomeLayout>
             )
           }
           </Router>
-        
+          <CommonSnackbar/>
         </div>
   );
 })

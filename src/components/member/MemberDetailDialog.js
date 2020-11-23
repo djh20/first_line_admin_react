@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MemberStore from '../../stores/MemberStore'
-import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarStore from '../../stores/SnackbarStore'
 import Alert from '@material-ui/lab/Alert';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -28,10 +28,7 @@ const useStyles = makeStyles( (theme) => ({
 export default function PostDetailDialog(props) {
     const classes = useStyles()
     const [open, setOpen] = React.useState(false);
-    const [barOpen, setBarOpen]= React.useState(false);
-    const [code, setCode] = React.useState(0);
     const [select, setSelect] = React.useState(false);
-    const [message, setMessage] = React.useState("");
     const defult_id = props.id
     const defult_name = props.name
     const defult_nickname = props.nickname
@@ -55,16 +52,12 @@ export default function PostDetailDialog(props) {
     const handleClose = () => {
         memberStore.createMember(id.current.value,name.current.value,nickname.current.value,age.current.value,
             gender.current.value,authority.current.value,phonenumber.current.value,email.current.value).then(result => {
-            console.log(result)
             if(result['status'] == 200)
             {
-                setCode(1)
+                SnackbarStore.pushMessage(result['data']['message'], true)
             }
             else
-                setCode(2)
-            setOpen(false)
-            setBarOpen(true)
-            setMessage(result['data']['message'])
+                SnackbarStore.pushMessage(result['data']['message'], false)
         })
         setOpen(false)
         memberStore.readAllMembers()
@@ -214,18 +207,6 @@ export default function PostDetailDialog(props) {
             </Button>
             </DialogActions>
         </Dialog>
-        <Snackbar open={barOpen} autoHideDuration={6000} onClose={() => {setBarOpen(false)}}>
-        {
-        code == 1 ?(
-        <Alert onClose={() => {setBarOpen(false)}} severity="success">
-          {message}
-        </Alert>):(
-          <Alert onClose={() => {setBarOpen(false)}} severity="error">
-          {message}
-        </Alert>
-        )
-        }
-      </Snackbar>
     </div>
     );
 }
