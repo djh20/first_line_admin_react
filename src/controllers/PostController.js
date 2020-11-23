@@ -36,7 +36,7 @@ export async function requestSearchPost(_code, _query){
                 data.push((new Post(tmp[key]['post_id'], tmp[key]['title'],
                 tmp[key]['num_lookup'],tmp[key]['text'],tmp[key]['num_reply'],
                 tmp[key]['tag'],tmp[key]['writer'],
-                tmp[key]['writing_date'],tmp[key]['edting_date'],
+                tmp[key]['writing_date'],tmp[key]['editing_date'],
                 tmp[key]['temperature'],tmp[key]['keyword'],tmp[key]['prob_p_dp']
                 ,tmp[key]['prob_a_da'],tmp[key]['prob_is_slang'],tmp[key]['is_deleted']
                 ,tmp[key]['is_blinded'],tmp[key]['num_good']
