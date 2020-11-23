@@ -6,6 +6,11 @@ import {observer} from 'mobx-react'
 import {toJS} from 'mobx'
 import SeachSpace from '../common/SearchSpace'
 import KeywordAddDialog from './KeywordAddDialog'
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+
 var elem = (document.compatMode === "CSS1Compat") ? 
     document.documentElement :
     document.body;
@@ -70,26 +75,32 @@ function createOptions(){
   return [
     { name : "키워드",type : "text"},
     { name : "등록자",type : "text"},
-    { name : "최초 등록일(이상)",type : "datetime-local"},
-    { name : "최초 등록일(이하)",type : "datetime-local"},
-    { name : "최근 사용(예정)일 (이상)",type : "date"},
-    { name : "최근 사용(예정)일 (이하)",type : "date"},
+    { name : "최초 등록일(이후)",type : "datetime-local"},
+    { name : "최초 등록일(이전)",type : "datetime-local"},
+    { name : "최근 사용일 (이후)",type : "date"},
+    { name : "최근 사용일 (이전)",type : "date"},
+    { name : "사용 예정일 (이후)",type : "date"},
+    { name : "사용 예정일 (이전)",type : "date"},
     { name : "사용 수(이상)",type : "number"},
     { name : "사용 수(이하)",type : "number"},
   ]
 }
 
 const columns = [
-  { field: 'id', type : 'number',headerName: '키워드', width: getWidth(0.95,1/5), align:'left', headerAlign:'left' },
-  { field: 'registrator', type : 'string',headerName: '등록자', width: getWidth(0.95,1/5) , align:'left', headerAlign:'left'},
-  { field: 'registration_date', type : 'datetime',headerName: '최초 등록일', width: getWidth(0.95,1/5) , align:'left', headerAlign:'left'},
-  { field: 'recent_used_date', type : 'datetime',headerName: '최근 사용일' , width: getWidth(0.95,1/5), align:'left', headerAlign:'left'},
-  { field: 'suggest_amount', type : 'datetime',headerName: '사용 수' , width: getWidth(0.95,1/5), align:'left', headerAlign:'left'},
+  { field: 'id', type : 'number',headerName: '키워드', width: getWidth(0.95,1/6), align:'left', headerAlign:'left' },
+  { field: 'registrator', type : 'string',headerName: '등록자', width: getWidth(0.95,1/6) , align:'left', headerAlign:'left'},
+  { field: 'registration_date', type : 'datetime',headerName: '최초 등록일', width: getWidth(0.95,1/6) , align:'left', headerAlign:'left'},
+  { field: 'recent_used_date', type : 'datetime',headerName: '최근 사용일' , width: getWidth(0.95,1/6), align:'left', headerAlign:'left'},
+  { field: 'suggest_date', type : 'datetime',headerName: '사용 예정일' , width: getWidth(0.95,1/6), align:'left', headerAlign:'left'},
+  { field: 'suggest_amount', type : 'datetime',headerName: '사용 수' , width: getWidth(0.95,1/6), align:'left', headerAlign:'left'},
 ];
 
 
 const KeywordManageView = observer( (props) => {
   const [selected, setSelection] = React.useState([]);
+  const [message, setMessage] = React.useState("");
+  const [barOpen, setBarOpen] = React.useState(false)
+  const [code, setCode] = React.useState(0);
   const keywordStore = React.useContext(KeywordStore.context)
   const classes = useStyles();
   const category = React.useRef();
@@ -98,6 +109,18 @@ const KeywordManageView = observer( (props) => {
   const searchButtonClick = () => {
     keywordStore.readKeywords(options[category.current.value]['name'] , input.current.value)
   }    
+  const deleteClick = () => {
+    keywordStore.deleteKeywords(selected).then(result => {
+      if(result['status'] == 200){
+        keywordStore.readKeywords("키워드","")
+        setCode(1)
+      }else
+        setCode(2)
+      setBarOpen(true)
+      
+      setMessage(result['data']['message'])
+    })
+  };
 
   React.useEffect(() => {
     keywordStore.readKeywords("키워드","");
@@ -106,12 +129,30 @@ const KeywordManageView = observer( (props) => {
     <div className={classes.root}>
           <SeachSpace category={category} input={input} options={options} onSearch={searchButtonClick}/>
           <div className={classes.table}>
-            <DataGrid rows={keywordStore.keywords} columns={columns} pageSize={10}
+            <DataGrid rows={keywordStore.keywords} columns={columns} pageSize={10} checkboxSelection
+            onSelectionChange={(data) => {
+              setSelection(data)
+              }}
             />
           </div>
           <div className={classes.buttons}>
-          <KeywordAddDialog/>
+            <Grid container direction="row">
+              <KeywordAddDialog/> 
+              <Button variant="contained" color="secondary" onClick={deleteClick} >삭제</Button>
+            </Grid>
           </div>
+          <Snackbar open={barOpen} autoHideDuration={6000} onClose={() => {setBarOpen(false)}}>
+            {
+            code == 1 ?(
+            <Alert onClose={() => {setBarOpen(false)}} severity="success">
+              {message}
+            </Alert>):(
+              <Alert onClose={() => {setBarOpen(false)}} severity="error">
+              {message}
+            </Alert>
+            )
+          }
+        </Snackbar>
     </div>
   );
 })

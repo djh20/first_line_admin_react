@@ -115,6 +115,7 @@ const MemberManageView = observer( (props) =>{
     const [selected,setSelection] = useState([]);
     const [open,setOpen] = useState(false);
     const [code, setCode] = React.useState(0);
+    const [message, setMessage] = React.useState("");
     const category = useRef();
     const input = useRef();
     const options = createOptions()
@@ -128,7 +129,7 @@ const MemberManageView = observer( (props) =>{
   
     const deleteButtonClick = () => {
         memberStore.deleteMember(selected).then(result => {
-        if(result == true)
+        if(result['status'] == 200)
         {
             setCode(0);
             setOpen(true);
@@ -139,6 +140,7 @@ const MemberManageView = observer( (props) =>{
             setCode(1);
             setOpen(true);
         }
+        setMessage(result['data']['message'])
         }
     )
     }
@@ -163,10 +165,10 @@ const MemberManageView = observer( (props) =>{
             {
             code == 1 ?(
             <Alert onClose={() => {setOpen(false)}} severity="error">
-            삭제 실패하였습니다.
+                {message}
             </Alert>):(
             <Alert onClose={() => {setOpen(false)}} severity="success">
-            삭제 성공하였습니다.
+                {message}
             </Alert>
             )
             }

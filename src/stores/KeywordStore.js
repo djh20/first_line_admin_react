@@ -1,6 +1,6 @@
 import { observable, action } from "mobx";
 import { createContext } from "react";
-import requestReadKeywords, {requestCreateKeyword} from '../controllers/KeywordController'
+import requestReadKeywords, {requestCreateKeyword, requestDeleteKeywords} from '../controllers/KeywordController'
 
 class KeywordStore {
     @observable keywords = []
@@ -29,6 +29,15 @@ class KeywordStore {
     {
         return requestReadKeywords(condition, query).then( (keywords) =>{
             this.keywords = [...keywords]
+        })
+    }
+    
+    @action
+    deleteKeywords(keywords)
+    {
+        return requestDeleteKeywords(keywords).then(result =>{
+            console.log(result)
+            return result
         })
     }
 }

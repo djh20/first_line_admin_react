@@ -23,7 +23,6 @@ class ReplyStore {
     {
         return requestReadAllReplies().then(result=>{
             this.replies = [...result]
-            console.log(this.replies)
         })
     }
 
@@ -42,7 +41,7 @@ class ReplyStore {
     search(code, query) {
   
       const codeTable = {'댓글 번호 (이상)':0,'댓글 번호 (이하)':1,"게시글 번호 (이상)":2,"게시글 번호 (이하)":3, '내용':4,'작성자':5,'작성일 (이후)':6,
-        '작성일 (이전)':7, '수정일(이후)':8,'수정일(이전)':9,'욕설 확률 (이상)':10,'욕설 확률 (이하)':11,'삭제 여부':12,'블라인드 여부':13}
+        '작성일 (이전)':7, '수정일(이후)':8,'수정일(이전)':9,'욕설 확률 (이상)':10,'욕설 확률 (이하)':11,'삭제 여부':12,'블라인드 여부':13, '전체' : 14}
       return requestSearchReply(codeTable[code], query).then(result=>{
         this.replies = [...result]
       })
@@ -52,7 +51,6 @@ class ReplyStore {
     readReplies(post_id){
         requestReadReplies(post_id).then(result=>{
             this.replies = [...this.replies,...result]
-            console.log(this.replies)
         })
     }
 
@@ -60,10 +58,7 @@ class ReplyStore {
     deleteReply(reply_id){
         console.log(reply_id)
         return requestDeleteReply(reply_id).then(result=>{
-        if(result==200)
-            return true
-        else
-            return false
+            return result
         })
     }
 
@@ -71,10 +66,7 @@ class ReplyStore {
     blindReply(reply_id){
         console.log(reply_id)
         return requestBlindReply(reply_id).then(result=>{
-        if(result==200)
-            return true
-        else
-            return false
+            return result
         })
     }
 

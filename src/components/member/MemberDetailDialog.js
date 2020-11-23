@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,14 +8,31 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import MemberStore from '../../stores/MemberStore'
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/core'
+import InputLabel from '@material-ui/core/InputLabel';
+
+
+const useStyles = makeStyles( (theme) => ({
+    
+    select : {
+        width : "100%"
+    },
+    label : {
+        marginTop : "1.5%",
+        fontSize : '0.8rem'
+    }
+}))
 
 export default function PostDetailDialog(props) {
+    const classes = useStyles()
     const [open, setOpen] = React.useState(false);
     const [barOpen, setBarOpen]= React.useState(false);
-    const [crntGender, setCrntGender] = React.useState(true);
     const [code, setCode] = React.useState(0);
+    const [select, setSelect] = React.useState(false);
+    const [message, setMessage] = React.useState("");
     const defult_id = props.id
-    const defult_pw = props.pw    
     const defult_name = props.name
     const defult_nickname = props.nickname
     const defult_age = props.age
@@ -24,7 +41,6 @@ export default function PostDetailDialog(props) {
     const defult_phonenumber = props.phonenumber
     const defult_email = props.email
     const id = useRef()
-    const pw = useRef()    
     const name = useRef()
     const nickname = useRef()
     const age = useRef()
@@ -37,22 +53,30 @@ export default function PostDetailDialog(props) {
         setOpen(true);
     }
     const handleClose = () => {
-        if(gender.current.value == '여성')
-            setCrntGender(false)
-        memberStore.createMember(id.current.value, pw.current.value,name.current.value,nickname.current.value,age.current.value,
-            crntGender,authority.current.value,phonenumber.current.value,email.current.value).then(result => {
+        memberStore.createMember(id.current.value,name.current.value,nickname.current.value,age.current.value,
+            gender.current.value,authority.current.value,phonenumber.current.value,email.current.value).then(result => {
             console.log(result)
-            if(result == true)
+            if(result['status'] == 200)
+            {
                 setCode(1)
+            }
             else
                 setCode(2)
             setOpen(false)
             setBarOpen(true)
+            setMessage(result['data']['message'])
         })
         setOpen(false)
         memberStore.readAllMembers()
     };
 
+    const selectClose = () => {
+        setSelect(false);
+    };
+
+    const selectOpen = () => {
+        setSelect(true);
+    };
     return (
         <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
@@ -105,26 +129,61 @@ export default function PostDetailDialog(props) {
                 multiline
                 fullWidth
             />
-            <TextField
-                margin="dense"
-                id="gender"
-                inputRef={gender}
-                defaultValue={defult_gender}
-                label="성별"
-                type="text"
-                multiline
-                fullWidth
-            />
-            <TextField
-                margin="dense"
-                id="authority"
-                inputRef={authority}
-                defaultValue={defult_authority}
-                label="권한"
-                type="text"
-                multiline
-                fullWidth
-            />
+            <InputLabel className={classes.label}>
+            성별
+            </InputLabel>
+            {
+                defult_gender == '남성' ?(
+                <Select
+                    className={classes.select}
+                    defaultValue={true}
+                    onClose={selectClose}
+                    onOpen={selectOpen}
+                    inputRef={gender}
+                >
+                    <MenuItem value={true}>남성</MenuItem>
+                    <MenuItem value={false}>여성</MenuItem>
+                </Select>):(
+                <Select      
+                    className={classes.select}
+                    defaultValue={false}
+                    onClose={selectClose}
+                    onOpen={selectOpen}
+                    inputRef={gender}
+                >
+                    <MenuItem value={false}>여성</MenuItem>
+                    <MenuItem value={true}>남성</MenuItem>
+                </Select>
+                )
+            }
+            <br/>
+            <InputLabel className={classes.label}>
+            권한
+            </InputLabel>
+            {
+                defult_authority == '회원' ?(
+                <Select   
+                    className={classes.select}
+                    defaultValue={'회원'}
+                    onClose={selectClose}
+                    onOpen={selectOpen}
+                    inputRef={authority}
+                >
+                    <MenuItem value={'회원'}>회원</MenuItem>
+                    <MenuItem value={'관리자'}>관리자</MenuItem>
+                </Select>):(
+                <Select       
+                    className={classes.select}
+                    defaultValue={'관리자'}
+                    onClose={selectClose}
+                    onOpen={selectOpen}
+                    inputRef={authority}
+                >
+                    <MenuItem value={'회원'}>회원</MenuItem>
+                    <MenuItem value={'관리자'}>관리자</MenuItem>
+                </Select>
+                )
+            }
             <TextField
                 margin="dense"
                 id="phonenumber"
@@ -159,10 +218,10 @@ export default function PostDetailDialog(props) {
         {
         code == 1 ?(
         <Alert onClose={() => {setBarOpen(false)}} severity="success">
-          수정 성공하였습니다.
+          {message}
         </Alert>):(
           <Alert onClose={() => {setBarOpen(false)}} severity="error">
-          수정 실패하였습니다.
+          {message}
         </Alert>
         )
         }

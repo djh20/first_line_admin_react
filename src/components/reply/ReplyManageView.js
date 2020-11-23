@@ -97,6 +97,7 @@ const columns =
 
 function createOptions() {
     return [
+        { name : "전체",type : "text"},
         { name : "댓글 번호 (이상)",type : "number"},
         { name : "댓글 번호 (이하)",type : "number"},
         { name : "게시글 번호 (이상)",type : "number"},
@@ -119,7 +120,7 @@ const ReplyManageView = observer( (props) =>{
     const [selected,setSelection] = useState([]);
     const [open,setOpen] = useState(false);
     const [code, setCode] = React.useState(0);
-    const [type, setType] = useState('삭제');
+    const [message, setMessage] = React.useState("");
     const category = useRef();
     const input = useRef();
     const options = createOptions()
@@ -135,32 +136,30 @@ const ReplyManageView = observer( (props) =>{
 
     const deleteButtonClick = () => {
         replyStore.deleteReply(selected).then(result => {
-            setType('삭제');
-        if(result == true)
+        if(result['status'] == 200)
         {
             setCode(0);
-            setOpen(true);
             replyStore.readAllReplies();
         }
         else
             setCode(1);
-            setOpen(true);
+        setOpen(true);
+        setMessage(result['data']['message'])
       }
       )
     }
     
     const blindButtonClick = () => {
         replyStore.blindReply(selected).then(result=> {
-            setType('블라인드');
-            if(result == true)
+            if(result['status'] == 200)
             {
                 setCode(0);
-                setOpen(true);
                 replyStore.readAllReplies();
             }
             else
                 setCode(1);
-                setOpen(true);
+            setOpen(true);
+            setMessage(result['data']['message'])
         } 
             )
     }
@@ -186,10 +185,10 @@ const ReplyManageView = observer( (props) =>{
             {
                 code == 1 ?(
                 <Alert onClose={() => {setOpen(false)}} severity="error">
-                    {type} 실패하였습니다.
+                    {message}
                 </Alert>):(
                 <Alert onClose={() => {setOpen(false)}} severity="success">
-                    {type} 성공하였습니다.
+                    {message}
                 </Alert>
                 )
             }

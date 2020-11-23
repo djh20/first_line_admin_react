@@ -54,6 +54,7 @@ const UserNoticeItem = observer( (props) => {
       if(noticeStore.myNotices.length == 1)
         setAnchor(null)
       noticeStore.deleteNotice(notice_id)
+      noticeStore.readMyNotices()
     }
 
     return (

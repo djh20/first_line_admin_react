@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import parse from 'html-react-parser';
-import Typography from '@material-ui/core/Typography';
-export default function PostDetailDialog(props) {
+import LoginLogStore from '../../stores/LoginLogStore'
+
+export default function LoginLogDetailDialog(props) {
     const [open, setOpen] = React.useState(false);
-    const post_id = props.post_id
-    const title = props.title
-    const text = parse(props.text)
-    const tag = props.tag
-    const writer = props.writer
-    const temperature = props.temperature
+    const defult_id = props.id
+    const requester_ip = props.requester_ip
+    const login_id = props.login_id
+    const logging_date = props.logging_date
+    const login_result = props.login_result
     const handleClickOpen = () => {
         setOpen(true);
     }
@@ -24,53 +23,49 @@ export default function PostDetailDialog(props) {
         조회
       </Button>
       <Dialog open={open} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">게시글 상세 보기</DialogTitle>
+        <DialogTitle id="form-dialog-title">회원 상세 보기</DialogTitle>
         <DialogContent>
             <TextField
                 autoFocus
                 margin="dense"
-                id="text"
-                defaultValue={post_id}
-                label="게시글 번호"
+                id="id"
+                defaultValue={defult_id}
+                label="로그 번호"
+                type="text"
+                fullWidth
+                InputProps={{
+                readOnly: true,
+                }}
+            />
+            <TextField
+                margin="dense"
+                id="name"
+                defaultValue={requester_ip}
+                label="요청자 ip"
+                type="text"
+                multiline
+                fullWidth
+                InputProps={{
+                readOnly: true,
+                }}
+            />
+            <TextField
+                margin="dense"
+                defaultValue={login_id}
+                label="아이디"
+                type="text"
+                multiline
+                fullWidth
+                InputProps={{
+                readOnly: true,
+                }}
+            />
+            <TextField
+                margin="dense"
+                id="age"
+                defaultValue={logging_date}
+                label="로그인 날짜"
                 type="number"
-                fullWidth
-                InputProps={{
-                readOnly: true,
-                }}
-            />
-            <TextField
-                autoFocus
-                margin="dense"
-                id="text"
-                defaultValue={temperature}
-                label="온도"
-                type="number"
-                fullWidth
-                InputProps={{
-                readOnly: true,
-                }}
-            />
-            <TextField
-                margin="dense"
-                id="text"
-                defaultValue={title}
-                label="제목"
-                type="text"
-                multiline
-                fullWidth
-                InputProps={{
-                readOnly: true,
-                }}
-            />
-            <Typography variant="h7" >
-                {text}
-            </Typography>
-            <TextField
-                margin="dense"
-                id="text"
-                defaultValue={tag}
-                label="태그"
-                type="text"
                 multiline
                 fullWidth
                 InputProps={{
@@ -79,21 +74,21 @@ export default function PostDetailDialog(props) {
             />
             <TextField
                 margin="dense"
-                id="text"
-                defaultValue={writer}
-                label="작성자"
+                id="gender"
+                defaultValue={login_result}
+                label="로그인 결과"
                 type="text"
                 multiline
                 fullWidth
                 InputProps={{
-                    readOnly: true,
+                readOnly: true,
                 }}
             />
         </DialogContent>
         <DialogActions>
-            <Button onClick={() => {setOpen(false)}} color="primary">
+            <Button onClick={() => {setOpen(false) }} color="primary">
                 닫기
-                </Button>
+            </Button>
             </DialogActions>
         </Dialog>
     </div>

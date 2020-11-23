@@ -150,6 +150,12 @@ function UserHomeLayout(props){
                                 <ListItemText className={classes.listItemText}>로그 조회</ListItemText>
                         </ListItem>
                         </Link>
+                        <Link  href='/loginLogManage'>
+                        <ListItem button>
+                            <ListItemIcon><Home /></ListItemIcon>                            
+                                <ListItemText className={classes.listItemText}>로그인 로그 조회</ListItemText>
+                        </ListItem>
+                        </Link>
                         <Link  href='/traffic'>
                         <ListItem button>
                             <ListItemIcon><Home /></ListItemIcon>                            

@@ -29,6 +29,7 @@ export default function NoticeAddDialog() {
       console.log(result)
       if(result['status'] == 200){
         noticeStore.readNotices("내용","")
+        noticeStore.readMyNotices()
         setCode(1)
       }else
         setCode(2)
